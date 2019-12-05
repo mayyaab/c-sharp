@@ -1,0 +1,11 @@
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.exe
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.deps.json
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.runtimeconfig.json
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.runtimeconfig.dev.json
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.dll
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.pdb
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.csprojAssemblyReference.cache
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.AssemblyInfoInputs.cache
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.AssemblyInfo.cs
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.dll
+C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.pdb
