@@ -9,3 +9,14 @@ C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Clas
 C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.AssemblyInfo.cs
 C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.dll
 C:\Users\m.abzhigitova\source\repos\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.pdb
+C:\Projects\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.exe
+C:\Projects\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.deps.json
+C:\Projects\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.runtimeconfig.json
+C:\Projects\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.runtimeconfig.dev.json
+C:\Projects\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.dll
+C:\Projects\Classes\Classes\bin\Debug\netcoreapp3.0\Classes.pdb
+C:\Projects\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.csprojAssemblyReference.cache
+C:\Projects\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.AssemblyInfoInputs.cache
+C:\Projects\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.AssemblyInfo.cs
+C:\Projects\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.dll
+C:\Projects\Classes\Classes\obj\Debug\netcoreapp3.0\Classes.pdb
