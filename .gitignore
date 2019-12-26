@@ -3,3 +3,6 @@
 ################################################################################
 
 /Classes/.vs/Classes
+/Classes/Classes/bin/
+/Classes/Classes/obj/Debug/netcoreapp3.0/*.pdb
+/Classes/Classes/obj/Debug/netcoreapp3.0/*.dll

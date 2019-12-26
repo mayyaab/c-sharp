@@ -13,8 +13,20 @@ namespace Classes
         private string lastName;
         private string eyeColor;
         private int age;
+        //default constructor
+        public Human()
+        {
+            Console.WriteLine("Human is created");
+        }
 
-        //constructor
+        public Human(string firstName, string lastName, string eyeColor)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.eyeColor = eyeColor;
+        }
+
+        //paramiritirized constructor
         public Human(string firstName, string lastName, string eyeColor, int age)
         {
             this.firstName = firstName;
@@ -26,13 +38,13 @@ namespace Classes
         //member
         public void IntroduceMySelf()
         {
-            if (age == 1)
+            if (age != 0)
             {
-                Console.WriteLine("My name is {0} {1} and my color of hairs is {2} and year {3} old", firstName, lastName, eyeColor, age);
+                Console.WriteLine("My name is {0} {1} and my color of hairs is {2} and years {3} old", firstName, lastName, eyeColor, age);
             }
             else
             {
-                Console.WriteLine("My name is {0} {1} and my color of hairs is {2} and years {3} old", firstName, lastName, eyeColor, age);
+                Console.WriteLine("My name is {0} {1} and my color of hairs is {2} ", firstName, lastName, eyeColor);
             }
         }
 
