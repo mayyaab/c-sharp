@@ -4,7 +4,7 @@ using System.Text;
 
 namespace List1
 {
-    class List
+    public class List
     {
         private Node firstElement;
 
@@ -18,10 +18,10 @@ namespace List1
 
             firstElement = addElement;
         }
-        
+
         public int GetSize()
         {
-            int index=0;
+            int index = 0;
             //initilizer; conditioner; itarator
             for (var element = firstElement; element != null; element = element.next)
             {
@@ -86,7 +86,7 @@ namespace List1
             {
                 for (int currentIndex = 0; currentIndex < index - 1; currentIndex++)
                 {
-                    
+
                     currentElement = currentElement.next;
                 }
                 currentElement.next = currentElement.next.next;
@@ -95,7 +95,7 @@ namespace List1
 
         public void PrintList()
         {
-            for (Node currentNode = firstElement; currentNode != null; currentNode=currentNode.next)
+            for (Node currentNode = firstElement; currentNode != null; currentNode = currentNode.next)
             {
                 Console.WriteLine(currentNode.data);
             }
