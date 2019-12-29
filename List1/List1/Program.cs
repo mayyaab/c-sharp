@@ -12,17 +12,8 @@ namespace List1
 
             List myList1 = new List();
 
-
-
+            myList1.AddNElement(1, 123);
             myList1.PrintList();
-            Console.WriteLine("_____");
-            myList1.DeleteNElement(0);
-            myList1.PrintList();
-
-
-
-
-
             Console.ReadLine();
 
 

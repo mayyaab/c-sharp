@@ -33,16 +33,15 @@ namespace List1
             return index;
         }
 
-
         public void AddNElement(int index, int data)
         {
             if (index < 0)
             {
-                throw new Exception("Index is negative");
+                throw new IndexOutOfRangeException("Index is negative");
             }
-            if (index > GetSize())
+            if (firstElement.next == null)
             {
-                throw new Exception("Index is bigger than list size");
+                throw new IndexOutOfRangeException("Index is bigger than list size");
             }
             Node addElement = new Node();
             addElement.data = data;
@@ -58,6 +57,10 @@ namespace List1
                 {
                     currentElement = currentElement.next;
                 }
+                if (currentElement.next == null)
+                {
+                    throw new IndexOutOfRangeException("Index is bigger than list size");
+                }
                 addElement.next = currentElement.next;
                 currentElement.next = addElement;
             }
@@ -66,18 +69,19 @@ namespace List1
         public void DeleteNElement(int index)
         {
             Node currentElement = firstElement;
-            /*if (firstElement == null)
+            if (firstElement == null)
             {
-                throw new Exception("No element to delete");
-            }*/
+                throw new IndexOutOfRangeException("No element to delete");
+            }
             if (index < 0)
             {
-                throw new Exception("Index is negative");
+                throw new IndexOutOfRangeException("Index is negative");
             }
-            if (index >= GetSize())
+            /*if (index >= GetSize())
             {
                 throw new Exception("Index is bigger than list size");
-            }
+            }*/
+            
             if (index == 0)
             {
                 firstElement = firstElement.next;
@@ -88,6 +92,10 @@ namespace List1
                 {
 
                     currentElement = currentElement.next;
+                }
+                if (currentElement.next == null)
+                {
+                    throw new IndexOutOfRangeException("Index is bigger than list size");
                 }
                 currentElement.next = currentElement.next.next;
             }
@@ -118,6 +126,31 @@ namespace List1
                 firstElement = firstElement.next;
             }
 
+        }
+
+        public int GetValueOfElement(int index)
+        {
+            if (index < 0)
+            {
+                throw new IndexOutOfRangeException("Element can not be negative");
+            }
+            var currentElement = firstElement;
+            if (firstElement == null)
+            {
+                throw new IndexOutOfRangeException("Index is bigger than list size");
+            }
+            for (int currentIndex = 0; currentIndex < index; currentIndex++)
+            {
+                
+                currentElement = currentElement.next;
+                if (currentElement == null)
+                {
+                    throw new IndexOutOfRangeException("Index is bigger than list size");
+                }
+
+            }
+            
+            return currentElement.data;
         }
 
     }
