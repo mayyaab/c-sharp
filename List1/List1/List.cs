@@ -153,5 +153,31 @@ namespace List1
             return currentElement.data;
         }
 
+        public void DeleteElementByValue(int data)
+        {
+            if (firstElement == null)
+            {
+                throw new IndexOutOfRangeException("No element to delete");
+            }
+            Node currentElement = firstElement;
+
+
+
+                for (int currentIndex = 0; currentElement.next != null; currentIndex++)
+                { 
+                    
+
+                    if (currentElement.next.data == data)
+                    {
+                        currentElement.next = currentElement.next.next;
+                    }
+                    else
+                    {
+                        currentElement = currentElement.next;
+                    }
+                }
+            
+        }
+
     }
 }
