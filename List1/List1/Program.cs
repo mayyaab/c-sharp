@@ -13,12 +13,13 @@ namespace List1
             List myList1 = new List();
             myList1.AddElement(4);
             myList1.AddElement(3);
-            myList1.AddElement(4);
-            myList1.AddElement(0);
+            myList1.AddElement(2);
+            myList1.AddElement(1);
+
 
             myList1.PrintList();
             Console.WriteLine("______");
-            myList1.DeleteElementByValue(0);
+            myList1.DeleteElementByValue(1);
             myList1.PrintList();
             Console.ReadLine();
 

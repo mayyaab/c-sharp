@@ -39,10 +39,7 @@ namespace List1
             {
                 throw new IndexOutOfRangeException("Index is negative");
             }
-            if (firstElement.next == null)
-            {
-                throw new IndexOutOfRangeException("Index is bigger than list size");
-            }
+            
             Node addElement = new Node();
             addElement.data = data;
             if (index == 0)
@@ -55,9 +52,13 @@ namespace List1
                 Node currentElement = firstElement;
                 for (int currentIndex = 0; currentIndex < index - 1; currentIndex++)
                 {
+                    if (currentElement == null)
+                    {
+                        throw new IndexOutOfRangeException("Index is bigger than list size");
+                    }
                     currentElement = currentElement.next;
                 }
-                if (currentElement.next == null)
+                if (currentElement == null)
                 {
                     throw new IndexOutOfRangeException("Index is bigger than list size");
                 }
@@ -77,11 +78,6 @@ namespace List1
             {
                 throw new IndexOutOfRangeException("Index is negative");
             }
-            /*if (index >= GetSize())
-            {
-                throw new Exception("Index is bigger than list size");
-            }*/
-            
             if (index == 0)
             {
                 firstElement = firstElement.next;
@@ -90,7 +86,6 @@ namespace List1
             {
                 for (int currentIndex = 0; currentIndex < index - 1; currentIndex++)
                 {
-
                     currentElement = currentElement.next;
                 }
                 if (currentElement.next == null)
@@ -147,37 +142,24 @@ namespace List1
                 {
                     throw new IndexOutOfRangeException("Index is bigger than list size");
                 }
-
             }
-            
             return currentElement.data;
         }
 
         public void DeleteElementByValue(int data)
         {
-            if (firstElement == null)
-            {
-                throw new IndexOutOfRangeException("No element to delete");
-            }
             Node currentElement = firstElement;
-
-
-
-                for (int currentIndex = 0; currentElement.next != null; currentIndex++)
-                { 
-                    
-
-                    if (currentElement.next.data == data)
-                    {
-                        currentElement.next = currentElement.next.next;
-                    }
-                    else
-                    {
-                        currentElement = currentElement.next;
-                    }
+            for (int currentIndex = 0; currentElement.next != null; currentIndex++)
+            {
+                if (currentElement.next.data == data)
+                {
+                    currentElement.next = currentElement.next.next;
                 }
-            
+                else
+                {
+                    currentElement = currentElement.next;
+                }
+            }
         }
-
     }
 }

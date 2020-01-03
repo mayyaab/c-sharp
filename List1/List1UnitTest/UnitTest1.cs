@@ -94,7 +94,7 @@ namespace List1UnitTest
             list.AddElement(124);
             var res = list.GetSize();
             Assert.AreEqual(2, res);
-            list.AddNElement(1,125);
+            list.AddNElement(1, 125);
             res = list.GetSize();
             Assert.AreEqual(3, res);
         }
@@ -103,8 +103,10 @@ namespace List1UnitTest
         {
             List list = new List();
             list.AddElement(123);
-            Assert.ThrowsException<IndexOutOfRangeException>(() => list.AddNElement(2,1234));
+            Assert.ThrowsException<IndexOutOfRangeException>(() => list.AddNElement(2, 1234));
         }
+
+
 
         [TestMethod]
         public void TestDeleteElement_11()
@@ -122,6 +124,7 @@ namespace List1UnitTest
             Assert.AreEqual(4, res);
         }
 
+        
 
 
 
