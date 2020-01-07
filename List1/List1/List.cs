@@ -22,7 +22,12 @@ namespace List1
         public int GetSize()
         {
             int index = 0;
+
             //initilizer; conditioner; itarator
+            /*if (firstElement == null)
+            {
+                return 0;
+            }*/
             for (var element = firstElement; element != null; element = element.next)
             {
                 index++;
@@ -39,7 +44,7 @@ namespace List1
             {
                 throw new IndexOutOfRangeException("Index is negative");
             }
-            
+
             Node addElement = new Node();
             addElement.data = data;
             if (index == 0)
@@ -136,7 +141,7 @@ namespace List1
             }
             for (int currentIndex = 0; currentIndex < index; currentIndex++)
             {
-                
+
                 currentElement = currentElement.next;
                 if (currentElement == null)
                 {
@@ -148,7 +153,17 @@ namespace List1
 
         public void DeleteElementByValue(int data)
         {
+            if (IsEmpty()) 
+            { 
+                return; 
+            }
+
             Node currentElement = firstElement;
+            if (currentElement.data == data)
+            {
+                firstElement = firstElement.next;
+            }
+
             for (int currentIndex = 0; currentElement.next != null; currentIndex++)
             {
                 if (currentElement.next.data == data)
@@ -160,6 +175,82 @@ namespace List1
                     currentElement = currentElement.next;
                 }
             }
+        }
+
+        public int GetIndexByValue(int data)
+        {
+            Node currentElement = firstElement;
+            for (int currentIndex = 0; currentElement != null; currentIndex++)
+            {
+                if (currentElement.data == data)
+                {
+                    return currentIndex;
+                }
+                else
+                {
+                    currentElement = currentElement.next;
+                }
+            }
+            return -1;
+        }
+
+        public bool IsEmpty()
+        {
+            return firstElement == null;
+        }
+
+        public void DeleteElementByValueIfValueKnown(int data)
+        {
+            int index = 0;
+            while (true) // for (;;) // do {} while (true)
+            {
+                index = GetIndexByValue(data);
+                if (index == -1)
+                {
+                    return;
+                }
+                DeleteNElement(index);
+            }
+        }
+
+        public int ReturnTheBiggestValueInTheList()
+        {
+            if (firstElement == null)
+            {
+                throw new ArgumentOutOfRangeException("No element in the list");
+            }
+            Node currentElement = firstElement;
+            int max = currentElement.data;
+
+            while (currentElement != null)
+            {
+                if (currentElement.data >= max)
+                {
+                    max = currentElement.data;
+                }
+                currentElement = currentElement.next;
+            }
+            return max;
+        }
+
+        public int ReturnTheMinValueInTheList()
+        {
+            if (firstElement == null)
+            {
+                throw new ArgumentOutOfRangeException("No element in the list");
+            }
+            Node currentElement = firstElement;
+            int min = currentElement.data;
+
+            while (currentElement != null)
+            {
+                if (currentElement.data <= min)
+                {
+                    min = currentElement.data;
+                }
+                currentElement = currentElement.next;
+            }
+            return min;
         }
     }
 }

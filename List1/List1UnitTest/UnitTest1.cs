@@ -35,7 +35,6 @@ namespace List1UnitTest
             List list = new List();
             list.AddElement(10);
             list.AddElement(11);
-
             var value = 0;
             Assert.ThrowsException<IndexOutOfRangeException>(() => value = list.GetValueOfElement(2));
         }
@@ -45,7 +44,6 @@ namespace List1UnitTest
         {
             List list = new List();
             list.AddElement(10);
-
             var value = 0;
             Assert.ThrowsException<IndexOutOfRangeException>(() => value = list.GetValueOfElement(-1));
         }
@@ -98,6 +96,7 @@ namespace List1UnitTest
             res = list.GetSize();
             Assert.AreEqual(3, res);
         }
+
         [TestMethod]
         public void TestAddElementIsBiggerThenListSize()
         {
@@ -105,8 +104,6 @@ namespace List1UnitTest
             list.AddElement(123);
             Assert.ThrowsException<IndexOutOfRangeException>(() => list.AddNElement(2, 1234));
         }
-
-
 
         [TestMethod]
         public void TestDeleteElement_11()
@@ -124,9 +121,88 @@ namespace List1UnitTest
             Assert.AreEqual(4, res);
         }
 
-        
+        [TestMethod]
+        public void TestDeleteElementByValueInEmptyList()
+        {
+            List list = new List();
+            var res = list.GetSize();
+            Assert.AreEqual(0, res);
+            list.DeleteElementByValue(11);
+            res = list.GetSize();
+            Assert.AreEqual(0, res);
+        }
 
+        [TestMethod]
+        public void TestDeleteElementByValueNotInTheList()
+        {
+            List list = new List();
+            list.AddElement(1);
+            list.AddElement(2);
+            list.AddElement(1);
+            list.AddElement(5);
+            var res = list.GetSize();
+            Assert.AreEqual(4, res);
+            list.DeleteElementByValue(555);
+            res = list.GetSize();
+            Assert.AreEqual(4, res);
+        }
 
+        [TestMethod]
+        public void TestDeleteElementIfValueIsKnown_11()
+        {
+            List list = new List();
+            list.AddElement(1);
+            list.AddElement(2);
+            list.AddElement(1);
+            list.AddElement(11);
+            list.AddElement(5);
+            var res = list.GetSize();
+            Assert.AreEqual(5, res);
+            list.DeleteElementByValueIfValueKnown(11);
+            res = list.GetSize();
+            Assert.AreEqual(4, res);
+        }
 
+        [TestMethod]
+        public void TestDeleteElementByValueIfValueIsKnownInEmptyList()
+        {
+            List list = new List();
+            var res = list.GetSize();
+            Assert.AreEqual(0, res);
+            list.DeleteElementByValueIfValueKnown(11);
+            res = list.GetSize();
+            Assert.AreEqual(0, res);
+        }
+
+        [TestMethod]
+        public void TestDeleteElementByValueIsKnownNotInTheList()
+        {
+            List list = new List();
+            list.AddElement(1);
+            list.AddElement(2);
+            list.AddElement(1);
+            list.AddElement(5);
+            var res = list.GetSize();
+            Assert.AreEqual(4, res);
+            list.DeleteElementByValue(555);
+            res = list.GetSize();
+            Assert.AreEqual(4, res);
+        }
+
+        [TestMethod]
+        public void TestDeleteTwoElementIfValueIsKnown()
+        {
+            List list = new List();
+            list.AddElement(1);
+            list.AddElement(2);
+            list.AddElement(1);
+            list.AddElement(11);
+            list.AddElement(5);
+            var res = list.GetSize();
+            Assert.AreEqual(5, res);
+            list.DeleteElementByValueIfValueKnown(1);
+            res = list.GetSize();
+            Assert.AreEqual(3, res);
+        }
     }
 }

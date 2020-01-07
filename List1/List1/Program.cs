@@ -7,29 +7,15 @@ namespace List1
     {
         static void Main(string[] args)
         {
-
-
-
             List myList1 = new List();
-            myList1.AddElement(4);
+            myList1.AddElement(-1);
+            myList1.AddElement(8);
             myList1.AddElement(3);
-            myList1.AddElement(2);
-            myList1.AddElement(1);
-
-
+            myList1.AddElement(-122);
             myList1.PrintList();
             Console.WriteLine("______");
-            myList1.DeleteElementByValue(1);
-            myList1.PrintList();
+            Console.WriteLine(myList1.ReturnTheMinValueInTheList()); 
             Console.ReadLine();
-
-
-
-
-
-
-
-
         }
     }
 }
