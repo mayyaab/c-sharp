@@ -4,6 +4,13 @@ using System.Text;
 
 namespace List1
 {
+    public enum SortingOrder
+    {
+        Unsorted,
+        Ascending,
+        Descending
+    }
+
     public class List
     {
         private Node firstElement;
@@ -153,9 +160,9 @@ namespace List1
 
         public void DeleteElementByValue(int data)
         {
-            if (IsEmpty()) 
-            { 
-                return; 
+            if (IsEmpty())
+            {
+                return;
             }
 
             Node currentElement = firstElement;
@@ -251,6 +258,76 @@ namespace List1
                 currentElement = currentElement.next;
             }
             return min;
+        }
+
+        public bool IsSymmetric()
+        {
+            int size = GetSize();
+
+            for (int i = 0; i < size / 2; i++)
+            {
+                int leftSideIndex = i;
+                int rightSideIndex = size - 1 - i;
+
+                int leftSideValue = GetValueOfElement(leftSideIndex);
+                int rightSideValue = GetValueOfElement(rightSideIndex);
+
+                if (rightSideValue != leftSideValue)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool IsSortedAscending()
+        {
+            if (firstElement == null)
+            {
+                return true;
+            }
+            
+            for (Node currentElement = firstElement; currentElement.next != null; currentElement = currentElement.next )
+            {
+                if (currentElement.data > currentElement.next.data)
+                {
+                    return false;
+                }    
+            }
+            return true;
+        }
+
+        public bool IsSortedDescending()
+        {
+            if (firstElement == null)
+            {
+                return true;
+            }
+
+            for (Node currentElement = firstElement; currentElement.next != null; currentElement = currentElement.next)
+            {
+                if (currentElement.data < currentElement.next.data)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public SortingOrder IncreasingOrDecrising()
+        {
+            if (IsSortedAscending())
+            {
+                return SortingOrder.Ascending;
+            }
+            else if (IsSortedDescending())
+            {
+                return SortingOrder.Descending;
+            }
+            else
+            {
+                return SortingOrder.Unsorted;
+            }
         }
     }
 }
