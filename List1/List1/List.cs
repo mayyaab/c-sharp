@@ -316,6 +316,9 @@ namespace List1
 
         public SortingOrder IncreasingOrDecrising()
         {
+
+           // return IsSortedAscending() ? SortingOrder.Ascending : IsSortedDescending() ? SortingOrder.Descendin : SortingOrder.Unsorted;
+
             if (IsSortedAscending())
             {
                 return SortingOrder.Ascending;
@@ -328,6 +331,64 @@ namespace List1
             {
                 return SortingOrder.Unsorted;
             }
+        }
+
+        public List Reverse()
+        {
+            List listSecond = new List();
+
+            for (Node currentElemenet = firstElement; currentElemenet != null; currentElemenet = currentElemenet.next)
+            {
+                listSecond.AddElement(currentElemenet.data);
+            }
+            return listSecond;
+        }
+
+        public bool IsEqual(List list)
+        {
+            Node currentElement = firstElement;
+
+            for (int i = 0; currentElement != null;i++)
+            {
+                if(currentElement.data != list.GetValueOfElement(i))
+                {
+                    return false;
+                }
+                 currentElement = currentElement.next;
+            }
+            return true;
+        }
+
+        public bool IsEqual2(List list)
+        {
+          
+            Node currentElement = this.firstElement;
+            Node currentElemntList = list.firstElement;
+
+            while (currentElement != null && currentElemntList != null)
+            {
+                if (currentElement.data != currentElemntList.data)
+                {
+                    return false;
+                }
+                currentElement = currentElement.next;
+                currentElemntList = currentElemntList.next;
+            }
+            if (list.GetSize() != this.GetSize())
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsSemetricSecondWay()
+        {
+            List listSemetric = this.Reverse();
+            if (listSemetric.IsEqual(this))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

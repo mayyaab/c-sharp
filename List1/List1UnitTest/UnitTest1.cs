@@ -204,5 +204,38 @@ namespace List1UnitTest
             res = list.GetSize();
             Assert.AreEqual(3, res);
         }
+
+
+        [TestMethod]
+        public void TestReverse()
+        {
+            List list = new List();
+            list.AddElement(1);
+            list.AddElement(2);
+            list.AddElement(3);
+            var res = list.GetSize();
+            Assert.AreEqual(3, res);
+            List newList = list.Reverse();
+
+            res = newList.GetSize();
+            Assert.AreEqual(3, res);
+
+            Assert.AreEqual(3, list.GetValueOfElement(0));
+            Assert.AreEqual(2, list.GetValueOfElement(1));
+            Assert.AreEqual(1, list.GetValueOfElement(2));
+        }
+
+        [TestMethod]
+        public void TestReverseEmptyList()
+        {
+            List list = new List();
+            var res = list.GetSize();
+            Assert.AreEqual(0, res);
+            List newList = list.Reverse();
+
+            res = newList.GetSize();
+            Assert.AreEqual(0, res);
+
+        }
     }
 }
