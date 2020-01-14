@@ -205,7 +205,6 @@ namespace List1UnitTest
             Assert.AreEqual(3, res);
         }
 
-
         [TestMethod]
         public void TestReverse()
         {
@@ -236,6 +235,85 @@ namespace List1UnitTest
             res = newList.GetSize();
             Assert.AreEqual(0, res);
 
+        }
+
+        [TestMethod]
+        public void TestListstsAreEquel()
+        {
+            List myList1 = new List();
+            myList1.AddElement(3);
+            myList1.AddElement(2);
+            myList1.AddElement(1);
+            var res = myList1.GetSize();
+            Assert.AreEqual(3, res);
+
+            List newList = new List();
+            newList.AddElement(3);
+            newList.AddElement(2);
+            newList.AddElement(1);
+            res = newList.GetSize();
+            Assert.AreEqual(3, res);
+
+            Assert.IsTrue(myList1.IsEqual2(newList));
+        }
+
+        [TestMethod]
+        public void TestAreEquelIfSecondListIsBigger()
+        {
+            List myList1 = new List();
+            myList1.AddElement(3);
+            myList1.AddElement(2);
+            myList1.AddElement(1);
+            var res = myList1.GetSize();
+            Assert.AreEqual(3, res);
+
+            List newList = new List();
+            newList.AddElement(3);
+            newList.AddElement(3);
+            newList.AddElement(2);
+            newList.AddElement(1);
+            res = newList.GetSize();
+            Assert.AreEqual(4, res);
+
+            Assert.IsFalse(myList1.IsEqual2(newList));
+        }
+
+        [TestMethod]
+        public void TestAreEquelIfFirstListIsBigger()
+        {
+            List myList1 = new List();
+            myList1.AddElement(3);
+            myList1.AddElement(3);
+            myList1.AddElement(2);
+            myList1.AddElement(1);
+            var res = myList1.GetSize();
+            Assert.AreEqual(4, res);
+
+            List newList = new List();
+            newList.AddElement(3);
+            newList.AddElement(2);
+            newList.AddElement(1);
+            res = newList.GetSize();
+            Assert.AreEqual(3, res);
+
+            Assert.IsFalse(myList1.IsEqual2(newList));
+        }
+
+        [TestMethod]
+        public void TestAreEquelIfOneListIsEmpty()
+        {
+            List myList1 = new List();
+            var res = myList1.GetSize();
+            Assert.AreEqual(0, res);
+
+            List newList = new List();
+            newList.AddElement(3);
+            newList.AddElement(2);
+            newList.AddElement(1);
+            res = newList.GetSize();
+            Assert.AreEqual(3, res);
+
+            Assert.IsFalse(myList1.IsEqual2(newList));
         }
     }
 }

@@ -374,7 +374,8 @@ namespace List1
                 currentElement = currentElement.next;
                 currentElemntList = currentElemntList.next;
             }
-            if (list.GetSize() != this.GetSize())
+            if ((currentElement != null && currentElemntList == null) || 
+                (currentElement == null && currentElemntList != null))
             {
                 return false;
             }
