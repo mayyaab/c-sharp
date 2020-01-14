@@ -286,13 +286,13 @@ namespace List1
             {
                 return true;
             }
-            
-            for (Node currentElement = firstElement; currentElement.next != null; currentElement = currentElement.next )
+
+            for (Node currentElement = firstElement; currentElement.next != null; currentElement = currentElement.next)
             {
                 if (currentElement.data > currentElement.next.data)
                 {
                     return false;
-                }    
+                }
             }
             return true;
         }
@@ -317,7 +317,7 @@ namespace List1
         public SortingOrder IncreasingOrDecrising()
         {
 
-           // return IsSortedAscending() ? SortingOrder.Ascending : IsSortedDescending() ? SortingOrder.Descendin : SortingOrder.Unsorted;
+            // return IsSortedAscending() ? SortingOrder.Ascending : IsSortedDescending() ? SortingOrder.Descendin : SortingOrder.Unsorted;
 
             if (IsSortedAscending())
             {
@@ -348,20 +348,20 @@ namespace List1
         {
             Node currentElement = firstElement;
 
-            for (int i = 0; currentElement != null;i++)
+            for (int i = 0; currentElement != null; i++)
             {
-                if(currentElement.data != list.GetValueOfElement(i))
+                if (currentElement.data != list.GetValueOfElement(i))
                 {
                     return false;
                 }
-                 currentElement = currentElement.next;
+                currentElement = currentElement.next;
             }
             return true;
         }
 
         public bool IsEqual2(List list)
         {
-          
+
             Node currentElement = this.firstElement;
             Node currentElemntList = list.firstElement;
 
@@ -387,6 +387,36 @@ namespace List1
             if (listSemetric.IsEqual(this))
             {
                 return true;
+            }
+            return false;
+        }
+
+        public bool IsSortedAscendingIfDeleteOneNode()
+        {
+            if (firstElement == null)
+            {
+                return true;
+            }
+            Node currentElement = firstElement;
+            if (IsSortedAscending())
+            {
+                Console.WriteLine("Already sorted");
+                return false;
+            }
+            for (int i = 0; currentElement.next != null; i++)
+            {
+                if (currentElement.data > currentElement.next.data)
+                {
+                    int elementValue = GetValueOfElement(i);
+                    DeleteNElement(i);
+
+                    if (IsSortedAscending())
+                    {
+                        Console.WriteLine("Need to delete element {0} with value {1}", i+1, elementValue);
+                        return true;
+                    }
+                }
+                currentElement = currentElement.next;
             }
             return false;
         }
