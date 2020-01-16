@@ -361,6 +361,10 @@ namespace List1
 
         public bool IsEqual2(List list)
         {
+            if (list  == null)
+            {
+                throw new ArgumentNullException("Argument null");
+            }
 
             Node currentElement = this.firstElement;
             Node currentElemntList = list.firstElement;
@@ -374,12 +378,7 @@ namespace List1
                 currentElement = currentElement.next;
                 currentElemntList = currentElemntList.next;
             }
-            if ((currentElement != null && currentElemntList == null) || 
-                (currentElement == null && currentElemntList != null))
-            {
-                return false;
-            }
-            return true;
+            return (currentElement == null && currentElemntList == null);
         }
 
         public bool IsSemetricSecondWay()
