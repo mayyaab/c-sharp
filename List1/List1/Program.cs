@@ -15,7 +15,8 @@ namespace List1
             myList1.AddElement(2);
             myList1.PrintList();
             Console.WriteLine("______");
-            Console.WriteLine(myList1.DistinctElementsInTheList()); 
+            myList1.UniqElementsInTheList().PrintList();
+            
             Console.ReadLine();
         }
     }

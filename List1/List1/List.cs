@@ -446,10 +446,32 @@ namespace List1
             return false;
         }
 
-       /* public int DistinctElementsInTheList()
+        public int DistinctElementsInTheList()
         {
-           
-        }*/
+            int count = 0;
+            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            {
+                if (CountSpecificElement(currentElement.data) == 1)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public List UniqElementsInTheList()
+        {
+            List UniqList = new List();
+            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            {
+                if (UniqList.IsPresentedInTheList(currentElement.data) == false)
+                {
+                    UniqList.AddElement(currentElement.data);
+                }
+            }
+            return UniqList;
+
+        }
 
     }
 }
