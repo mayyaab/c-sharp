@@ -420,5 +420,36 @@ namespace List1
             }
             return false;
         }
+
+        public int CountSpecificElement(int data)
+        {
+            int count = 0;
+            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            {
+                if (data == currentElement.data)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public bool IsPresentedInTheList(int data)
+        {
+            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            {
+                if (data == currentElement.data)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+       /* public int DistinctElementsInTheList()
+        {
+           
+        }*/
+
     }
 }
