@@ -220,13 +220,27 @@ namespace List1
             }
         }
 
-        public int ReturnTheBiggestValueInTheList()
+        public int MaxElement()
+        {
+            return MaxElement(0);
+        }
+
+        public int MaxElement(int startingIndex)
         {
             if (firstElement == null)
             {
                 throw new ArgumentOutOfRangeException("No element in the list");
             }
             Node currentElement = firstElement;
+            for (int i = 0; i != startingIndex; i++)
+            {
+                if (currentElement == null)
+                {
+                    throw new IndexOutOfRangeException("Index is bigger than list");
+                }
+                currentElement = currentElement.next;
+            }
+
             int max = currentElement.data;
 
             while (currentElement != null)
@@ -240,7 +254,7 @@ namespace List1
             return max;
         }
 
-        public int ReturnTheMinValueInTheList()
+        public int MinElement()
         {
             if (firstElement == null)
             {
@@ -258,6 +272,33 @@ namespace List1
                 currentElement = currentElement.next;
             }
             return min;
+        }
+
+        public Node MinElementReturnNode()
+        {
+            return MinElementReturnNode(firstElement);
+        }
+
+        public Node MinElementReturnNode(Node startingNode)
+        {
+            if (firstElement == null)
+            {
+                throw new ArgumentOutOfRangeException("No element in the list");
+            }
+
+            Node currentElement = startingNode;
+            
+            Node minNode = currentElement;
+
+            while (currentElement != null)
+            {
+                if (currentElement.data <= minNode.data)
+                {
+                    minNode = currentElement;
+                }
+                currentElement = currentElement.next;
+            }
+            return minNode;
         }
 
         public bool IsSymmetric()
@@ -436,7 +477,12 @@ namespace List1
 
         public bool IsPresentedInTheList(int data)
         {
-            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            return IsPresentedInTheList(data, null);
+        }
+
+        private bool IsPresentedInTheList(int data, Node tail)
+        {
+            for (Node currentElement = firstElement; currentElement != tail; currentElement = currentElement.next)
             {
                 if (data == currentElement.data)
                 {
@@ -473,5 +519,65 @@ namespace List1
 
         }
 
+        public int DistinctElementsInTheListV2()
+        {
+            int count = 0;
+            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            {
+                if (!IsPresentedInTheList(currentElement.data, currentElement))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public int DistinctElementsInTheListV3()
+        {
+            Dictionary<int, bool> distinct = new Dictionary<int, bool>();
+            int count = 0;
+            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            {
+                if (!distinct.ContainsKey(currentElement.data))
+                {
+                    count++;
+                    distinct[currentElement.data] = true;
+                }
+            }
+            return count;
+        }
+
+        public void SortList()
+        {
+            if (firstElement == null)
+            {
+                throw new IndexOutOfRangeException("No element to sort");
+            }
+            List newList = new List();
+
+            for (int i = 0; !this.IsSortedAscending(); i++)    
+            {
+                int n = this.MaxElement();
+                newList.AddElement(n);
+                this.DeleteElementByValue(n);                
+            }
+            firstElement.next = newList.firstElement;
+        }
+
+        public void Swap(Node left, Node right)
+        {
+            int data = left.data;
+            left.data = right.data;
+            right.data = data;
+        }
+
+        public void SortListV2()
+        {
+            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            {
+                Node right = MinElementReturnNode(currentElement);
+                Swap(currentElement, right);
+            }
+        }
     }
 }
