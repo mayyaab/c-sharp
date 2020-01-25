@@ -281,7 +281,7 @@ namespace List1
 
         public Node MinElementReturnNode(Node startingNode)
         {
-            if (firstElement == null)
+            if (startingNode == null)
             {
                 throw new ArgumentOutOfRangeException("No element in the list");
             }

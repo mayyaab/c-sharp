@@ -24,9 +24,9 @@ namespace List1
             //Console.WriteLine(myList1.DistinctElementsInTheListV3());
             //Console.WriteLine(myList1.MaxElement());
             //Console.WriteLine(myList1.MinElement());
-            //Console.WriteLine(myList1.MinElementReturnNode().data);
-            myList1.SortListV2();
-            myList1.PrintList();
+            Console.WriteLine(myList1.MinElementReturnNode(null));
+            //myList1.SortListV2();
+            //myList1.PrintList();
             Console.ReadLine();
         }
     }
