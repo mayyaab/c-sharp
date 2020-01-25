@@ -573,6 +573,10 @@ namespace List1
 
         public void SortListV2()
         {
+            if (firstElement == null)
+            {
+                throw new ArgumentOutOfRangeException("No element in the list");
+            }
             for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
             {
                 Node right = MinElementReturnNode(currentElement);
