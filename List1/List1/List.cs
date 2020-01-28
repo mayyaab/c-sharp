@@ -301,6 +301,35 @@ namespace List1
             return minNode;
         }
 
+        public Node MinElementPreviousReturnNode()
+        {
+            return MinElementPreviousReturnNode(firstElement);
+        }
+
+        public Node MinElementPreviousReturnNode(Node startingNode)
+        {
+            if (startingNode == null)
+            {
+                throw new ArgumentOutOfRangeException("No element in the list");
+            }
+
+            Node currentElement = startingNode;
+
+            Node minNode = currentElement;
+            Node minNodePrevious = currentElement;
+
+            while (currentElement.next != null)
+            {
+                if (currentElement.next.data <= minNode.data)
+                {
+                    minNode = currentElement.next;
+                    minNodePrevious = currentElement;
+                }
+                currentElement = currentElement.next;
+            }
+            return minNodePrevious;
+        }
+
         public bool IsSymmetric()
         {
             int size = GetSize();
@@ -571,6 +600,15 @@ namespace List1
             right.data = data;
         }
 
+        public void SwapNodes(Node left, Node right)
+        {
+            firstElement = left.next;
+            
+            left = right.next.next;
+            right.next = firstElement;
+            right = left;
+        }
+
         public void SortListV2()
         {
             if (firstElement == null)
@@ -581,6 +619,19 @@ namespace List1
             {
                 Node right = MinElementReturnNode(currentElement);
                 Swap(currentElement, right);
+            }
+        }
+
+        public void SortListNodes()
+        {
+            if (firstElement == null)
+            {
+                throw new ArgumentOutOfRangeException("No element in the list");
+            }
+            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            {
+                Node right = MinElementReturnNode(currentElement);
+                SwapNodes(currentElement, right);
             }
         }
     }
