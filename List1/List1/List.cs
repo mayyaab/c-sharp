@@ -17,13 +17,13 @@ namespace List1
 
         public void AddElement(int data)
         {
-            var addElement = new Node
-            {
-                data = data,
-                next = firstElement
-            };
+            AddNode(new Node() { data = data });
+        }
 
-            firstElement = addElement;
+        public void AddNode(Node addedNode)
+        {
+            addedNode.next = firstElement;
+            firstElement = addedNode;
         }
 
         public int GetSize()
@@ -301,22 +301,17 @@ namespace List1
             return minNode;
         }
 
-        public Node MinElementPreviousReturnNode()
+        public Node RemoveMinElement()
         {
-            return MinElementPreviousReturnNode(firstElement);
-        }
-
-        public Node MinElementPreviousReturnNode(Node startingNode)
-        {
-            if (startingNode == null)
+            if (firstElement == null)
             {
                 throw new ArgumentOutOfRangeException("No element in the list");
             }
 
-            Node currentElement = startingNode;
+            Node currentElement = firstElement;
 
-            Node minNode = currentElement;
-            Node minNodePrevious = currentElement;
+            Node minNode = firstElement;
+            Node minNodePrevious = null;
 
             while (currentElement.next != null)
             {
@@ -327,7 +322,16 @@ namespace List1
                 }
                 currentElement = currentElement.next;
             }
-            return minNodePrevious;
+
+            if (minNodePrevious == null)
+            {
+                firstElement = firstElement.next;
+            }
+            else
+            {
+                minNodePrevious.next = minNodePrevious.next.next;
+            }
+            return minNode;
         }
 
         public bool IsSymmetric()
@@ -628,11 +632,14 @@ namespace List1
             {
                 throw new ArgumentOutOfRangeException("No element in the list");
             }
-            for (Node currentElement = firstElement; currentElement != null; currentElement = currentElement.next)
+            List sortedList = new List();
+            
+            while (!IsEmpty())
             {
-                Node right = MinElementReturnNode(currentElement);
-                SwapNodes(currentElement, right);
+                sortedList.AddNode(RemoveMinElement());
+                
             }
+            firstElement = sortedList.firstElement;
         }
     }
 }
