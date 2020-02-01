@@ -10,14 +10,18 @@ namespace List1
         {
 
             DoublyLinkedList doubly = new DoublyLinkedList();
+            doubly.AddElement(13);
             doubly.AddElement(14);
             doubly.AddElement(15);
             doubly.AddElement(16);
+            doubly.AddElement(17);
             doubly.PrintList();
             Console.WriteLine("-----------");
-            doubly.DeleteNElement(null);
+            var a = doubly.GetNodeByIndex(2);
+            doubly.DeleteNElement(a);
             Console.WriteLine("-----------");
             doubly.PrintList();
+            Console.ReadKey();
 
         }
     }
