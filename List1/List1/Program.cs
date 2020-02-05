@@ -17,7 +17,7 @@ namespace List1
             doubly.AddElement(17);
             doubly.PrintList();
             Console.WriteLine("-----------");
-            var a = doubly.GetNodeByIndex(2);
+            var a = doubly.GetNodeByIndex(0);
             doubly.DeleteNElement(a);
             Console.WriteLine("-----------");
             doubly.PrintList();

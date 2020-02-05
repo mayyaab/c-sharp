@@ -12,7 +12,7 @@ namespace List1
             Node2 addedNode = new Node2();
             addedNode.data = data;
             addedNode.next = firstElement;
-            addedNode.prev = null;
+            addedNode.prev = addedNode.next;
             firstElement = addedNode;
         }
 
@@ -59,6 +59,10 @@ namespace List1
             if (index < 0)
             {
                 throw new IndexOutOfRangeException("Index can not be negative");
+            }
+            if (firstElement == null)
+            {
+                throw new IndexOutOfRangeException("Index is bigger than list size");
             }
             var currentElement = firstElement;
             for (int currentIndex = 0; currentIndex < index; currentIndex++)
