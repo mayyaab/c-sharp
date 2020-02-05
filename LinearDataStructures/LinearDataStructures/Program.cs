@@ -9,7 +9,9 @@ namespace LinearDataStructures
     {
         static void Main(string[] args)
         {
-            Exercise1.Ex1();
+            //Exercise1.Ex1();
+            //Exercise2.Ex2();
+            Exercise3.Ex3();
 
         }
     }
