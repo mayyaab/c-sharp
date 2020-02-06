@@ -30,6 +30,7 @@ namespace LinearDataStructures
                     Console.WriteLine("Invalid formt, write again");
                 }
             }
+
             Console.WriteLine("Your input in reversed order");
             while (stack.Count > 0)
             {

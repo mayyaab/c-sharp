@@ -23,6 +23,7 @@ namespace LinearDataStructures
                 {
                     break;
                 }
+
                 try
                 {
                     int elementToAdd = int.Parse(userInput);
@@ -33,12 +34,11 @@ namespace LinearDataStructures
                     else
                     {
                         intList.Add(elementToAdd);
-                    }
-                    
+                    }                    
                 }
                 catch
                 {
-                    Console.WriteLine("Invalid formt, write again");
+                    Console.WriteLine("Invalid format, write again");
                 }
             }
 

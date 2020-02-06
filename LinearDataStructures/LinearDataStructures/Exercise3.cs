@@ -21,6 +21,7 @@ namespace LinearDataStructures
                 {
                     break;
                 }
+
                 try
                 {
                     int elementToAdd = int.Parse(userInput);
