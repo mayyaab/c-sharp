@@ -25,13 +25,33 @@ namespace LinearDataStructures
             intList.Add(1);
             intList.Add(1);
             intList.Add(1);
+
+            List<int> listToPrint = LongestSequenceOfEqual(intList);
+            
+            Console.WriteLine("First list");
+            foreach (int i in intList)
+            {
+                Console.WriteLine(i);
+            }
+
+            Console.WriteLine("New list");
+
+            foreach (int i in listToPrint)
+            {
+                Console.WriteLine(i);
+            }
+
+        }
+
+        private static List<int> LongestSequenceOfEqual(List<int> intList)
+        {
             int start = 0;
             int newStart = 0;
             int length = 1;
-            int maxLength = 1; 
-            for (int i = intList.Count-1; i >= 0; i--)
+            int maxLength = 1;
+            for (int i = intList.Count - 1; i >= 0; i--)
             {
-                
+
                 if (start == intList.ElementAt(i))
                 {
                     length++;
@@ -48,23 +68,12 @@ namespace LinearDataStructures
                 start = intList.ElementAt(i);
             }
             List<int> listToPrint = new List<int>();
-            for (int i = 1; i< maxLength+1; i++)
+            for (int i = 1; i < maxLength + 1; i++)
             {
                 listToPrint.Add(newStart);
             }
-            Console.WriteLine("First list");
-            foreach (int i in intList)
-            {
-                Console.WriteLine(i);
-            }
 
-            Console.WriteLine("New list");
-
-            foreach (int i in listToPrint)
-            {
-                Console.WriteLine(i);
-            }
-
+            return listToPrint;
         }
     }
 }

@@ -20,24 +20,27 @@ namespace LinearDataStructures
             ex5List.Add(-2);
             ex5List.Add(5);
 
+            List<int> positiveList = RemoveNegativeElements(ex5List);
+
+            foreach (int i in positiveList)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        private static List<int> RemoveNegativeElements(List<int> ex5List)
+        {
             List<int> positiveList = new List<int>();
             for (int i = 0; i < ex5List.Count; i++)
             {
                 if (ex5List[i] > 0)
                 {
-                    int toAdd = ex5List.ElementAt(i);
+                    int toAdd = ex5List[i];
                     positiveList.Add(toAdd);
                 }
             }
 
-              
-
-
-                foreach (int i in positiveList)
-            {
-                Console.WriteLine(i);
-            }
-
+            return positiveList;
         }
     }
 }
