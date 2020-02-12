@@ -13,17 +13,37 @@ namespace LinearDataStructures
     {
         public static void Ex8()
         {
-            int[] array = new int[] { 2, 2, 3, 3, 2, 3, 4, 3, 3 };
+            int[] array = new int[] { 2, 2, 3, 1, 2, 3, 4, 3, 3 };
+
             Array.Sort(array);
-            int element = 0;
+            int element = array[0];
             int countElement = 0;
-            for (int i = 0; i < countElement / 2 + 1; i++)
+
+            for (int i = 0; i < array.Length; i++)
             {
-                
 
+                if (array[i] == element)
+                {
+                    countElement++;
+                }
+
+                else
+                {
+                    if (countElement >= array.Length / 2 + 1)
+                    {
+                        Console.WriteLine("The majorant element is {0} , count {1} times", element, countElement);
+                        return;
+                    }
+                    else
+                    {
+                        element = array[i];
+                        countElement = 1;
+                    }
+
+                }
             }
+
+
         }
-
-
     }
 }
