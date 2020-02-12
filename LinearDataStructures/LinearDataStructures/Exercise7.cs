@@ -12,14 +12,15 @@ namespace LinearDataStructures
         public static void Ex7()
 
         {
-            int countUnic = 0;
+            
             int[] array = new int[] { 3, 4, 4, 2, 3, 3, 4, 3, 2 };
             Array.Sort(array);
 
             Array.ForEach(array, Console.WriteLine);
 
             int elementToCaompare = array[0];
-           
+            int countUnic = 0;
+
             for (int i = 0; i < array.Length; i++)
             { 
                 
@@ -28,12 +29,14 @@ namespace LinearDataStructures
                     countUnic++;
 
                 }
-                else {
+                else
+                {
                     Console.WriteLine("{0} element -> {1} times", elementToCaompare, countUnic);
                     elementToCaompare = array[i];
                     countUnic = 1;
                 }
             }
+            Console.WriteLine("{0} element -> {1} times", elementToCaompare, countUnic);
         }
     }
 }
