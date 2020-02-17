@@ -16,8 +16,8 @@ namespace LinearDataStructures
             //Exercise5.Ex5();
             //Exercise6.Ex6();
             //Exercise7.Ex7();
-            Exercise8.Ex8();
-
+            //Exercise8.Ex8();
+            Exercise9.Ex9();
 
         }
     }
