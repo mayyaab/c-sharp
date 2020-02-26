@@ -7,12 +7,11 @@ namespace LinearDataStructures
 {
     /*Write a program that finds in a given array of integers 
      (in the range [0…1000]) how many times each of them occurs.*/
-    class Exercise7
+    class Exercise7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     {
-        public static void Ex7()
+        public static void Ex7()                                                              
 
-        {
-            
+        {        
             int[] array = new int[] { 3, 4, 4, 2, 3, 3, 4, 3, 2 };
             Array.Sort(array);
 
