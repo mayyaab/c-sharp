@@ -14,7 +14,7 @@ namespace Algorithms_CSharp_Course
             //300 milisecons for 1k
             //14 second for 4k
             //1 min 36 sec for 8k 
-            var ints = In.ReadInts("4Kints.txt").ToArray();
+            /*var ints = In.ReadInts("4Kints.txt").ToArray();
 
             var watch = new Stopwatch();
             watch.Start();
@@ -26,7 +26,9 @@ namespace Algorithms_CSharp_Course
             Console.WriteLine($"The number of \"zero-sum\" triplets: {triplets}");
             Console.WriteLine($"Time taken: {watch.Elapsed:g}");
 
-            Console.Read();
+            Console.Read();*/
+
+            //Algorithms_DataStruct_Lib.Sorting.SelectionSort(int[4], 12, 14, 24, 16) ;
         }
     }
 }
