@@ -476,19 +476,6 @@ namespace Algorithms_CSharp_Course.Properties {
         ///Mr. Neigum, poker-faced during the difficult task, manages a 46-second showing.
         ///This, combined with the container division talks, sugges [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string leipzig1m {
-            get {
-                return ResourceManager.GetString("leipzig1m", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A rebel statement sent to Lisbon from Jamba said 86 government soldiers and 13 guerrillas were killed in the fighting that ended Jan. 3. It said the rebel forces sill held Mavinga.
-        ///Authorities last week issued a vacate order for a club in Manhattan and closed another in the Bronx.
-        ///At the first Pan Am bankruptcy hearing, for example, at least five airlines were represented.
-        ///Mr. Neigum, poker-faced during the difficult task, manages a 46-second showing.
-        ///This, combined with the container division talks, sugges [rest of string was truncated]&quot;;.
-        /// </summary>
         internal static string leipzig300k {
             get {
                 return ResourceManager.GetString("leipzig300k", resourceCulture);

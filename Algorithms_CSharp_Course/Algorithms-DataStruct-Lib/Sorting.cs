@@ -19,7 +19,7 @@ namespace Algorithms_DataStruct_Lib
                         largestAt = i;
                     }
                 }
-                Swap(array, largestAt, partIndex);a
+                Swap(array, largestAt, partIndex);
             }
         }
 
