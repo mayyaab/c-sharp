@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace PolymorphismC
+{
+    class M3:BMW
+    {
+        public M3(int hp, string color, string model) : base(hp, color, model)
+        {
+            this.Model = model;
+        }
+
+
+        // sealed - doesn't allowed to override
+        public sealed override void Repair()
+        {
+            base.Repair();
+        }
+    }
+}

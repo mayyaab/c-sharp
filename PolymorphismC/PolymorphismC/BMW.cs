@@ -2,10 +2,16 @@
 
 namespace PolymorphismC
 {
+    // a BMW is a Car
     class BMW:Car
     {
         private string brand = "BMW";
         public string Model { get; set; }
+
+        public BMW()
+        {
+
+        }
 
         public BMW(int hp, string color, string model) : base(hp, color)
         {

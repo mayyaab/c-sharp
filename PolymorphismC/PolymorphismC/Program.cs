@@ -24,11 +24,20 @@ namespace PolymorphismC
             bmwz3.ShowDetails();
             audiA3.ShowDetails();
 
+            bmwz3.SetCarIDInfo(1234, "Mayya");
+            audiA3.SetCarIDInfo(2222, "Anna");
+
+            bmwz3.GetCarIDInfo();
+            audiA3.GetCarIDInfo();
+
             BMW bmwM5 = new BMW(330, "white", "M5");
             bmwM5.ShowDetails();
 
             Car carB = (Car) bmwM5;
             carB.ShowDetails();
+
+            M3 myM3 = new M3(260, "red", "m3 Super Turbo");
+            myM3.Repair();
         }
     }
 }
