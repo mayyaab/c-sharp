@@ -69,7 +69,42 @@ namespace TreesAndGraphs
              return count;
          }
 
+        public int GetAllChildrenCount()
+        {
+            return GetAllChildrenCount(this.root);
+        }
 
+        public void PrintRootsWithKNodes(TreeNode<T> root, int k)
+        {
+            if (this.root == null)
+            {
+                return;
+            }
+
+            TreeNode<T> child = null;
+
+            if (GetAllChildrenCount(root) + 1 == k)
+            {
+                Console.WriteLine(root.Value);
+            }
+                for (int i = 0; i < root.ChildrenCount; i++)
+            {
+                    if (GetAllChildrenCount(root) + 1 == k)
+                {
+                    child = root.GetChild(i);
+
+                    Console.WriteLine(child.Value);
+                }
+                PrintRootsWithKNodes(root.GetChild(i), k);
+            }
+        }
+
+
+        public void PrintRootsWithKNodes(int k)
+        {
+            this.PrintRootsWithKNodes(this.root, k);
+
+        }
 
     }
 }
