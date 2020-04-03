@@ -121,13 +121,13 @@ namespace TreesAndGraphs
                 leaves++;
             }
 
-            if (root.ChildrenCount != 0)
+            else if (root.ChildrenCount != 0)
             {
                 internalVertices++;
             }
+
             for (int i = 0; i < root.ChildrenCount; i++)
             { 
-                
                 var result = PrintLeaveasAndVerticesNumber(root.GetChild(i));
                 internalVertices += result.Item1;
                 leaves += result.Item2;
