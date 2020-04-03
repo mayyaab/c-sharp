@@ -8,7 +8,7 @@ namespace TreesAndGraphs
 {
     class Tree<T>
     {
-        private TreeNode<T> root;
+        private TreeNode<T> _root;
 
         public Tree(T value)
         {
@@ -17,14 +17,14 @@ namespace TreesAndGraphs
                 throw new ArgumentNullException("Can not insert null value");
             }
 
-            this.root = new TreeNode<T>(value);
+            this._root = new TreeNode<T>(value);
         }
 
         public Tree(T value, params Tree<T>[] children) : this(value)
         {
             foreach (Tree<T> child in children)
             {
-                this.root.AddChild(child.root);
+                this._root.AddChild(child._root);
             }
         }
 
@@ -32,15 +32,15 @@ namespace TreesAndGraphs
 
         public void PrintDFS(TreeNode<T> root, string spaces)
         {
-            if (this.root == null)
+            if (this._root == null)
             {
-               return;
+                return;
             }
 
             Console.WriteLine(spaces + root.Value);
 
             TreeNode<T> child = null;
-            for ( int i = 0; i < root.ChildrenCount; i++)
+            for (int i = 0; i < root.ChildrenCount; i++)
             {
                 child = root.GetChild(i);
                 PrintDFS(child, spaces + " ");
@@ -50,61 +50,95 @@ namespace TreesAndGraphs
 
         public void TraverseDFS()
         {
-            this.PrintDFS(this.root, string.Empty);
+            this.PrintDFS(this._root, string.Empty);
         }
 
-         public int GetAllChildrenCount(TreeNode<T> root)
-         {
-             if (root.ChildrenCount == 0)
-             {
+        //1. Write a program that finds the number of occurrences of a number in a tree of numbers.
+        public int GetAllChildrenCount(TreeNode<T> root)
+        {
+            if (root.ChildrenCount == 0)
+            {
                 return 0;
-             }
+            }
 
-             int count = 0;
-             for (int i = 0; i < root.ChildrenCount; i++)
-             {
-                 count += 1 + GetAllChildrenCount(root.GetChild(i));
-             }
+            int count = 0;
+            for (int i = 0; i < root.ChildrenCount; i++)
+            {
+                count += 1 + GetAllChildrenCount(root.GetChild(i));
+            }
 
-             return count;
-         }
+            return count;
+        }
 
         public int GetAllChildrenCount()
         {
-            return GetAllChildrenCount(this.root);
+            return GetAllChildrenCount(this._root);
         }
 
-        public void PrintRootsWithKNodes(TreeNode<T> root, int k)
+        //2.    Write a program that displays the roots of those sub-trees of a tree, which have exactly k nodes, where k is an integer.
+        public int PrintRootsWithKNodes(TreeNode<T> root, int k)
         {
-            if (this.root == null)
+            if (this._root == null)
             {
-                return;
+                return 0;
+            }
+             
+            var allChildrenCount = 1;
+            
+            for (int i = 0; i < root.ChildrenCount; i++)
+            {
+                allChildrenCount += PrintRootsWithKNodes(root.GetChild(i), k);
             }
 
-            TreeNode<T> child = null;
-
-            if (GetAllChildrenCount(root) + 1 == k)
+            if (allChildrenCount == k)
             {
                 Console.WriteLine(root.Value);
             }
-                for (int i = 0; i < root.ChildrenCount; i++)
-            {
-                    if (GetAllChildrenCount(root) + 1 == k)
-                {
-                    child = root.GetChild(i);
 
-                    Console.WriteLine(child.Value);
-                }
-                PrintRootsWithKNodes(root.GetChild(i), k);
-            }
+            return allChildrenCount;
         }
 
 
         public void PrintRootsWithKNodes(int k)
         {
-            this.PrintRootsWithKNodes(this.root, k);
-
+            PrintRootsWithKNodes(this._root, k);
         }
 
+        //3. Write a program that finds the number of leaves and number of internal vertices of a tree.
+
+        public Tuple<int, int> PrintLeaveasAndVerticesNumber(TreeNode<T> root)
+        {
+            if (this._root == null)
+            {
+                return new Tuple<int, int>(0, 0);
+            }
+            
+            int internalVertices = 0;
+            int leaves = 0;
+
+            if (root.ChildrenCount == 0)
+            {
+                leaves++;
+            }
+
+            if (root.ChildrenCount != 0)
+            {
+                internalVertices++;
+            }
+            for (int i = 0; i < root.ChildrenCount; i++)
+            { 
+                
+                var result = PrintLeaveasAndVerticesNumber(root.GetChild(i));
+                internalVertices += result.Item1;
+                leaves += result.Item2;
+            }
+
+            return new Tuple<int, int>(internalVertices, leaves);
+        }
+
+        public Tuple<int, int> PrintLeaveasAndVerticesNumber()
+        {
+            return PrintLeaveasAndVerticesNumber(this._root);
+        }
     }
 }

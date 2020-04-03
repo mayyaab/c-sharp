@@ -25,7 +25,9 @@ namespace TreesAndGraphs
 
            //Console.WriteLine(tree.GetAllChildrenCount());
 
-            tree.PrintRootsWithKNodes(9);
+           // tree.PrintRootsWithKNodes(3);
+
+            Console.WriteLine(tree.PrintLeaveasAndVerticesNumber());
 
         }
     }
