@@ -54,14 +54,25 @@ namespace BinaryTreeT
             }
         }
 
-        //Write a program that finds in a binary tree of numbers the sum of the vertices of each level of the tree.
-        
 
+        //Write a program that finds and prints all vertices of a binary tree, which have for only leaves successors.
 
+        public void PrintVertices()
+        {
+            if (this.LeftChild != null || this.RightChild != null)
+            {
+                Console.WriteLine(this.Value);
+            }
+            if (this.LeftChild != null)
+            {
+                this.LeftChild.PrintVertices();
+            }
 
+            if (this.RightChild != null)
+            {
+                this.RightChild.PrintVertices();
+            }
+        }
 
-        
-
-        
     }
 }

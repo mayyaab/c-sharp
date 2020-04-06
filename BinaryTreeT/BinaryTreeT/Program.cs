@@ -20,15 +20,15 @@ namespace BinaryTreeT
             Console.WriteLine("-----");
             //binaryTree.PrintDFS();
 
-
+            Console.WriteLine("Write a program that finds in a binary tree of numbers the sum of the vertices of each level of the tree.");
             var list = Tree.VerticesSumByLevel(binaryTree, null, 0);
             foreach(var i in list)
             {
                 Console.WriteLine(i);
             }
 
-            Console.WriteLine();
-
+            Console.WriteLine("Write a program that finds and prints all vertices of a binary tree, which have for only leaves successors.");
+            binaryTree.PrintVertices();
         }
     }
 }

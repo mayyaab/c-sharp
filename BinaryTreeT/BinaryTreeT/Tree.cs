@@ -7,7 +7,9 @@ namespace BinaryTreeT
     public class Tree
     {
         public BinaryTree<int> _root;
-
+       
+        
+        //Write a program that finds in a binary tree of numbers the sum of the vertices of each level of the tree.
         public static List<int> VerticesSumByLevel(BinaryTree<int> root, List<int> list = null, int level = 0)
         {
             if (list == null)
@@ -37,7 +39,6 @@ namespace BinaryTreeT
             }
             return list;
         }
-
-       
-}
+        
+    }
 }
