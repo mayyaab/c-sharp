@@ -8,8 +8,8 @@ namespace BinaryTreeT
 
     {
         public T Value { get; set; }
-        public BinaryTree<T> LeftChild { get;  set; }
-        public BinaryTree<T> RightChild { get;  set; }
+        public BinaryTree<T> LeftChild { get; private set; }
+        public BinaryTree<T> RightChild { get; private set; }
 
         public BinaryTree(T value,
             BinaryTree<T> leftChild, BinaryTree<T> rightChild)
@@ -56,7 +56,6 @@ namespace BinaryTreeT
 
 
         //Write a program that finds and prints all vertices of a binary tree, which have for only leaves successors.
-
         public void PrintVertices()
         {
             if (this.LeftChild != null || this.RightChild != null)
@@ -74,5 +73,27 @@ namespace BinaryTreeT
             }
         }
 
+        //Write a program that checks whether a binary tree is perfectly balanced.
+        public bool IsBalanced()
+        {
+            // !(A || B) = !A && !B  
+
+            if (!((this.LeftChild == null && this.RightChild == null) || (this.LeftChild != null && this.RightChild != null)))
+            {
+                return false;
+            }
+
+            if (this.LeftChild != null && !this.LeftChild.IsBalanced())
+            {
+                 return false;
+            }
+
+            if (this.RightChild != null && !this.RightChild.IsBalanced())
+            {
+                 return false;
+            }
+
+            return true;
+        }
     }
 }

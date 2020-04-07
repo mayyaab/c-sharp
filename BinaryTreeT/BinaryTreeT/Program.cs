@@ -15,7 +15,7 @@ namespace BinaryTreeT
                                   new BinaryTree<int>(21))),
                     new BinaryTree<int>(15,
                           new BinaryTree<int>(3),
-                          null));
+                          new BinaryTree<int>(3)));
             binaryTree.PrintInOrder();
             Console.WriteLine("-----");
             //binaryTree.PrintDFS();
@@ -29,6 +29,9 @@ namespace BinaryTreeT
 
             Console.WriteLine("Write a program that finds and prints all vertices of a binary tree, which have for only leaves successors.");
             binaryTree.PrintVertices();
+
+            Console.WriteLine("Write a program that checks whether a binary tree is perfectly balanced.");
+            Console.WriteLine(binaryTree.IsBalanced());
         }
     }
 }
