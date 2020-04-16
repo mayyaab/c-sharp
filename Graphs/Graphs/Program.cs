@@ -9,10 +9,13 @@ namespace Graphs
             new List<int>() {4},     // successors of vertice 0
             new List<int>() {1, 2, 6}, // successors of vertice 1
             new List<int>() {1, 6},    // successors of vertice 2
-            new List<int>() {6},     // successors of vertice 3
+            new List<int>() {6, 7},     // successors of vertice 3
             new List<int>() {0},     // successors of vertice 4
             new List<int>() {},      // successors of vertice 5
-            new List<int>() {1, 2, 3}  // successors of vertice 6
+            new List<int>() {1, 2, 3},  // successors of vertice 6
+            new List<int>() {3}, // successors of vertice 7
+            new List<int>() {7, 1}  // successors of vertice 8
+
         });
 
         static bool[] visited = new bool[graph.Size];
@@ -30,24 +33,30 @@ namespace Graphs
             }
         }
 
-        static bool IsWay(int x, int y)
+        static int IsWay(int x, int y)
         {
             if (x == y)
             {
-                return true;
+                return 0;
             }
-
             visited[x] = true;
+
             foreach (int child in graph.GetSuccessors(x))
             {
-                if (!visited[child] && IsWay(child, y))
+                if (!visited[child])
                 {
-                    return true;
+                    var result = IsWay(child, y);
+                    if (result != -1)
+                    {
+                        return result + 1;
+                    }
                 }
             }
-
-            return false;
+            return -1;
         }
+
+        //  1 > 2 > 3 > 7
+        //  IsWay(1, 7)
 
         static void Main()
         {
@@ -61,7 +70,7 @@ namespace Graphs
             //    }
             //}
 
-            Console.WriteLine(IsWay(1, 5));
+              Console.WriteLine(IsWay(1, 0));
 
         }
     }
