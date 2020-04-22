@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Graphs
 {
@@ -33,30 +34,32 @@ namespace Graphs
             }
         }
 
-        static int IsWay(int x, int y)
+        static List<int> IsWay(int x, int y)
         {
             if (x == y)
             {
-                return 0;
+                return new List<int> { x };
             }
             visited[x] = true;
-
+            List<int> minList = new List<int>();
             foreach (int child in graph.GetSuccessors(x))
             {
                 if (!visited[child])
                 {
                     var result = IsWay(child, y);
-                    if (result != -1)
+                    if (result.Count != 0)
                     {
-                        return result + 1;
+                        if (minList.Count == 0 || result.Count < minList.Count)
+                        {
+                            minList = result;
+                            minList.Add(x);
+                        }
                     }
                 }
             }
-            return -1;
+            return minList;
         }
 
-        //  1 > 2 > 3 > 7
-        //  IsWay(1, 7)
 
         static void Main()
         {
@@ -70,7 +73,10 @@ namespace Graphs
             //    }
             //}
 
-              Console.WriteLine(IsWay(1, 0));
+            foreach (var element in IsWay(1, 0))
+            {
+                Console.WriteLine(element);
+            }
 
         }
     }
