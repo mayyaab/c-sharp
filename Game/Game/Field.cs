@@ -32,18 +32,14 @@ namespace Game
         public void PlaceBalls()
         {
             Random random = new Random();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3;)
             {
                 var heightElement = random.Next(height);
                 var widthElement = random.Next(width);
-
                 if (array[heightElement, widthElement] == 0)
                 {
                     array[heightElement, widthElement] = random.Next(1, 4);
-                }
-                else
-                {
-                    continue;
+                    i++;
                 }
             }
             Print();
