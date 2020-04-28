@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
 namespace Game
 {
@@ -7,31 +6,31 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            // get user input in a loop here
-            // it should handle different commands
-            // 1) "show" command should print the field
-            // Some useful example https://www.dotnetperls.com/console-readline
-            // 2) add a temp (it shouldn't be in a game) command "next" that will place
-            //    next 3 balls on a field
-            Field newField = new Field();
+            // TG: add support for numeric commands as well
+            Console.WriteLine("Supported commands:");
+            // TG: implement usage
+            Console.WriteLine("1|usage: Prints the usage.");
+            Console.WriteLine("3|show: Print the field");
+            Console.WriteLine("4|next: Add a temp");
+            Console.WriteLine("5|finish: Finish ");
+
+
+            var newField = new Field();
             while (true)
             {
-                Console.WriteLine("Choose:");
-                Console.WriteLine("show: Print the field");
-                Console.WriteLine("next: Add a temp");
-                Console.WriteLine("finish: Finish ");
                 string line = Console.ReadLine();
-                if (line == "show") // Try to parse the string as an integer
+
+                // TG: consider replacing with switch
+                if (line == "show")
                 {
+                    // TG: that should be only once
                     Console.WriteLine("New game started");
                     newField.Print();
                 }
-
                 else if (line == "next")
                 {
                     newField.PlaceBalls();
                 }
-
                 else if (line == "finish")
                 {
                     break;

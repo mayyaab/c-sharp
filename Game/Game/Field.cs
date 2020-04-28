@@ -27,17 +27,18 @@ namespace Game
             //array[this.height, this.width];
         }
 
-        // Add function PlaceBalls that will place 3 balls on a field at random positions
-        // PlaceBalls()
+        // TG: think about strategies to make the function more effective.
         public void PlaceBalls()
         {
-            Random random = new Random();
+            var random = new Random();
+            // TG: extract 3 to a separate variable or constant.
             for (int i = 0; i < 3;)
             {
                 var heightElement = random.Next(height);
                 var widthElement = random.Next(width);
                 if (array[heightElement, widthElement] == 0)
                 {
+                    // TG: extract number of color to a separate constant.
                     array[heightElement, widthElement] = random.Next(1, 4);
                     i++;
                 }
@@ -45,32 +46,23 @@ namespace Game
             Print();
         }
 
-
-        // Modify to a function "Print" which prints the field
-        public void RandomizeArray()
+        // TG: implement the function
+        void MoveBall(/*Position source, Position destination */)
         {
-            Random random = new Random();
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    array[i, j] = random.Next(4);
-                }
-            }
+
         }
 
         public void Print()
         {
-            for (int i = 0; i < height; i++)
+            for (int row = 0; row < height; row++)
             {
-                for (int j = 0; j < width; j++)
+                for (int col = 0; col < width; col++)
                 {
-                    Console.Write("{0,4}", array[i, j]);
+                    Console.Write("{0,4}", array[row, col]);
                 }
                 Console.WriteLine();
             }
         }
-
     }
 }
 
