@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace Game
 {
@@ -6,7 +7,7 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            // TG: add support for numeric commands as well
+            // DONE TG: add support for numeric commands as well
             Console.WriteLine("Supported commands:");
             // TG: implement usage
             Console.WriteLine("1|usage: Prints the usage.");
@@ -14,34 +15,64 @@ namespace Game
             Console.WriteLine("4|next: Add a temp");
             Console.WriteLine("5|finish: Finish ");
 
+            bool doLoop = true;
 
             var newField = new Field();
-            while (true)
+            while (doLoop)
             {
                 string line = Console.ReadLine();
-
                 // TG: consider replacing with switch
-                if (line == "show")
-                {
-                    // TG: that should be only once
-                    Console.WriteLine("New game started");
-                    newField.Print();
-                }
-                else if (line == "next")
-                {
-                    newField.PlaceBalls();
-                }
-                else if (line == "finish")
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("NOT VALID");
-                }
 
+                switch (line.ToUpper())
+                {
+                    case "SHOW":
+                    case "3":
+                    {
+                        Console.WriteLine("New game started");
+                        PrintField(newField);
+                        break;
+                    }
+
+                    case "NEXT":
+                    case "4":
+                    {
+                        newField.PlaceBalls();
+                        newField.MoveBall((2,2) , (3,3));
+
+                        PrintField(newField);
+                        break;
+                    }
+
+                    case "END":
+                    case "5":
+                    {
+                        doLoop = false;
+                        break;
+                    }
+
+                    default:
+                    {
+                        Console.WriteLine("command is not supported");
+                        break;
+                    }
+                }
             }
-
         }
+
+
+
+        public static void PrintField(Field field)
+        {
+            for (int row = 0; row < field.Height; row++)
+            {
+                for (int col = 0; col < field.Width; col++)
+                {
+                    // field.GetColor(new Position(_row, col))
+                    //Console.Write("{0,4}", _array[_row, col]);
+                }
+                Console.WriteLine();
+            }
+        }
+
     }
 }

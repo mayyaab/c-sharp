@@ -1,68 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+using System.Data;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace Game
 {
-    // Done Rename to Field
     public class Field
     {
-        int height = 6;
-        int width = 6;
+        public int Height { get; }
+        public int Width { get; }
 
-        int[,] array = new int[6,6];
-        //Done Have a array as a member variable
-        //Done Make constructor accepting height & width
+        readonly int[,] _array;
 
-        public Field()
+        public Field() : this(9, 9)
         {
         }
 
         public Field(int height, int width)
         {
-            height = this.height;
-            width = this.width;
-            //array[this.height, this.width];
+            Height = height;
+            Width = width;
+
+            _array = new int[height, width];
+        }
+
+        int GetColor( /*Position pos*/)
+        {
+            return 0;
         }
 
         // TG: think about strategies to make the function more effective.
         public void PlaceBalls()
         {
             var random = new Random();
-            // TG: extract 3 to a separate variable or constant.
-            for (int i = 0; i < 3;)
+            const int ballsCount = 3;
+
+            // DONE TG: extract 3 to a separate variable or constant.
+            for (int i = 0; i < ballsCount;)
             {
-                var heightElement = random.Next(height);
-                var widthElement = random.Next(width);
-                if (array[heightElement, widthElement] == 0)
+                var heightElement = random.Next(Height);
+                var widthElement = random.Next(Width);
+                if (_array[heightElement, widthElement] == 0)
                 {
                     // TG: extract number of color to a separate constant.
-                    array[heightElement, widthElement] = random.Next(1, 4);
+                    _array[heightElement, widthElement] = random.Next(1, 4);
                     i++;
                 }
             }
-            Print();
         }
 
         // TG: implement the function
-        void MoveBall(/*Position source, Position destination */)
+        public void MoveBall(Position source, Position destination)
         {
+            source = new Position(source._row, source._col);
+            destination = new Position(destination._row, destination._col);
 
-        }
-
-        public void Print()
-        {
-            for (int row = 0; row < height; row++)
+            if (_array[source._row, source._col] != 0 && _array[destination._row, destination._col] == 0)
             {
-                for (int col = 0; col < width; col++)
-                {
-                    Console.Write("{0,4}", array[row, col]);
-                }
-                Console.WriteLine();
+                int temp = _array[source._row, source._col];
+                _array[source._row, source._col] = _array[destination._row, destination._col];
+                _array[destination._row, destination._col] = temp;
             }
+
         }
+
     }
 }
 
