@@ -9,7 +9,9 @@ namespace Game
         public int Height { get; }
         public int Width { get; }
 
-        readonly int[,] _array;
+        readonly BallColor[,] _array;
+
+        const int ballsCount = 3;
 
         public Field() : this(9, 9)
         {
@@ -20,49 +22,44 @@ namespace Game
             Height = height;
             Width = width;
 
-            _array = new int[height, width];
+            _array = new BallColor[height, width];
         }
 
-        int GetColor( /*Position pos*/)
+        public BallColor GetColor(Position pos)
         {
-            return 0;
+            return _array[pos.Row, pos.Column];
         }
 
         // TG: think about strategies to make the function more effective.
         public void PlaceBalls()
         {
             var random = new Random();
-            const int ballsCount = 3;
 
-            // DONE TG: extract 3 to a separate variable or constant.
             for (int i = 0; i < ballsCount;)
             {
                 var heightElement = random.Next(Height);
                 var widthElement = random.Next(Width);
                 if (_array[heightElement, widthElement] == 0)
                 {
-                    // TG: extract number of color to a separate constant.
-                    _array[heightElement, widthElement] = random.Next(1, 4);
+                    _array[heightElement, widthElement] = (BallColor) random.Next(1, 5);
                     i++;
                 }
             }
         }
 
-        // TG: implement the function
         public void MoveBall(Position source, Position destination)
         {
-            source = new Position(source._row, source._col);
-            destination = new Position(destination._row, destination._col);
-
-            if (_array[source._row, source._col] != 0 && _array[destination._row, destination._col] == 0)
+            if (_array[source.Row, source.Column] != 0 && _array[destination.Row, destination.Column] == 0)
             {
-                int temp = _array[source._row, source._col];
-                _array[source._row, source._col] = _array[destination._row, destination._col];
-                _array[destination._row, destination._col] = temp;
+                var temp = _array[source.Row, source.Column];
+                _array[source.Row, source.Column] = _array[destination.Row, destination.Column];
+                _array[destination.Row, destination.Column] = temp;
             }
-
+            else
+            {
+                throw new Exception("empty source or busy destination");
+            }
         }
-
     }
 }
 

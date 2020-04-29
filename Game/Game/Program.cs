@@ -7,13 +7,14 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            // DONE TG: add support for numeric commands as well
+
             Console.WriteLine("Supported commands:");
             // TG: implement usage
             Console.WriteLine("1|usage: Prints the usage.");
             Console.WriteLine("3|show: Print the field");
             Console.WriteLine("4|next: Add a temp");
-            Console.WriteLine("5|finish: Finish ");
+            Console.WriteLine("5|switch: Switch two balls");
+            Console.WriteLine("6|finish: Finish ");
 
             bool doLoop = true;
 
@@ -21,7 +22,6 @@ namespace Game
             while (doLoop)
             {
                 string line = Console.ReadLine();
-                // TG: consider replacing with switch
 
                 switch (line.ToUpper())
                 {
@@ -37,14 +37,32 @@ namespace Game
                     case "4":
                     {
                         newField.PlaceBalls();
-                        newField.MoveBall((2,2) , (3,3));
+                        PrintField(newField);
+                        break;
+                    }
 
+                    case "SWITCH":
+                    case "5":
+                    {
+                        Console.WriteLine("Source Row: ");
+                        var sourceRow = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Source Column: ");
+                        var sourceColumn = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Destination Row: ");
+                        var destinationRow = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Source Column: ");
+                        var destinationColumn = Convert.ToInt32(Console.ReadLine());
+
+                        var source = new Position(sourceRow, sourceColumn);
+                        var destination = new Position(destinationRow, destinationColumn);
+
+                        newField.MoveBall(source, destination);
                         PrintField(newField);
                         break;
                     }
 
                     case "END":
-                    case "5":
+                    case "6":
                     {
                         doLoop = false;
                         break;
@@ -67,8 +85,8 @@ namespace Game
             {
                 for (int col = 0; col < field.Width; col++)
                 {
-                    // field.GetColor(new Position(_row, col))
-                    //Console.Write("{0,4}", _array[_row, col]);
+                    var forPrint = field.GetColor(new Position(row, col));
+                    Console.Write("{0,8}", forPrint);
                 }
                 Console.WriteLine();
             }

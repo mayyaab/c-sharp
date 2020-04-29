@@ -6,11 +6,13 @@ namespace Game
 {
     public class Position
     {
-        public int _row, _col;
-        public Position(int row, int col)
+        public int Row { get; }
+        public int Column { get; }
+
+        public Position(int row, int column)
         {
-            this._row = row;
-            this._col = col;
+            this.Row = row;
+            this.Column = column;
         }
     }
 }
