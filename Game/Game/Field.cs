@@ -47,18 +47,41 @@ namespace Game
             }
         }
 
+        public void PlaceBalls2()
+        {
+            var arrayEmptyPosition = new Position[Height * Width];
+            var index = 0;
+            var random = new Random();
+            for (int row = 0; row < Height; row++)
+            {
+                for (int col = 0; col < Width; col++)
+                {
+                    if (_array[row, col] == 0)
+                    {
+                        arrayEmptyPosition[index] = new Position(row, col);
+                    }
+                }
+            }
+
+            for (int i = 0; i < ballsCount; i++)
+            {
+                var elementIndex = random.Next(arrayEmptyPosition.Length);
+                var position = arrayEmptyPosition[elementIndex];
+                _array[position.Row, position.Column] = (BallColor)random.Next(1, 5);
+            }
+        }
+
+        // TG: reorganize the function to check preconditions first
         public void MoveBall(Position source, Position destination)
         {
-            if (_array[source.Row, source.Column] != 0 && _array[destination.Row, destination.Column] == 0)
-            {
-                var temp = _array[source.Row, source.Column];
-                _array[source.Row, source.Column] = _array[destination.Row, destination.Column];
-                _array[destination.Row, destination.Column] = temp;
-            }
-            else
+            if(!(_array[source.Row, source.Column] != 0 && _array[destination.Row, destination.Column] == 0))
             {
                 throw new Exception("empty source or busy destination");
             }
+
+            var temp = _array[source.Row, source.Column];
+            _array[source.Row, source.Column] = _array[destination.Row, destination.Column];
+            _array[destination.Row, destination.Column] = temp;
         }
     }
 }

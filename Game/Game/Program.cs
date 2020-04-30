@@ -44,17 +44,25 @@ namespace Game
                     case "SWITCH":
                     case "5":
                     {
-                        Console.WriteLine("Source Row: ");
-                        var sourceRow = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Source Column: ");
-                        var sourceColumn = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Destination Row: ");
-                        var destinationRow = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Source Column: ");
-                        var destinationColumn = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Source [row column]: ");
+                        var source = ParsePosition(Console.ReadLine());
 
-                        var source = new Position(sourceRow, sourceColumn);
-                        var destination = new Position(destinationRow, destinationColumn);
+                        if (source == null)
+                        {
+                            Console.WriteLine("Wrong format!");
+                            break; //I need to call case 5
+                        }
+
+                        // TG: verify that is valid position
+
+                        Console.WriteLine("Destination [row column]: ");
+                        var destination = ParsePosition(Console.ReadLine());
+                        if (destination == null)
+                        {
+                            Console.WriteLine("Wrong format!");
+                            break; //I need to call case 5
+                        }
+                        // TG: verify that is valid position
 
                         newField.MoveBall(source, destination);
                         PrintField(newField);
@@ -78,8 +86,26 @@ namespace Game
         }
 
 
+        // TG: Implement the function. Input format: row,col
+        private static Position ParsePosition(string input)
+        {
+            string[] tokens = input.Split();
+            try
+            {
+                int a = int.Parse(tokens[0]);
+                int b = int.Parse(tokens[1]);
 
-        public static void PrintField(Field field)
+                var position = new Position(a, b);
+
+                return position;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static void PrintField(Field field)
         {
             for (int row = 0; row < field.Height; row++)
             {
@@ -91,6 +117,5 @@ namespace Game
                 Console.WriteLine();
             }
         }
-
     }
 }
