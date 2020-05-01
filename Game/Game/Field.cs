@@ -9,18 +9,20 @@ namespace Game
 
         readonly BallColor[,] _array;
 
-        // TG: make this parameterized for the constructor
-        const int ballsCount = 3;
+        //DONE TG: make this parameterized for the constructor
+        public int BallsCount ;
+        public int ColorsCount;
 
-        public Field() : this(9, 9)
+        public Field() : this(9, 9, 3, 4)
         {
         }
 
-        public Field(int height, int width)
+        public Field(int height, int width, int ballsCount, int colorsCount)
         {
             Height = height;
             Width = width;
-
+            BallsCount = ballsCount;
+            ColorsCount = colorsCount;
             _array = new BallColor[height, width];
         }
 
@@ -34,7 +36,7 @@ namespace Game
         {
             var random = new Random();
 
-            for (int i = 0; i < ballsCount;)
+            for (int i = 0; i < BallsCount;)
             {
                 var heightElement = random.Next(Height);
                 var widthElement = random.Next(Width);
@@ -62,21 +64,25 @@ namespace Game
                 }
             }
 
-            for (int i = 0; i < ballsCount; i++)
+            for (int i = 0; i < BallsCount; i++)
             {
                 var elementIndex = random.Next(arrayEmptyPosition.Length);
                 var position = arrayEmptyPosition[elementIndex];
-                // TG: make number of elements parameterized from the constructor
-                _array[position.Row, position.Column] = (BallColor)random.Next(1, 5);
+                //DONE TG: make number of elements parameterized from the constructor
+                _array[position.Row, position.Column] = (BallColor)random.Next(1, ColorsCount+1);
             }
         }
 
         public void MoveBall(Position source, Position destination)
         {
-            // TG: split to two different conditions
-            if(!(_array[source.Row, source.Column] != 0 && _array[destination.Row, destination.Column] == 0))
+            //DONE  TG: split to two different conditions
+            if (_array[source.Row, source.Column] == 0)
             {
-                throw new Exception("empty source or busy destination");
+                throw new Exception("empty source");
+            }
+            if (_array[destination.Row, destination.Column] != 0)
+            {
+                throw new Exception("busy destination");
             }
 
             var temp = _array[source.Row, source.Column];

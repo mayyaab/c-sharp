@@ -39,8 +39,8 @@ namespace List1
             {
                 index++;
                 // var element = firstElement - initialized element
-                // element != null - comparesent 
-                //element = element.next - action which we perform at the end of the loop 
+                // element != null - comparesent
+                //element = element.next - action which we perform at the end of the loop
             }
             return index;
         }
@@ -116,8 +116,8 @@ namespace List1
             }
 
             // first initialization
-            // condition if 
-            // body 
+            // condition if
+            // body
             // last statement
             // goto condition if
         }
@@ -287,7 +287,7 @@ namespace List1
             }
 
             Node currentElement = startingNode;
-            
+
             Node minNode = currentElement;
 
             while (currentElement != null)
@@ -588,11 +588,11 @@ namespace List1
             }
             List newList = new List();
 
-            for (int i = 0; !this.IsSortedAscending(); i++)    
+            for (int i = 0; !this.IsSortedAscending(); i++)
             {
                 int n = this.MaxElement();
                 newList.AddElement(n);
-                this.DeleteElementByValue(n);                
+                this.DeleteElementByValue(n);
             }
             firstElement.next = newList.firstElement;
         }
@@ -607,7 +607,7 @@ namespace List1
         public void SwapNodes(Node left, Node right)
         {
             firstElement = left.next;
-            
+
             left = right.next.next;
             right.next = firstElement;
             right = left;
@@ -633,11 +633,11 @@ namespace List1
                 throw new ArgumentOutOfRangeException("No element in the list");
             }
             List sortedList = new List();
-            
+
             while (!IsEmpty())
             {
                 sortedList.AddNode(RemoveMinElement());
-                
+
             }
             firstElement = sortedList.firstElement;
         }

@@ -16,7 +16,7 @@ namespace Game
 
             bool doLoop = true;
 
-            var newField = new Field();
+            var newField = new Field(2,2,2,2);
             while (doLoop)
             {
                 string line = Console.ReadLine();
@@ -109,8 +109,13 @@ namespace Game
 
             for (int row = 0; row < field.Height; row++)
             {
+                Console.Write("{0,8}", row);
                 for (int col = 0; col < field.Width; col++)
                 {
+                    //if (row == 0)
+                    //{
+                    //    Console.Write("{0,8}", col);
+                    //}
                     var forPrint = field.GetColor(new Position(row, col));
                     Console.Write("{0,8}", forPrint);
                 }
