@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Game
 {
@@ -11,6 +9,7 @@ namespace Game
 
         readonly BallColor[,] _array;
 
+        // TG: make this parameterized for the constructor
         const int ballsCount = 3;
 
         public Field() : this(9, 9)
@@ -67,13 +66,14 @@ namespace Game
             {
                 var elementIndex = random.Next(arrayEmptyPosition.Length);
                 var position = arrayEmptyPosition[elementIndex];
+                // TG: make number of elements parameterized from the constructor
                 _array[position.Row, position.Column] = (BallColor)random.Next(1, 5);
             }
         }
 
-        // TG: reorganize the function to check preconditions first
         public void MoveBall(Position source, Position destination)
         {
+            // TG: split to two different conditions
             if(!(_array[source.Row, source.Column] != 0 && _array[destination.Row, destination.Column] == 0))
             {
                 throw new Exception("empty source or busy destination");
