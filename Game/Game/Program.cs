@@ -117,7 +117,7 @@ namespace Game
                     //{
                     //    Console.Write("{0,8}", col);
                     //}
-                    Console.Write("{0,8}", forPrint);
+                    Console.Write("{0,8}", field.GetBallColorAt(row, col));
                 }
                 Console.WriteLine();
             }
