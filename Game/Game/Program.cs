@@ -85,6 +85,7 @@ namespace Game
 
         // TG: Implement the function. Input format: row,col
         // TG: Throw exception on error.
+        // TG: Consider using regex to parse the input.
         private static Position ParsePosition(string input)
         {
             string[] tokens = input.Split();
@@ -116,7 +117,6 @@ namespace Game
                     //{
                     //    Console.Write("{0,8}", col);
                     //}
-                    var forPrint = field.GetColor(new Position(row, col));
                     Console.Write("{0,8}", forPrint);
                 }
                 Console.WriteLine();
