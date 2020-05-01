@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
 
 namespace Game
 {
@@ -7,7 +6,6 @@ namespace Game
     {
         static void Main(string[] args)
         {
-
             Console.WriteLine("Supported commands:");
             // TG: implement usage
             Console.WriteLine("1|usage: Prints the usage.");
@@ -36,7 +34,7 @@ namespace Game
                     case "NEXT":
                     case "4":
                     {
-                        newField.PlaceBalls();
+                        newField.PlaceBalls2();
                         PrintField(newField);
                         break;
                     }
@@ -85,7 +83,6 @@ namespace Game
             }
         }
 
-
         // TG: Implement the function. Input format: row,col
         private static Position ParsePosition(string input)
         {
@@ -107,6 +104,8 @@ namespace Game
 
         private static void PrintField(Field field)
         {
+            // TG: add row and column numbers
+
             for (int row = 0; row < field.Height; row++)
             {
                 for (int col = 0; col < field.Width; col++)
