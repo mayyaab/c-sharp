@@ -84,6 +84,7 @@ namespace Game
         }
 
         // TG: Implement the function. Input format: row,col
+        // TG: Throw exception on error.
         private static Position ParsePosition(string input)
         {
             string[] tokens = input.Split();
