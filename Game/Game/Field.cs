@@ -4,6 +4,9 @@ namespace Game
 {
     public class Field
     {
+        // TG: make this parameterized for the constructor
+        public const int ballsCount = 3;
+
         public int Height { get; }
         public int Width { get; }
 
@@ -12,7 +15,6 @@ namespace Game
         //DONE TG: make this parameterized for the constructor
         public int BallsCount ;
         public int ColorsCount;
-
         public Field() : this(9, 9, 3, 4)
         {
         }
@@ -26,9 +28,14 @@ namespace Game
             _array = new BallColor[height, width];
         }
 
-        public BallColor GetColor(Position pos)
+        public BallColor GetBallColorAt(Position pos)
         {
-            return _array[pos.Row, pos.Column];
+            return GetBallColorAt(pos.Row, pos.Column);
+        }
+
+        public BallColor GetBallColorAt(int row, int column)
+        {
+            return _array[row, column];
         }
 
         // TG: think about strategies to make the function more effective.
