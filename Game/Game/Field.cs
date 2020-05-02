@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game
 {
@@ -57,8 +58,8 @@ namespace Game
 
         public void PlaceBalls2()
         {
-            var arrayEmptyPosition = new Position[Height * Width];
-            var index = 0;
+            var listPosition = new List<Position>();
+
             var random = new Random();
             for (int row = 0; row < Height; row++)
             {
@@ -66,23 +67,21 @@ namespace Game
                 {
                     if (_array[row, col] == 0)
                     {
-                        arrayEmptyPosition[index] = new Position(row, col);
+                        listPosition.Add(new Position(row, col));
                     }
                 }
             }
 
             for (int i = 0; i < BallsCount; i++)
             {
-                var elementIndex = random.Next(arrayEmptyPosition.Length);
-                var position = arrayEmptyPosition[elementIndex];
-                //DONE TG: make number of elements parameterized from the constructor
+                var elementIndex = random.Next(listPosition.Count);
+                var position = listPosition[elementIndex];
                 _array[position.Row, position.Column] = (BallColor)random.Next(1, ColorsCount+1);
             }
         }
 
         public void MoveBall(Position source, Position destination)
         {
-            //DONE  TG: split to two different conditions
             if (_array[source.Row, source.Column] == 0)
             {
                 throw new Exception("empty source");

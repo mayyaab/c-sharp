@@ -16,7 +16,7 @@ namespace Game
 
             bool doLoop = true;
 
-            var newField = new Field(2,2,2,2);
+            var newField = new Field();
             while (doLoop)
             {
                 string line = Console.ReadLine();
@@ -106,18 +106,21 @@ namespace Game
 
         private static void PrintField(Field field)
         {
-            // TG: add row and column numbers
+            const string format = "{0,8}";
+
+            Console.Write(format, "");
+            for (int i = 0; i < field.Width; i++)
+            {
+                Console.Write(format, i);
+            }
+            Console.WriteLine("\n");
 
             for (int row = 0; row < field.Height; row++)
             {
-                Console.Write("{0,8}", row);
+                Console.Write(format, row);
                 for (int col = 0; col < field.Width; col++)
                 {
-                    //if (row == 0)
-                    //{
-                    //    Console.Write("{0,8}", col);
-                    //}
-                    Console.Write("{0,8}", field.GetBallColorAt(row, col));
+                    Console.Write(format, field.GetBallColorAt(row, col));
                 }
                 Console.WriteLine();
             }
