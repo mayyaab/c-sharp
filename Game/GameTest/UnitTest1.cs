@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -17,7 +16,20 @@ namespace GameTest
 
             field.PlaceBalls();
 
-            Assert.AreEqual(initialEmptyCount - Field.ballsCount, CountEmptySquares(field));
+            Assert.AreEqual(initialEmptyCount - field.BallsCount, CountEmptySquares(field));
+        }
+
+        [TestMethod]
+        public void TesTestMethod2()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(2,2), BallColor.Red);
+            field.SetBallColorAt(new Position(2,3), BallColor.Red);
+            field.SetBallColorAt(new Position(2,4), BallColor.Red);
+
+            var line = field.GetLineHorizontal(new Position(2, 3));
+            Assert.Equals(line.Count, 3);
         }
 
         private static int CountEmptySquares(Field field)
