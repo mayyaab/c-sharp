@@ -7,10 +7,8 @@ namespace Game
     {
         public int Height { get; }
         public int Width { get; }
-
-        // TG: make the properties
-        public int BallsCount;
-        public int ColorsCount;
+        public int BallsCount { get; }
+        public int ColorsCount { get; }
 
         readonly BallColor[,] _array;
 
@@ -69,12 +67,18 @@ namespace Game
                     }
                 }
             }
-
-            for (int i = 0; i < BallsCount; i++)
+            if (listPosition.Count == 0)
             {
-                var elementIndex = random.Next(listPosition.Count);
-                var position = listPosition[elementIndex];
-                _array[position.Row, position.Column] = (BallColor)random.Next(1, ColorsCount+1);
+                Console.WriteLine("Game is over");
+            }
+            else
+            {
+                for (int i = 0; i < BallsCount; i++)
+                {
+                    var elementIndex = random.Next(listPosition.Count);
+                    var position = listPosition[elementIndex];
+                    _array[position.Row, position.Column] = (BallColor)random.Next(1, ColorsCount + 1);
+                }
             }
         }
 

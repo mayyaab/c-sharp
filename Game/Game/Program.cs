@@ -6,27 +6,29 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Supported commands:");
-            // TG: implement usage
-            Console.WriteLine("1|usage: Prints the usage.");
-            Console.WriteLine("3|show: Print the field");
-            Console.WriteLine("4|next: Add a temp");
-            Console.WriteLine("5|switch: Switch two balls");
-            Console.WriteLine("6|finish: Finish ");
-
             bool doLoop = true;
 
-            var newField = new Field();
+            PrintUsage();
+
             while (doLoop)
             {
                 string line = Console.ReadLine();
+                var newField = new Field();
 
                 switch (line.ToUpper())
                 {
-                    case "SHOW":
-                    case "3":
+                    case "USAGE":
+                    case "1":
+                    {
+                        PrintUsage();
+                        break;
+                    }
+
+                    case "START":
+                    case "2":
                     {
                         Console.WriteLine("New game started");
+                        newField.PlaceBalls2();
                         PrintField(newField);
                         break;
                     }
@@ -42,28 +44,7 @@ namespace Game
                     case "SWITCH":
                     case "5":
                     {
-                        Console.WriteLine("Source [row column]: ");
-                        var source = ParsePosition(Console.ReadLine());
-
-                        if (source == null)
-                        {
-                            Console.WriteLine("Wrong format!");
-                            break; //I need to call case 5
-                        }
-
-                        // TG: verify that is valid position
-
-                        Console.WriteLine("Destination [row column]: ");
-                        var destination = ParsePosition(Console.ReadLine());
-                        if (destination == null)
-                        {
-                            Console.WriteLine("Wrong format!");
-                            break; //I need to call case 5
-                        }
-                        // TG: verify that is valid position
-
-                        newField.MoveBall(source, destination);
-                        PrintField(newField);
+                        SwitchBalls(newField);
                         break;
                     }
 
@@ -79,6 +60,13 @@ namespace Game
                         Console.WriteLine("command is not supported");
                         break;
                     }
+                }
+
+                while (line != "6")
+                {
+                    SwitchBalls(newField);
+                    newField.PlaceBalls2();
+                    PrintField(newField);
                 }
             }
         }
@@ -124,6 +112,39 @@ namespace Game
                 }
                 Console.WriteLine();
             }
+        }
+
+        private static void PrintUsage()
+        {
+            Console.WriteLine("Supported commands:");
+            Console.WriteLine("1|usage: Prints the usage.");
+            Console.WriteLine("2|start: Print the field");
+            Console.WriteLine("4|next: Add a temp");
+            Console.WriteLine("5|switch: Switch two balls");
+            Console.WriteLine("6|finish: Finish ");
+        }
+
+        private static void SwitchBalls(Field field)
+        {
+            Console.WriteLine("Source [row column]: ");
+            var source = ParsePosition(Console.ReadLine());
+
+            if (source == null)
+            {
+                Console.WriteLine("Wrong format!");
+            }
+
+            // TG: verify that is valid position
+
+            Console.WriteLine("Destination [row column]: ");
+            var destination = ParsePosition(Console.ReadLine());
+            if (destination == null)
+            {
+                Console.WriteLine("Wrong format!");
+            }
+            // TG: verify that is valid position
+
+            field.MoveBall(source, destination);
         }
     }
 }
