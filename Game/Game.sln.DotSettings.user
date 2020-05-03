@@ -3,4 +3,9 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;MSTest::03B0B39B-8B6A-4434-A944-5833AB2BE93B::.NETCoreApp,Version=v3.1::GameTest.UnitTest1.TestMethod1&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5130dc8f_002D3e75_002D40bc_002Dab20_002Df28b78dcbaf3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TesTestMethod2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::03B0B39B-8B6A-4434-A944-5833AB2BE93B::.NETCoreApp,Version=v3.1::GameTest.UnitTest1.TesTestMethod2&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -5,17 +5,15 @@ namespace Game
 {
     public class Field
     {
-        // TG: make this parameterized for the constructor
-        public const int ballsCount = 3;
-
         public int Height { get; }
         public int Width { get; }
 
+        // TG: make the properties
+        public int BallsCount;
+        public int ColorsCount;
+
         readonly BallColor[,] _array;
 
-        //DONE TG: make this parameterized for the constructor
-        public int BallsCount ;
-        public int ColorsCount;
         public Field() : this(9, 9, 3, 4)
         {
         }
@@ -84,16 +82,27 @@ namespace Game
         {
             if (_array[source.Row, source.Column] == 0)
             {
-                throw new Exception("empty source");
+                throw new Exception("The source square is empty.");
             }
             if (_array[destination.Row, destination.Column] != 0)
             {
-                throw new Exception("busy destination");
+                throw new Exception("The destination square is occupied.");
             }
 
             var temp = _array[source.Row, source.Column];
             _array[source.Row, source.Column] = _array[destination.Row, destination.Column];
             _array[destination.Row, destination.Column] = temp;
+        }
+
+        // TG: implement the function
+        public IList<Position> GetLineHorizontal(Position position)
+        {
+            return new List<Position>();
+        }
+
+        internal void SetBallColorAt(Position position, BallColor color)
+        {
+            _array[position.Row, position.Column] = color;
         }
     }
 }
