@@ -99,9 +99,31 @@ namespace Game
         }
 
         // TG: implement the function
-        public IList<Position> GetLineHorizontal(Position position)
+        public IList<Position> GetLineHorizontal(Position position, int ballsInLine)
         {
-            return new List<Position>();
+            var row = position.Row;
+            var col = position.Column;
+            //var arrayElement = _array[row, col];
+            var color = GetBallColorAt(row, col);
+            var listPosition = new List<Position>();
+
+            for (int i = 0; i < Height; i++)
+            {
+                if (GetBallColorAt(row, i) == color)
+                {
+                    if (GetBallColorAt(row, i) == GetBallColorAt(row, i + 1) ||
+                        GetBallColorAt(row, i) == GetBallColorAt(row, i - 1))
+                    {
+                        listPosition.Add(new Position(row, i));
+                    }
+                }
+            }
+            if (listPosition.Count >= ballsInLine)
+            {
+                return listPosition;
+            }
+
+            return null;
         }
 
         internal void SetBallColorAt(Position position, BallColor color)

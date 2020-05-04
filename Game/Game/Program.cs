@@ -9,12 +9,10 @@ namespace Game
             bool doLoop = true;
 
             PrintUsage();
-
+            var newField = new Field();
             while (doLoop)
             {
                 string line = Console.ReadLine();
-                var newField = new Field();
-
                 switch (line.ToUpper())
                 {
                     case "USAGE":
@@ -28,7 +26,7 @@ namespace Game
                     case "2":
                     {
                         Console.WriteLine("New game started");
-                        newField.PlaceBalls2();
+                        //newField.PlaceBalls2();
                         PrintField(newField);
                         break;
                     }
@@ -55,6 +53,32 @@ namespace Game
                         break;
                     }
 
+                    case "7":
+                    {
+                        Console.WriteLine("position [row column]: ");
+                        var position = ParsePosition(Console.ReadLine());
+
+                        if (position == null)
+                        {
+                            Console.WriteLine("Wrong format!");
+                        }
+
+                        var result = newField.GetLineHorizontal(position, 2);
+                        if (result == null)
+                        {
+                            Console.WriteLine("Not found");
+                        }
+                        else
+                        {
+                            foreach (var i in result)
+                            {
+                                Console.WriteLine("row = ", i.Row);
+                                Console.WriteLine("col = ", i.Column);
+                            }
+                        }
+                        break;
+                    }
+
                     default:
                     {
                         Console.WriteLine("command is not supported");
@@ -62,12 +86,12 @@ namespace Game
                     }
                 }
 
-                while (line != "6")
-                {
-                    SwitchBalls(newField);
-                    newField.PlaceBalls2();
-                    PrintField(newField);
-                }
+                //while (line != "6")
+                //{
+                //    SwitchBalls(newField);
+                //    newField.PlaceBalls2();
+                //    PrintField(newField);
+                //}
             }
         }
 
