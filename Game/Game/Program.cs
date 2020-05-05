@@ -72,8 +72,7 @@ namespace Game
                         {
                             foreach (var i in result)
                             {
-                                Console.WriteLine("row = ", i.Row);
-                                Console.WriteLine("col = ", i.Column);
+                                Console.WriteLine("position row {0}, col {1}", i.Row, i.Column);
                             }
                         }
                         break;
