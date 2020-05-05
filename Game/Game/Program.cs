@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Game
 {
@@ -99,7 +100,7 @@ namespace Game
         // TG: Consider using regex to parse the input.
         private static Position ParsePosition(string input)
         {
-            string[] tokens = input.Split();
+            string[] tokens = Regex.Split(input, @"\D+");
             try
             {
                 int a = int.Parse(tokens[0]);
@@ -113,6 +114,7 @@ namespace Game
             {
                 return null;
             }
+
         }
 
         private static void PrintField(Field field)
