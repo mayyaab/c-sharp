@@ -130,8 +130,12 @@ namespace Game
                     {
                         break;
                     }
-                    listPosition.Add(currentRight);
-                    currentRight = new Position(currentLeft.Row, currentLeft.Column - 1);
+
+                    if (!listPosition.Contains(currentLeft))
+                    {
+                        listPosition.Add(currentLeft);
+                    }
+                    currentLeft = new Position(currentLeft.Row, currentLeft.Column - 1);
                 }
             }
 
