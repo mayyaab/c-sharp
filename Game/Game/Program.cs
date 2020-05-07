@@ -64,7 +64,7 @@ namespace Game
                             Console.WriteLine("Wrong format!");
                         }
 
-                        var result = newField.GetLineHorizontal(position, 2);
+                        var result = newField.GetLineHorizontal(position);
                         if (result == null)
                         {
                             Console.WriteLine("Not found");

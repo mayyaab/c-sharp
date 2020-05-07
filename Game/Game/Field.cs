@@ -99,31 +99,43 @@ namespace Game
         }
 
         // TG: implement the function
-        public IList<Position> GetLineHorizontal(Position position, int ballsInLine)
+        public IList<Position> GetLineHorizontal(Position position)
         {
             var row = position.Row;
             var col = position.Column;
-            //var arrayElement = _array[row, col];
             var color = GetBallColorAt(row, col);
             var listPosition = new List<Position>();
 
-            for (int i = 0; i < Height; i++)
+            var currentRight = position;
+            var currentLeft = position;
+
+            if (GetBallColorAt(position.Row, position.Column + 1) == color)
             {
-                if (GetBallColorAt(row, i) == color)
+                for (; ; )
                 {
-                    if (GetBallColorAt(row, i) == GetBallColorAt(row, i + 1) ||
-                        GetBallColorAt(row, i) == GetBallColorAt(row, i - 1))
+                    if (currentRight.Column >= Width || GetBallColorAt(currentRight) != color)
                     {
-                        listPosition.Add(new Position(row, i));
+                        break;
                     }
+
+                    listPosition.Add(currentRight);
+                    currentRight = new Position(currentRight.Row, currentRight.Column + 1);
                 }
             }
-            if (listPosition.Count >= ballsInLine)
+            if (GetBallColorAt(position.Row, position.Column - 1) == color)
             {
-                return listPosition;
+                for (; ; )
+                {
+                    if (currentLeft.Column < 0 || GetBallColorAt(currentLeft) != color)
+                    {
+                        break;
+                    }
+                    listPosition.Add(currentRight);
+                    currentRight = new Position(currentLeft.Row, currentLeft.Column - 1);
+                }
             }
 
-            return null;
+            return listPosition;
         }
 
         internal void SetBallColorAt(Position position, BallColor color)
