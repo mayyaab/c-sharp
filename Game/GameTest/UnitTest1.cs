@@ -28,7 +28,7 @@ namespace GameTest
             field.SetBallColorAt(new Position(2,3), BallColor.Red);
             field.SetBallColorAt(new Position(2,4), BallColor.Red);
 
-            var line = field.GetLineHorizontal(new Position(2, 2));
+            var line = field.GetLineHorizontal(new Position(2, 3));
             Assert.AreEqual(line.Count, 3);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Game
 {
@@ -106,39 +107,33 @@ namespace Game
             var color = GetBallColorAt(row, col);
             var listPosition = new List<Position>();
 
-            var currentRight = position;
-            var currentLeft = position;
-
-            if (GetBallColorAt(position.Row, position.Column + 1) == color)
+            var directions = new Position[]{new Position(0, 1), new Position(0, -1)} ;
+            foreach (var direction in directions)
             {
-                for (; ; )
+                if (GetBallColorAt(position + direction) == color)
                 {
-                    if (currentRight.Column >= Width || GetBallColorAt(currentRight) != color)
-                    {
-                        break;
-                    }
+                    var current = position;
 
-                    listPosition.Add(currentRight);
-                    currentRight = new Position(currentRight.Row, currentRight.Column + 1);
+                    for (; ; )
+                    {
+                        if (current.Column < 0 || current.Column >= Width)
+                        {
+                            break;
+                        }
+
+                        if (GetBallColorAt(current) != color)
+                        {
+                            break;
+                        }
+
+                        if (!listPosition.Contains(current))
+                        {
+                            listPosition.Add(current);
+                        }
+                        current = current + direction;
+                    }
                 }
             }
-            if (GetBallColorAt(position.Row, position.Column - 1) == color)
-            {
-                for (; ; )
-                {
-                    if (currentLeft.Column < 0 || GetBallColorAt(currentLeft) != color)
-                    {
-                        break;
-                    }
-
-                    if (!listPosition.Contains(currentLeft))
-                    {
-                        listPosition.Add(currentLeft);
-                    }
-                    currentLeft = new Position(currentLeft.Row, currentLeft.Column - 1);
-                }
-            }
-
             return listPosition;
         }
 

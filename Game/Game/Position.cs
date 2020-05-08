@@ -10,5 +10,10 @@
             Row = row;
             Column = column;
         }
+
+        public static Position operator + (Position lhs, Position rhs)
+        {
+            return new Position(lhs.Row + rhs.Row, lhs.Column + rhs.Column);
+        }
     }
 }
