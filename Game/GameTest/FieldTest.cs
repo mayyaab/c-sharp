@@ -1,11 +1,10 @@
-using System;
 using Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GameTest
 {
     [TestClass]
-    public class UnitTest1
+    public class FieldTest
     {
         [TestMethod]
         public void TestMethod1()

@@ -115,7 +115,7 @@ namespace Game
             };
 
             // Collect all lines in "lines" list
-            var lines = new List<Line>();
+            // var lines = new List<Line>();
             foreach (var direction in directions)
             {
 
@@ -170,14 +170,13 @@ namespace Game
             }
         }
 
+        // TG: introduce enum Direction { Horizontal, ...
+        // TG: introduce new function GetLine(Direction direction, Position position)
+
         // TG: implement the function
         public IList<Position> GetLineHorizontal(Position position)
         {
-            var directions = new Position[]{new Position(0, 1), new Position(0, -1),
-                //new Position(1,0), new Position(-1, 0),
-                //new Position(-1, -1), new Position(-1, 1),
-                //new Position(1, -1), new Position(1,1),
-            };
+            var directions = new[]{new Position(0, 1), new Position(0, -1)};
             return GetLine(position, directions);
         }
 
@@ -203,6 +202,7 @@ namespace Game
                     line.Add(current);
                 }
             }
+
             return line;
         }
 
