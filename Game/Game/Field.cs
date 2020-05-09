@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Game
 {
@@ -104,6 +103,29 @@ namespace Game
 
         public void RemoveLines(Position position)
         {
+            // TG: lets introduce a new class Line
+
+            var directions = new[]
+            {
+                // horizontal
+                new Tuple<Position, Position>(new Position(0, -1), new Position(0, 1)),
+                // vertical
+                // diagonal left to right
+                // diagonal right to left
+            };
+
+            // Collect all lines in "lines" list
+            var lines = new List<Line>();
+            foreach (var direction in directions)
+            {
+
+            }
+
+            // Remove lines
+
+
+
+
             var directionHorizontal = new Position[]
             {
                 new Position(0, 1), new Position(0, -1),
