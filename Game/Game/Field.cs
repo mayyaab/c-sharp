@@ -10,19 +10,21 @@ namespace Game
         public int Width { get; }
         public int BallsCount { get; }
         public int ColorsCount { get; }
+        public int BallsInLineCount { get; }
 
         readonly BallColor[,] _array;
 
-        public Field() : this(9, 9, 3, 4)
+        public Field() : this(9, 9, 3, 4, 4)
         {
         }
 
-        public Field(int height, int width, int ballsCount, int colorsCount)
+        public Field(int height, int width, int ballsCount, int colorsCount, int ballsInLineCount)
         {
             Height = height;
             Width = width;
             BallsCount = ballsCount;
             ColorsCount = colorsCount;
+            BallsInLineCount = ballsInLineCount;
             _array = new BallColor[height, width];
         }
 
@@ -99,42 +101,87 @@ namespace Game
             _array[destination.Row, destination.Column] = temp;
         }
 
+
+        public void RemoveLines(Position position)
+        {
+            var directionHorizontal = new Position[]
+            {
+                new Position(0, 1), new Position(0, -1),
+            };
+
+            var directionVertical = new Position[]
+            {
+                new Position(1,0), new Position(-1, 0),
+            };
+            var directionDiagonal = new Position[]
+            {
+                new Position(-1, -1), new Position(-1, 1),
+                new Position(1, -1), new Position(1,1),
+            };
+
+            var lineHorizontal = GetLine(position, directionHorizontal);
+            var lineVertical = GetLine(position, directionVertical);
+            var lineDiagonal = GetLine(position, directionDiagonal);
+
+            if (lineHorizontal.Count >= BallsInLineCount)
+            {
+                foreach (var ball in lineHorizontal )
+                {
+                   SetBallColorAt(ball, BallColor.Empty);
+                }
+            }
+
+            if (lineVertical.Count >= BallsInLineCount)
+            {
+                foreach (var ball in lineVertical)
+                {
+                    SetBallColorAt(ball, BallColor.Empty);
+                }
+            }
+
+            if (lineDiagonal.Count >= BallsInLineCount)
+            {
+                foreach (var ball in lineDiagonal)
+                {
+                    SetBallColorAt(ball, BallColor.Empty);
+                }
+            }
+        }
+
         // TG: implement the function
         public IList<Position> GetLineHorizontal(Position position)
         {
-            var row = position.Row;
-            var col = position.Column;
-            var color = GetBallColorAt(row, col);
-            var listPosition = new List<Position>();
+            var directions = new Position[]{new Position(0, 1), new Position(0, -1),
+                //new Position(1,0), new Position(-1, 0),
+                //new Position(-1, -1), new Position(-1, 1),
+                //new Position(1, -1), new Position(1,1),
+            };
+            return GetLine(position, directions);
+        }
 
-            var directions = new Position[]{new Position(0, 1), new Position(0, -1)} ;
+        private IList<Position> GetLine(Position position, Position[] directions)
+        {
+            var color = GetBallColorAt(position);
+            var line = new List<Position>{position};
+
             foreach (var direction in directions)
             {
-                if (GetBallColorAt(position + direction) == color)
+                var current = position;
+
+                for (;;)
                 {
-                    var current = position;
+                    current = current + direction;
 
-                    for (; ; )
+                    if (current.Column < 0 || current.Column >= Width || current.Row < 0 || current.Row >= Height ||
+                        GetBallColorAt(current) != color)
                     {
-                        if (current.Column < 0 || current.Column >= Width)
-                        {
-                            break;
-                        }
-
-                        if (GetBallColorAt(current) != color)
-                        {
-                            break;
-                        }
-
-                        if (!listPosition.Contains(current))
-                        {
-                            listPosition.Add(current);
-                        }
-                        current = current + direction;
+                        break;
                     }
+
+                    line.Add(current);
                 }
             }
-            return listPosition;
+            return line;
         }
 
         internal void SetBallColorAt(Position position, BallColor color)
