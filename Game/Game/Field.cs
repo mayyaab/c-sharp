@@ -110,65 +110,84 @@ namespace Game
                 // horizontal
                 new Tuple<Position, Position>(new Position(0, -1), new Position(0, 1)),
                 // vertical
+                new Tuple<Position, Position>(new Position(-1, 0), new Position(1, 0)),
                 // diagonal left to right
+                new Tuple<Position, Position>(new Position(-1, -1), new Position(1, 1)),
                 // diagonal right to left
+                new Tuple<Position, Position>(new Position(1, -1), new Position(-1, 1)),
             };
 
             // Collect all lines in "lines" list
-            // var lines = new List<Line>();
+
+           // var lines = new List<IList<Position>>();
+            var lines = new List<IList<Position>>();
+
             foreach (var direction in directions)
             {
-
+                var line = GetLine(position, direction);
+                lines.Add(line);
             }
+
+            foreach (var line in lines)
+            {
+                if (line.Count >= BallsInLineCount)
+                {
+                    foreach (var ball in line)
+                    {
+                        SetBallColorAt(ball, BallColor.Empty);
+                    }
+                }
+            }
+
 
             // Remove lines
 
 
 
 
-            var directionHorizontal = new Position[]
-            {
-                new Position(0, 1), new Position(0, -1),
-            };
+            //    var directionHorizontal = new Position[]
+            //    {
+            //        new Position(0, 1), new Position(0, -1),
+            //    };
 
-            var directionVertical = new Position[]
-            {
-                new Position(1,0), new Position(-1, 0),
-            };
-            var directionDiagonal = new Position[]
-            {
-                new Position(-1, -1), new Position(-1, 1),
-                new Position(1, -1), new Position(1,1),
-            };
+            //    var directionVertical = new Position[]
+            //    {
+            //        new Position(1,0), new Position(-1, 0),
+            //    };
+            //    var directionDiagonal = new Position[]
+            //    {
+            //        new Position(-1, -1), new Position(-1, 1),
+            //        new Position(1, -1), new Position(1,1),
+            //    };
 
-            var lineHorizontal = GetLine(position, directionHorizontal);
-            var lineVertical = GetLine(position, directionVertical);
-            var lineDiagonal = GetLine(position, directionDiagonal);
+            //    var lineHorizontal = GetLine(position, directionHorizontal);
+            //    var lineVertical = GetLine(position, directionVertical);
+            //    var lineDiagonal = GetLine(position, directionDiagonal);
 
-            if (lineHorizontal.Count >= BallsInLineCount)
-            {
-                foreach (var ball in lineHorizontal )
-                {
-                   SetBallColorAt(ball, BallColor.Empty);
-                }
+            //    if (lineHorizontal.Count >= BallsInLineCount)
+            //    {
+            //        foreach (var ball in lineHorizontal )
+            //        {
+            //           SetBallColorAt(ball, BallColor.Empty);
+            //        }
+            //    }
+
+            //    if (lineVertical.Count >= BallsInLineCount)
+            //    {
+            //        foreach (var ball in lineVertical)
+            //        {
+            //            SetBallColorAt(ball, BallColor.Empty);
+            //        }
+            //    }
+
+            //    if (lineDiagonal.Count >= BallsInLineCount)
+            //    {
+            //        foreach (var ball in lineDiagonal)
+            //        {
+            //            SetBallColorAt(ball, BallColor.Empty);
+            //        }
+            //    }
             }
-
-            if (lineVertical.Count >= BallsInLineCount)
-            {
-                foreach (var ball in lineVertical)
-                {
-                    SetBallColorAt(ball, BallColor.Empty);
-                }
-            }
-
-            if (lineDiagonal.Count >= BallsInLineCount)
-            {
-                foreach (var ball in lineDiagonal)
-                {
-                    SetBallColorAt(ball, BallColor.Empty);
-                }
-            }
-        }
 
         // TG: introduce enum Direction { Horizontal, ...
         // TG: introduce new function GetLine(Direction direction, Position position)
@@ -176,16 +195,42 @@ namespace Game
         // TG: implement the function
         public IList<Position> GetLineHorizontal(Position position)
         {
-            var directions = new[]{new Position(0, 1), new Position(0, -1)};
+            var directions = new[] { new Position(0, 1), new Position(0, -1) };
             return GetLine(position, directions);
         }
 
-        private IList<Position> GetLine(Position position, Position[] directions)
+        private Line GetLine(Position position, Position.Direction directions)
+        {
+            var color = GetBallColorAt(position);
+            var line = new List<Position> { position };
+
+            foreach (var direction in directions)
+            {
+                var current = position;
+
+                for (; ; )
+                {
+                    current = current + direction;
+
+                    if (current.Column < 0 || current.Column >= Width || current.Row < 0 || current.Row >= Height ||
+                        GetBallColorAt(current) != color)
+                    {
+                        break;
+                    }
+
+                    line.Add(current);
+                }
+            }
+
+            return line;
+        }
+
+        private IList<Position> GetLine(Position position, Tuple<Position, Position> directions)
         {
             var color = GetBallColorAt(position);
             var line = new List<Position>{position};
 
-            foreach (var direction in directions)
+            foreach (var direction in (dynamic)directions)
             {
                 var current = position;
 

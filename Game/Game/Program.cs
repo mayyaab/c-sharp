@@ -64,18 +64,18 @@ namespace Game
                             Console.WriteLine("Wrong format!");
                         }
 
-                        var result = newField.GetLineHorizontal(position);
-                        if (result == null)
-                        {
-                            Console.WriteLine("Not found");
-                        }
-                        else
-                        {
-                            foreach (var i in result)
-                            {
-                                Console.WriteLine("position row {0}, col {1}", i.Row, i.Column);
-                            }
-                        }
+                        //var result = newField.RemoveLines(position);
+                        //if (result == null)
+                        //{
+                        //    Console.WriteLine("Not found");
+                        //}
+                        //else
+                        //{
+                        //    foreach (var i in result)
+                        //    {
+                        //        Console.WriteLine("position row {0}, col {1}", i.Row, i.Column);
+                        //    }
+                        //}
                         break;
                     }
 

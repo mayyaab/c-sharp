@@ -5,6 +5,14 @@
         public int Row { get; }
         public int Column { get; }
 
+        public enum Direction
+        {
+            Horizontal,
+            Vertical,
+            DiagonalLeftToRight,
+            DiagonalRightToLeft
+        }
+
         public Position(int row, int column)
         {
             Row = row;
