@@ -48,7 +48,7 @@ namespace Game
                 var widthElement = random.Next(Width);
                 if (_array[heightElement, widthElement] == 0)
                 {
-                    _array[heightElement, widthElement] = (BallColor) random.Next(1, 5);
+                    _array[heightElement, widthElement] = (BallColor)random.Next(1, 5);
                     i++;
                 }
             }
@@ -100,7 +100,6 @@ namespace Game
             _array[destination.Row, destination.Column] = temp;
         }
 
-
         public void RemoveLines(Position position)
         {
             // TG: lets introduce a new class Line
@@ -119,7 +118,7 @@ namespace Game
 
             // Collect all lines in "lines" list
 
-           // var lines = new List<IList<Position>>();
+            // var lines = new List<IList<Position>>();
             var lines = new List<IList<Position>>();
 
             foreach (var direction in directions)
@@ -128,6 +127,7 @@ namespace Game
                 lines.Add(line);
             }
 
+            // Remove lines
             foreach (var line in lines)
             {
                 if (line.Count >= BallsInLineCount)
@@ -138,56 +138,7 @@ namespace Game
                     }
                 }
             }
-
-
-            // Remove lines
-
-
-
-
-            //    var directionHorizontal = new Position[]
-            //    {
-            //        new Position(0, 1), new Position(0, -1),
-            //    };
-
-            //    var directionVertical = new Position[]
-            //    {
-            //        new Position(1,0), new Position(-1, 0),
-            //    };
-            //    var directionDiagonal = new Position[]
-            //    {
-            //        new Position(-1, -1), new Position(-1, 1),
-            //        new Position(1, -1), new Position(1,1),
-            //    };
-
-            //    var lineHorizontal = GetLine(position, directionHorizontal);
-            //    var lineVertical = GetLine(position, directionVertical);
-            //    var lineDiagonal = GetLine(position, directionDiagonal);
-
-            //    if (lineHorizontal.Count >= BallsInLineCount)
-            //    {
-            //        foreach (var ball in lineHorizontal )
-            //        {
-            //           SetBallColorAt(ball, BallColor.Empty);
-            //        }
-            //    }
-
-            //    if (lineVertical.Count >= BallsInLineCount)
-            //    {
-            //        foreach (var ball in lineVertical)
-            //        {
-            //            SetBallColorAt(ball, BallColor.Empty);
-            //        }
-            //    }
-
-            //    if (lineDiagonal.Count >= BallsInLineCount)
-            //    {
-            //        foreach (var ball in lineDiagonal)
-            //        {
-            //            SetBallColorAt(ball, BallColor.Empty);
-            //        }
-            //    }
-            }
+        }
 
         // TG: introduce enum Direction { Horizontal, ...
         // TG: introduce new function GetLine(Direction direction, Position position)
@@ -195,46 +146,34 @@ namespace Game
         // TG: implement the function
         public IList<Position> GetLineHorizontal(Position position)
         {
-            var directions = new[] { new Position(0, 1), new Position(0, -1) };
+            // var directions = new[] { new Position(0, 1), new Position(0, -1) };
+            // TG: use GetDirections() to get directions
+            var directions = GetDirections(Position.Direction.Horizontal);
             return GetLine(position, directions);
         }
 
+        // TG: implement
+        private Tuple<Position, Position> GetDirections(Position.Direction direction)
+        {
+            return null;
+        }
+
+        // TG: use GetDirections() to implement the function
         private Line GetLine(Position position, Position.Direction directions)
         {
-            var color = GetBallColorAt(position);
-            var line = new List<Position> { position };
-
-            foreach (var direction in directions)
-            {
-                var current = position;
-
-                for (; ; )
-                {
-                    current = current + direction;
-
-                    if (current.Column < 0 || current.Column >= Width || current.Row < 0 || current.Row >= Height ||
-                        GetBallColorAt(current) != color)
-                    {
-                        break;
-                    }
-
-                    line.Add(current);
-                }
-            }
-
-            return line;
+            return null;
         }
 
         private IList<Position> GetLine(Position position, Tuple<Position, Position> directions)
         {
             var color = GetBallColorAt(position);
-            var line = new List<Position>{position};
+            var line = new List<Position> { position };
 
-            foreach (var direction in (dynamic)directions)
+            foreach (var direction in new[] { directions.Item1, directions.Item2 })
             {
                 var current = position;
 
-                for (;;)
+                for (; ; )
                 {
                     current = current + direction;
 
