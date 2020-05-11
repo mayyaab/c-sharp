@@ -9,8 +9,8 @@
         {
             Horizontal,
             Vertical,
-            DiagonalLeftToRight,
-            DiagonalRightToLeft
+            Descending,
+            Ascending
         }
 
         public Position(int row, int column)
