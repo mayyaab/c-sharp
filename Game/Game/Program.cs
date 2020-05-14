@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Game
@@ -8,96 +9,50 @@ namespace Game
         static void Main(string[] args)
         {
             bool doLoop = true;
+            var newField = new Field();
+
+            Dictionary<string, Action> commands = new Dictionary<string, Action>();
+
+            commands.Add("USAGE", PrintUsage);
+            commands.Add("START", () =>
+            {
+                Console.WriteLine("New game started");
+                PrintField(newField);
+            });
+
+            commands.Add("NEXT", () =>
+            {
+                newField.PlaceBalls();
+                PrintField(newField);
+            });
+
+            commands.Add("SWITCH", () =>
+            {
+                SwitchBalls(newField);
+            });
+
+            commands.Add("END", () =>
+            {
+                doLoop = false;
+            });
 
             PrintUsage();
-            var newField = new Field();
             while (doLoop)
             {
                 string line = Console.ReadLine();
-                switch (line.ToUpper())
+
+                if (commands.ContainsKey(line))
                 {
-                    case "USAGE":
-                    case "1":
-                    {
-                        PrintUsage();
-                        break;
-                    }
-
-                    case "START":
-                    case "2":
-                    {
-                        Console.WriteLine("New game started");
-                        //newField.PlaceBalls2();
-                        PrintField(newField);
-                        break;
-                    }
-
-                    case "NEXT":
-                    case "4":
-                    {
-                        newField.PlaceBalls2();
-                        PrintField(newField);
-                        break;
-                    }
-
-                    case "SWITCH":
-                    case "5":
-                    {
-                        SwitchBalls(newField);
-                        break;
-                    }
-
-                    case "END":
-                    case "6":
-                    {
-                        doLoop = false;
-                        break;
-                    }
-
-                    case "7":
-                    {
-                        Console.WriteLine("position [row column]: ");
-                        var position = ParsePosition(Console.ReadLine());
-
-                        if (position == null)
-                        {
-                            Console.WriteLine("Wrong format!");
-                        }
-
-                        //var result = newField.RemoveLines(position);
-                        //if (result == null)
-                        //{
-                        //    Console.WriteLine("Not found");
-                        //}
-                        //else
-                        //{
-                        //    foreach (var i in result)
-                        //    {
-                        //        Console.WriteLine("position row {0}, col {1}", i.Row, i.Column);
-                        //    }
-                        //}
-                        break;
-                    }
-
-                    default:
-                    {
-                        Console.WriteLine("command is not supported");
-                        break;
-                    }
+                    var func = commands[line];
+                    func();
                 }
-
-                //while (line != "6")
-                //{
-                //    SwitchBalls(newField);
-                //    newField.PlaceBalls2();
-                //    PrintField(newField);
-                //}
+                else
+                {
+                    Console.WriteLine("Command is not supported");
+                }
             }
         }
 
-        // TG: Implement the function. Input format: row,col
-        // TG: Throw exception on error.
-        // TG: Consider using regex to parse the input.
         private static Position ParsePosition(string input)
         {
             string[] tokens = Regex.Split(input, @"\D+");
@@ -114,7 +69,6 @@ namespace Game
             {
                 return null;
             }
-
         }
 
         private static void PrintField(Field field)
@@ -157,9 +111,8 @@ namespace Game
             if (source == null)
             {
                 Console.WriteLine("Wrong format!");
-            }
 
-            // TG: verify that is valid position
+            }
 
             Console.WriteLine("Destination [row column]: ");
             var destination = ParsePosition(Console.ReadLine());
@@ -167,7 +120,6 @@ namespace Game
             {
                 Console.WriteLine("Wrong format!");
             }
-            // TG: verify that is valid position
 
             field.MoveBall(source, destination);
         }
