@@ -110,6 +110,8 @@ namespace Game
 
         private Tuple<Position, Position> GetDirections(Line.Direction direction)
         {
+            // TG: consider simplifying it to array and then use direction as an index in the array.
+
             if (direction == Line.Direction.Horizontal)
             {
                 return new Tuple<Position, Position>(new Position(0, -1), new Position(0, 1));
