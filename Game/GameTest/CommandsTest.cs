@@ -32,7 +32,7 @@ namespace GameTest
             bool changed1 = false;
             bool changed2 = false;
             commands.Add("name1", "description1", () => changed1 = true);
-            commands.Add("name2","description2", () => changed2 = true);
+            commands.Add("name2", "description2", () => changed2 = true);
 
             commands.Run(1);
             Assert.AreEqual(false, changed1);
