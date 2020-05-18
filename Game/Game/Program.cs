@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
 namespace Game
@@ -12,7 +13,6 @@ namespace Game
             var newField = new Field();
 
             Dictionary<string, Action> commands = new Dictionary<string, Action>();
-
             commands.Add("USAGE", PrintUsage);
             commands.Add("START", () =>
             {

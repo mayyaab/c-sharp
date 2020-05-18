@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GameTest
@@ -34,10 +35,10 @@ namespace GameTest
         public void TestMethod2()
         {
             var commands = new Commands();
-            bool changed1 = false;
-            bool changed2 = false;
-            commands.Add("name1", "description1", () => changed1 = true);
-            commands.Add("name2", "description2", () => changed2 = true);
+            var changed1 = false;
+            var changed2 = false;
+            commands.Add("name1", () => changed1 = true);
+            commands.Add("name2", () => changed2 = true);
 
             commands.Run(1);
             Assert.AreEqual(false, changed1);
@@ -49,8 +50,8 @@ namespace GameTest
         {
             var commands = new Commands();
 
-            commands.Add("name1", "description1", () => { });
-            commands.Add("name2", "description2", () => { });
+            commands.Add("name1", () => { });
+            commands.Add("name2",  () => { });
 
             var cmd = commands.GetCommand(0);
             // check cmd.Name
