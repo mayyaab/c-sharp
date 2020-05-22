@@ -11,7 +11,7 @@ namespace GameTest
     // https://docs.microsoft.com/en-us/dotnet/api/system.collections.specialized.ordereddictionary?view=netcore-3.1
 
     [TestClass]
-    class CommandsTest
+    public class CommandsTest
     {
         [TestMethod]
         public void TestMethod1()
@@ -37,8 +37,8 @@ namespace GameTest
             var commands = new Commands();
             var changed1 = false;
             var changed2 = false;
-            commands.Add("name1", () => changed1 = true);
-            commands.Add("name2", () => changed2 = true);
+            commands.Add("name1", "descriprion1", () => changed1 = true);
+            commands.Add("name2", "descriprion2", () => changed2 = true);
 
             commands.Run(1);
             Assert.AreEqual(false, changed1);
@@ -51,15 +51,42 @@ namespace GameTest
             var commands = new Commands();
 
             commands.Add("name1", () => { });
-            commands.Add("name2",  () => { });
+            commands.Add("name2", () => { });
 
             var cmd = commands.GetCommand(0);
             // check cmd.Name
-            // check cmd.Description
+            //// check cmd.Description
 
-            cmd = commands.GetCommand(1);
-            // check cmd.Name
-            // check cmd.Description
+            //cmd = commands.GetCommand(1);
+            //// check cmd.Name
+            //// check cmd.Description
         }
+
+        [TestMethod]
+        public void TestMethod4()
+        {
+            var commands = new Commands();
+
+            commands.Add("name1", () => { });
+            commands.Add("name2", () => { });
+            commands.Add("name3", () => { });
+
+            var size = commands.GetSize();
+
+            Assert.AreEqual(3, size);
+        }
+
+        [TestMethod]
+        public void TestMethod5()
+        {
+            var commands = new Commands();
+
+            commands.Add("name1", "description1", () => { });
+            commands.Add("name2", "description2", () => { });
+            commands.Add("name3", "description3", () => { });
+
+            commands.GetCommandList();
+        }
+
     }
 }

@@ -2,31 +2,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Dynamic;
-using System.Text;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Game
 {
-    public class Commands: OrderedDictionary
+    public class Commands : OrderedDictionary
     {
-
-        public void Add(string name,  Action description)
+        public Command SingleCommand { get; }
+        public Commands(Command singleCommand)
         {
-            Add(name, description);
+            SingleCommand = singleCommand;
         }
 
-        public void Add(string name)
+        public Commands()
         {
-            Add(name, null);
+        }
+
+        public void Add(string name, string description, Action commandAction)
+        {
+            var command = new Command(name, description, commandAction);
+
+            Add(name, command);
+        }
+
+        public void Add(string name, Action commandAction)
+        {
+            var command = new Command(name, commandAction);
+
+            Add(name, command);
         }
 
         public void Run(int index, string name)
         {
-            if (Contains(index) || Contains(name))
-            {
-                Action func = (Action) this[name];
-                func();
-            }
+            //var value = Values[index]
         }
 
         public void Run(int index)
@@ -36,24 +45,40 @@ namespace Game
 
         public void Run(string name)
         {
-            Run(0, name);
+            //foreach (var eCommand in Commands)
+            //{
+
+            //}
         }
 
-        public void DisplayContents()
+        public Command GetCommand(int index)
         {
-            String[] myKeys = new String[Count];
-            String[] myValues = new String[Count];
-            CopyTo(myKeys, 0);
-            CopyTo(myValues, 0);
+            //var element = ;
+            //return element;
+            return null;
+        }
 
-            // Displays the contents of the OrderedDictionary
-            Console.WriteLine("   INDEX KEY                       VALUE");
+        public int GetSize()
+        {
+            return this.Count;
+        }
+
+        public void GetCommandList()
+        {
+            ICollection keyCOllection = Keys;
+            ICollection valueCollection = Values;
+
+            String[] myKeys = new String[Count];
+            String[] myValuesName = new String[Count];
+
+            keyCOllection.CopyTo(myKeys, 0);
+            valueCollection.CopyTo(myValuesName, 0);
+
             for (int i = 0; i < Count; i++)
             {
-                Console.WriteLine("   {0,-5} {1,-25} {2}",
-                    i, myKeys[i], myValues[i]);
+                Console.WriteLine("Key: " + myKeys[i]);
+                Console.WriteLine("Value Name: " + myValuesName[i]);
             }
-            Console.WriteLine();
         }
     }
 }
