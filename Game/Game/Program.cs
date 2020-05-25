@@ -9,6 +9,15 @@ namespace Game
     {
         static void Main(string[] args)
         {
+            CommandList newCommandList = new CommandList();
+            newCommandList.Add("name1", "desc1", () => { });
+            newCommandList.Add("name2", "desc2", () => { });
+            newCommandList.PrintCommandList();
+            var command = newCommandList.GetCommand(0);
+            Console.WriteLine(command.Name);
+            Console.WriteLine(command.Description);
+
+
             bool doLoop = true;
             var newField = new Field();
 

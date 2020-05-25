@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GameTest
 {
-    // TG: Consider implementing class Commands using "OrderedDictionary"
+    // TG: Consider implementing class CommandList using "OrderedDictionary"
     // https://docs.microsoft.com/en-us/dotnet/api/system.collections.specialized.ordereddictionary?view=netcore-3.1
 
     [TestClass]
@@ -16,7 +16,7 @@ namespace GameTest
         [TestMethod]
         public void TestMethod1()
         {
-            var commands = new Commands();
+            var commands = new CommandList();
             bool changed;
             commands.Add("name", () => { changed = true; });
 
@@ -34,7 +34,7 @@ namespace GameTest
         [TestMethod]
         public void TestMethod2()
         {
-            var commands = new Commands();
+            var commands = new CommandList();
             var changed1 = false;
             var changed2 = false;
             commands.Add("name1", "descriprion1", () => changed1 = true);
@@ -48,24 +48,34 @@ namespace GameTest
         [TestMethod]
         public void TestMethod3()
         {
-            var commands = new Commands();
+            var commands = new CommandList();
 
-            commands.Add("name1", () => { });
-            commands.Add("name2", () => { });
+            commands.Add("name1", "desc1",() => { });
+            commands.Add("name2", "desc2", () => { });
 
             var cmd = commands.GetCommand(0);
-            // check cmd.Name
-            //// check cmd.Description
+            var name = cmd.Name;
+            var description = cmd.Description;
+            var action = cmd.CommandAction;
 
-            //cmd = commands.GetCommand(1);
-            //// check cmd.Name
-            //// check cmd.Description
+            Assert.AreEqual("name1", name);
+            Assert.AreEqual("desc1", description);
+           // Assert.AreEqual(() => { }, action);
+
+            cmd = commands.GetCommand(1);
+            name = cmd.Name;
+            description = cmd.Description;
+            action = cmd.CommandAction;
+
+            Assert.AreEqual("name2", name);
+            Assert.AreEqual("desc2", description);
+            //Assert.AreEqual(() => { }, action);
         }
 
         [TestMethod]
         public void TestMethod4()
         {
-            var commands = new Commands();
+            var commands = new CommandList();
 
             commands.Add("name1", () => { });
             commands.Add("name2", () => { });
@@ -79,13 +89,13 @@ namespace GameTest
         [TestMethod]
         public void TestMethod5()
         {
-            var commands = new Commands();
+            var commands = new CommandList();
 
             commands.Add("name1", "description1", () => { });
             commands.Add("name2", "description2", () => { });
             commands.Add("name3", "description3", () => { });
 
-            commands.GetCommandList();
+            commands.PrintCommandList();
         }
 
     }
