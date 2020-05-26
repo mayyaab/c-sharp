@@ -37,18 +37,14 @@ namespace Game
 
         public void Run(int index, string name)
         {
-            if (Contains(index))
+            if (index != null)
             {
-                var element = (Command)this[index];
-                var action = element.CommandAction;
-                action();
+                Run(index);
             }
 
-            if (Contains(name))
+            if (name != null)
             {
-                var element = (Command)this[name];
-                var action = element.CommandAction;
-                action();
+                Run(name);
             }
 
             else
@@ -59,11 +55,21 @@ namespace Game
 
         public void Run(int index)
         {
-           Run(index, null);
+            var element = (Command)this[index];
+            var action = element.CommandAction;
+            action();
         }
 
         public void Run(string name)
         {
+            var lowerCaseName = name.ToLowerInvariant();
+
+            if (Contains(lowerCaseName))
+            {
+                var func = (Command)this[lowerCaseName];
+                var action = func.CommandAction;
+                action();
+            }
         }
 
         public Command GetCommand(int index)
