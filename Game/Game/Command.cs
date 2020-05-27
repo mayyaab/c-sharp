@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Game
 {
@@ -8,19 +6,19 @@ namespace Game
     {
         public string Name { get; }
         public string Description { get; }
-        public Action CommandAction { get; }
+        public Action Action { get; }
 
-        public Command(string name, Action commandAction)
+        public Command(string name, Action action)
         {
             Name = name;
-            CommandAction = commandAction;
+            Action = action;
         }
 
-        public Command(string name, string description, Action commandAction)
+        public Command(string name, string description, Action action)
         {
             Name = name;
             Description = description;
-            CommandAction = commandAction;
+            Action = action;
         }
     }
 }

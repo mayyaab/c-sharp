@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
 namespace Game
@@ -19,8 +18,10 @@ namespace Game
 
 
             bool doLoop = true;
+            // TG: why 'new' is there 'old' ?
             var newField = new Field();
 
+            // TG: replace with the CommandList
             Dictionary<string, Action> commands = new Dictionary<string, Action>();
             commands.Add("USAGE", PrintUsage);
             commands.Add("START", () =>
@@ -62,6 +63,8 @@ namespace Game
             }
         }
 
+        // TG: inconsistent error handling. Use either exceptions or error codes
+        // TG: We can talk about Try... pattern functions as well.
         private static Position ParsePosition(string input)
         {
             string[] tokens = Regex.Split(input, @"\D+");
@@ -102,6 +105,7 @@ namespace Game
             }
         }
 
+        // TG: replace with the generating out of the CommandList
         private static void PrintUsage()
         {
             Console.WriteLine("Supported commands:");

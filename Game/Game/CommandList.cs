@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Channels;
 
 namespace Game
 {
+    // TG: replace with the composition
     public class CommandList : OrderedDictionary
     {
         public Command Command { get; }
@@ -56,7 +52,7 @@ namespace Game
         public void Run(int index)
         {
             var element = (Command)this[index];
-            var action = element.CommandAction;
+            var action = element.Action;
             action();
         }
 
@@ -67,7 +63,7 @@ namespace Game
             if (Contains(lowerCaseName))
             {
                 var func = (Command)this[lowerCaseName];
-                var action = func.CommandAction;
+                var action = func.Action;
                 action();
             }
         }
@@ -83,6 +79,7 @@ namespace Game
             return element;
         }
 
+        // TG: change to property
         public int GetSize()
         {
             return this.Count;
