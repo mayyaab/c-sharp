@@ -32,19 +32,6 @@ namespace GameTest
         }
 
         [TestMethod]
-        public void TestMethod1_1()
-        {
-            var commands = new CommandList();
-            bool changed;
-            commands.Add("name", () => { changed = true; });
-
-            // test1
-            changed = false;
-            commands.Run(0, "name");
-            Assert.AreEqual(true, changed);
-        }
-
-        [TestMethod]
         public void TestMethod2()
         {
             var commands = new CommandList();
@@ -73,7 +60,7 @@ namespace GameTest
 
             Assert.AreEqual("name1", name);
             Assert.AreEqual("desc1", description);
-           // Assert.AreEqual(() => { }, action);
+            //Assert.AreEqual(() => { }, action);
 
             cmd = commands.GetCommand(1);
             name = cmd.Name;
