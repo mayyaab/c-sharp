@@ -107,6 +107,11 @@ namespace Game
             }
         }
 
+        // TG: returns either a path of positions from src to dst or null if not found
+        private IEnumerable<Position> GetPath(Position source, Position destination)
+        {
+            return null;
+        }
 
         private Tuple<Position, Position> GetDirections(Line.Direction direction)
         {
