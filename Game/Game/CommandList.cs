@@ -10,6 +10,11 @@ namespace Game
 
         private readonly OrderedDictionary _dictionary = new OrderedDictionary(StringComparer.InvariantCultureIgnoreCase);
 
+        public int GetSize
+        {
+            get { return _dictionary.Count; }
+        }
+
         public CommandList()
         {
         }
@@ -32,7 +37,7 @@ namespace Game
         public void Run(int index)
         {
             var element = (Command)_dictionary[index];
-            var action = element.CommandAction;
+            var action = element.Action;
             action();
         }
 
@@ -41,7 +46,7 @@ namespace Game
             if (_dictionary.Contains(name))
             {
                 var func = (Command)_dictionary[name];
-                var action = func.CommandAction;
+                var action = func.Action;
                 action();
             }
         }
@@ -57,27 +62,13 @@ namespace Game
             return element;
         }
 
-        public int GetSize()
-        {
-            return _dictionary.Count;
-        }
-
         public void PrintCommandList()
         {
-            var valueCollection = _dictionary.Values;
-            var i = 1;
-
-            foreach (var val in valueCollection)
+            for (int index = 0; index < _dictionary.Count; ++index)
             {
-                var getValue = (Command)val;
-                Console.WriteLine("{0}|{1}: {2}", i, getValue.Name, getValue.Description);
-                i++;
-            }
-
-            for (int index =0; index < _dictionary.Count; ++index)
-            {
-                DictionaryEntry entry = (DictionaryEntry)_dictionary[index];
+                var entry = (Command)_dictionary[index];
                 // index ,  entry.value.Name .. Descrtion
+                Console.WriteLine("{0}|{1}: {2}", index, entry.Name, entry.Description);
             }
         }
     }

@@ -56,7 +56,7 @@ namespace GameTest
             var cmd = commands.GetCommand(0);
             var name = cmd.Name;
             var description = cmd.Description;
-            var action = cmd.CommandAction;
+            var action = cmd.Action;
 
             Assert.AreEqual("name1", name);
             Assert.AreEqual("desc1", description);
@@ -65,7 +65,7 @@ namespace GameTest
             cmd = commands.GetCommand(1);
             name = cmd.Name;
             description = cmd.Description;
-            action = cmd.CommandAction;
+            action = cmd.Action;
 
             Assert.AreEqual("name2", name);
             Assert.AreEqual("desc2", description);

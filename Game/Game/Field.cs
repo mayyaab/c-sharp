@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Game
@@ -106,6 +107,40 @@ namespace Game
                 }
             }
         }
+
+        // TG: returns either a path of positions from src to dst or null if not found
+        //private IEnumerable<Position> GetPath(Position source, Position destination)
+        //{
+        //    //var list = new List<Position>();
+        //    if (source == destination)
+        //    {
+        //        var list = new List<Position>();
+        //        list.Add(source);
+        //        IEnumerable<Position> listIenumerable = list;
+        //        return listIenumerable;
+        //    }
+        //    bool[] visited = new bool[Height*Width];
+
+        //    visited[] = true;
+
+        //    List<int> minList = new List<int>();
+        //    foreach (int child in graph.GetSuccessors(x))
+        //    {
+        //        if (!visited[child])
+        //        {
+        //            var result = GetPath(child, y);
+        //            if (result.Count != 0)
+        //            {
+        //                if (minList.Count == 0 || result.Count < minList.Count)
+        //                {
+        //                    minList = result;
+        //                    minList.Add(x);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //}
 
 
         private Tuple<Position, Position> GetDirections(Line.Direction direction)

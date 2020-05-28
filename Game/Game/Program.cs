@@ -9,55 +9,49 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            CommandList newCommandList = new CommandList();
-            newCommandList.Add("name1", "desc1", () => { });
-            newCommandList.Add("name2", "desc2", () => { });
-            newCommandList.PrintCommandList();
-            var command = newCommandList.GetCommand(0);
-            Console.WriteLine(command.Name);
-            Console.WriteLine(command.Description);
-
-
             bool doLoop = true;
-            var newField = new Field();
+            var field = new Field();
 
-            Dictionary<string, Action> commands = new Dictionary<string, Action>();
-            commands.Add("USAGE", PrintUsage);
-            commands.Add("START", () =>
+            var commands = new CommandList();
+
+            commands.Add("USAGE", "Prints the usage", () => { commands.PrintCommandList(); });
+            commands.Add("START", "Print the field", () =>
             {
                 Console.WriteLine("New game started");
-                PrintField(newField);
+                PrintField(field);
             });
 
-            commands.Add("NEXT", () =>
+            commands.Add("NEXT", "Add a temp", () =>
             {
-                newField.PlaceBalls();
-                PrintField(newField);
+                field.PlaceBalls();
+                PrintField(field);
             });
 
-            commands.Add("SWITCH", () =>
+            commands.Add("SWITCH", "Switch two balls", () =>
             {
-                SwitchBalls(newField);
+                SwitchBalls(field);
             });
 
-            commands.Add("END", () =>
+            commands.Add("END", "Finish the game", () =>
             {
                 doLoop = false;
             });
 
-            PrintUsage();
+            commands.PrintCommandList();
+
+
             while (doLoop)
             {
                 string line = Console.ReadLine();
 
-                if (commands.ContainsKey(line))
+                try
                 {
-                    var func = commands[line];
-                    func();
+                     var result = Convert.ToInt32(line);
+                     commands.Run(result);
                 }
-                else
+                catch
                 {
-                    Console.WriteLine("Command is not supported");
+                    commands.Run(line);
                 }
             }
         }
@@ -100,16 +94,6 @@ namespace Game
                 }
                 Console.WriteLine();
             }
-        }
-
-        private static void PrintUsage()
-        {
-            Console.WriteLine("Supported commands:");
-            Console.WriteLine("1|usage: Prints the usage.");
-            Console.WriteLine("2|start: Print the field");
-            Console.WriteLine("4|next: Add a temp");
-            Console.WriteLine("5|switch: Switch two balls");
-            Console.WriteLine("6|finish: Finish ");
         }
 
         private static void SwitchBalls(Field field)
