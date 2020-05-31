@@ -110,6 +110,23 @@ namespace GameTest
             Assert.AreEqual(BallColor.White, field.GetBallColorAt(3, 2));
         }
 
+        [TestMethod]
+        public void TestGetPath1()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(1, 2), BallColor.White);
+            //field.SetBallColorAt(new Position(2, 2), BallColor.White);
+            //field.SetBallColorAt(new Position(3, 2), BallColor.White);
+
+            //var visited = new bool[,]();
+
+            var path = field.GetPath(new Position(1, 2), new Position(3, 2), new bool[field.Height, field.Width] );
+
+            var pathCount = path.Count;
+            Assert.AreEqual(3, pathCount);
+        }
+
         private static int CountEmptySquares(Field field)
         {
             int emptyCount = 0;

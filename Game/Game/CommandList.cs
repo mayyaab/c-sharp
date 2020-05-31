@@ -6,8 +6,6 @@ namespace Game
 {
     public class CommandList
     {
-        public Command Command { get; }
-
         private readonly OrderedDictionary _dictionary = new OrderedDictionary(StringComparer.InvariantCultureIgnoreCase);
 
         public int GetSize
@@ -32,7 +30,6 @@ namespace Game
 
             _dictionary.Add(name, command);
         }
-
 
         public void Run(int index)
         {
@@ -67,7 +64,7 @@ namespace Game
             for (int index = 0; index < _dictionary.Count; ++index)
             {
                 var entry = (Command)_dictionary[index];
-                // index ,  entry.value.Name .. Descrtion
+
                 Console.WriteLine("{0}|{1}: {2}", index, entry.Name, entry.Description);
             }
         }

@@ -108,40 +108,62 @@ namespace Game
             }
         }
 
-        // TG: returns either a path of positions from src to dst or null if not found
-        //private IEnumerable<Position> GetPath(Position source, Position destination)
-        //{
-        //    //var list = new List<Position>();
-        //    if (source == destination)
-        //    {
-        //        var list = new List<Position>();
-        //        list.Add(source);
-        //        IEnumerable<Position> listIenumerable = list;
-        //        return listIenumerable;
-        //    }
-        //    bool[] visited = new bool[Height*Width];
+        public IList<Position> GetPath(Position source, Position destination, bool[,] visited)
+        {
+            // condition when the function will end
+            //
+            //var list = new List<Position>();
+            if (source == destination)
+            {
+                return new List<Position>
+                {
+                    source
+                };
+            }
 
-        //    visited[] = true;
+            IList<Position> minPath = null;
 
-        //    List<int> minList = new List<int>();
-        //    foreach (int child in graph.GetSuccessors(x))
-        //    {
-        //        if (!visited[child])
-        //        {
-        //            var result = GetPath(child, y);
-        //            if (result.Count != 0)
-        //            {
-        //                if (minList.Count == 0 || result.Count < minList.Count)
-        //                {
-        //                    minList = result;
-        //                    minList.Add(x);
-        //                }
-        //            }
-        //        }
-        //    }
+            foreach (var neighbor in GetNeighbors(source))
+            {
+                if (!IsVisited(neighbor, visited))
+                {
+                    visited[neighbor.Row, neighbor.Column] = true;
+                    var path = GetPath(neighbor, destination, visited);
+                    if (path != null && (minPath == null || minPath.Count > path.Count))
+                    {
+                        minPath = path;
+                    }
+                }
+            }
 
-        //}
+            minPath?.Insert(0, source);
 
+            return minPath;
+        }
+
+        private IEnumerable<Position> GetNeighbors(Position source)
+        {
+            var neighbors = new List<Position>();
+
+            for (int row = source.Row - 1; row < 3; row++)
+            {
+                for (int col = source.Column - 1; col < 3; col++)
+                {
+                    var newP = new Position(row, col);
+                    if (newP != source && newP.Row >= 0 && newP.Row < Width && newP.Column >= 0 && newP.Column < Height)
+                    {
+                        neighbors.Add(newP);
+                    }
+                }
+            }
+
+            return neighbors;
+        }
+
+        private bool IsVisited(Position position, bool[,] visited)
+        {
+            return visited[position.Row, position.Column];
+        }
 
         private Tuple<Position, Position> GetDirections(Line.Direction direction)
         {
