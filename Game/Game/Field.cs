@@ -141,7 +141,7 @@ namespace Game
             return minPath;
         }
 
-        private IEnumerable<Position> GetNeighbors(Position source)
+        public IEnumerable<Position> GetNeighbors(Position source)
         {
             var neighbors = new List<Position>();
 
@@ -150,7 +150,9 @@ namespace Game
                 for (int col = source.Column - 1; col < 3; col++)
                 {
                     var newP = new Position(row, col);
-                    if (newP != source && newP.Row >= 0 && newP.Row < Width && newP.Column >= 0 && newP.Column < Height)
+                    if (newP != source && newP.Row >= 0 && newP.Row < Width && newP.Column >= 0 && newP.Column < Height
+                        && source.Row + 1 >= newP.Row
+                        && source.Column + 1 >= newP.Column)
                     {
                         neighbors.Add(newP);
                     }

@@ -1,3 +1,4 @@
+using System.Linq;
 using Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -36,7 +37,6 @@ namespace GameTest
             Assert.AreEqual(BallColor.Empty, field.GetBallColorAt(3, 2));
             Assert.AreEqual(BallColor.Empty, field.GetBallColorAt(4, 2));
         }
-
 
         [TestMethod]
         public void TestRemoveLinesHorizontal()
@@ -125,6 +125,56 @@ namespace GameTest
 
             var pathCount = path.Count;
             Assert.AreEqual(3, pathCount);
+        }
+
+        [TestMethod]
+        public void GetNeighbors1()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 0), BallColor.White);
+            field.SetBallColorAt(new Position(0, 1), BallColor.White);
+            field.SetBallColorAt(new Position(0, 2), BallColor.White);
+            field.SetBallColorAt(new Position(1, 0), BallColor.White);
+            field.SetBallColorAt(new Position(1, 2), BallColor.White);
+            field.SetBallColorAt(new Position(2, 0), BallColor.White);
+            field.SetBallColorAt(new Position(2, 1), BallColor.White);
+            field.SetBallColorAt(new Position(2, 2), BallColor.White);
+
+            var neighborList = field.GetNeighbors(new Position(1,1));
+
+            var countNeighbors = neighborList.Count();
+            Assert.AreEqual(8, countNeighbors);
+        }
+
+        [TestMethod]
+        public void GetNeighbors2()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 1), BallColor.White);
+            field.SetBallColorAt(new Position(1, 0), BallColor.White);
+            field.SetBallColorAt(new Position(1, 1), BallColor.White);
+
+            var neighborList = field.GetNeighbors(new Position(0, 0));
+
+            var countNeighbors = neighborList.Count();
+            Assert.AreEqual(3, countNeighbors);
+        }
+
+        [TestMethod]
+        public void GetNeighbors3()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(7, 8), BallColor.White);
+            field.SetBallColorAt(new Position(7, 7), BallColor.White);
+            field.SetBallColorAt(new Position(8, 7), BallColor.White);
+
+            var neighborList = field.GetNeighbors(new Position(8, 8));
+
+            var countNeighbors = neighborList.Count();
+            Assert.AreEqual(3, countNeighbors);
         }
 
         private static int CountEmptySquares(Field field)

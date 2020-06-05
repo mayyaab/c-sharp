@@ -1,4 +1,6 @@
-﻿namespace Game
+﻿using System;
+
+namespace Game
 {
     public class Position
     {
@@ -16,29 +18,32 @@
             return new Position(lhs.Row + rhs.Row, lhs.Column + rhs.Column);
         }
 
-        public static bool operator ==(Position v1, Position v2)
+        public override bool Equals(object obj)
         {
-            if (ReferenceEquals(v1, v2))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(v1, null))
-            {
-                return false;
-            }
-            if (ReferenceEquals(v2, null))
-            {
-                return false;
-            }
-
-            return v1.Equals(v2);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Position) obj);
         }
 
-        public static bool operator !=(Position v1, Position v2)
+        public override int GetHashCode()
         {
-            return !(v1 == v2);
+            return HashCode.Combine(Row, Column);
+        }
 
+        public static bool operator ==(Position left, Position right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Position left, Position right)
+        {
+            return !Equals(left, right);
+        }
+
+        protected bool Equals(Position other)
+        {
+            return Row == other.Row && Column == other.Column;
         }
     }
 }
