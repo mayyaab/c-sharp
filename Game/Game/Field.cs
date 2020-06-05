@@ -144,19 +144,22 @@ namespace Game
         public IEnumerable<Position> GetNeighbors(Position source)
         {
             var neighbors = new List<Position>();
-
-            for (int row = source.Row - 1; row < 3; row++)
+            int countRow = 0;
+            int countCol = 0;
+            for (int row = source.Row - 1; countRow < 3; row++)
             {
-                for (int col = source.Column - 1; col < 3; col++)
+                for (int col = source.Column - 1; countCol < 3; col++)
                 {
                     var newP = new Position(row, col);
                     if (newP != source && newP.Row >= 0 && newP.Row < Width && newP.Column >= 0 && newP.Column < Height
-                        && source.Row + 1 >= newP.Row
-                        && source.Column + 1 >= newP.Column)
+                        && (source.Row + 1 >= newP.Row || source.Row - 1 >= newP.Row)
+                        && (source.Column + 1 >= newP.Column || source.Column - 1 >= newP.Column))
                     {
                         neighbors.Add(newP);
                     }
+                    countCol++;
                 }
+                countRow++;
             }
 
             return neighbors;
