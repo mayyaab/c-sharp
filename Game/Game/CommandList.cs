@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Specialized;
 
 namespace Game
@@ -12,6 +11,16 @@ namespace Game
 
         public CommandList()
         {
+        }
+
+        public bool Contains(string nameOrIndex)
+        {
+            if (int.TryParse(nameOrIndex, out int index))
+            {
+                return index >= 0 && index < _dictionary.Count;
+            }
+
+            return _dictionary.Contains(nameOrIndex);
         }
 
         public void Add(string name, string description, Action commandAction)
@@ -28,15 +37,31 @@ namespace Game
             _dictionary.Add(name, command);
         }
 
-        public void Run(int index)
+        public void Run(string nameOrIndex)
         {
+            if (int.TryParse(nameOrIndex, out int index))
+            {
+                RunByIndex(index);
+            }
+            else
+            {
+                RunByName(nameOrIndex);
+            }
+        }
+
+        public void RunByIndex(int index)
+        {
+            // TG: check out-of-range
+
             var element = (Command)_dictionary[index];
             var action = element.Action;
             action();
         }
 
-        public void Run(string name)
+        public void RunByName(string name)
         {
+            // TG: check out-of-range
+
             if (_dictionary.Contains(name))
             {
                 var func = (Command)_dictionary[name];
@@ -45,6 +70,7 @@ namespace Game
             }
         }
 
+        // TG: can be replaced with the indexing operator
         public Command GetCommand(int index)
         {
             if (index < 0)

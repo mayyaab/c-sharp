@@ -19,12 +19,12 @@ namespace GameTest
 
             // test1
             changed = false;
-            commands.Run("name");
+            commands.RunByName("name");
             Assert.AreEqual(true, changed);
 
             // test 2
             changed = false;
-            commands.Run("NAME");
+            commands.RunByName("NAME");
             Assert.AreEqual(true, changed);
         }
 
@@ -37,7 +37,7 @@ namespace GameTest
             commands.Add("name1", "descriprion1", () => changed1 = true);
             commands.Add("name2", "descriprion2", () => changed2 = true);
 
-            commands.Run(1);
+            commands.RunByIndex(1);
             Assert.AreEqual(false, changed1);
             Assert.AreEqual(true, changed2);
         }

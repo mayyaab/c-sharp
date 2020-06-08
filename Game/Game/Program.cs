@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
 namespace Game
@@ -14,44 +12,50 @@ namespace Game
 
             var commands = new CommandList();
 
-            commands.Add("USAGE", "Prints the usage", () => { commands.PrintCommandList(); });
-            commands.Add("START", "Print the field", () =>
+            commands.Add("Usage", "Print the usage", () =>
+            {
+                commands.PrintCommandList();
+            });
+
+            commands.Add("Start", "Start a new game", () =>
             {
                 Console.WriteLine("New game started");
                 PrintField(field);
             });
 
-            commands.Add("NEXT", "Add a temp", () =>
+            commands.Add("Next", "Add a temp", () =>
             {
                 field.PlaceBalls();
                 PrintField(field);
             });
 
-            commands.Add("SWITCH", "Switch two balls", () =>
+            commands.Add("Switch", "Switch two balls", () =>
             {
                 SwitchBalls(field);
             });
 
-            commands.Add("END", "Finish the game", () =>
+            commands.Add("End", "Finish the game", () =>
             {
                 doLoop = false;
             });
 
             commands.PrintCommandList();
 
-
             while (doLoop)
             {
-                string line = Console.ReadLine();
-
-                try
+                string line = Console.ReadLine()?.Trim();
+                if (string.IsNullOrEmpty(line))
                 {
-                     var result = Convert.ToInt32(line);
-                     commands.Run(result);
+                    continue;
                 }
-                catch
+
+                if (commands.Contains(line))
                 {
                     commands.Run(line);
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid '{line}' command");
                 }
             }
         }
