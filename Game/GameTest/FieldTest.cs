@@ -116,15 +116,43 @@ namespace GameTest
             var field = new Field();
 
             field.SetBallColorAt(new Position(1, 2), BallColor.White);
-            //field.SetBallColorAt(new Position(2, 2), BallColor.White);
-            //field.SetBallColorAt(new Position(3, 2), BallColor.White);
-
-            //var visited = new bool[,]();
 
             var path = field.GetPath(new Position(1, 2), new Position(3, 2), new bool[field.Height, field.Width] );
 
             var pathCount = path.Count;
-            Assert.AreEqual(3, pathCount);
+
+            Assert.AreNotEqual(null, pathCount);
+        }
+
+        [TestMethod]
+        public void TestGetPath2()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 1), BallColor.White);
+            field.SetBallColorAt(new Position(1, 1), BallColor.White);
+            field.SetBallColorAt(new Position(1, 0), BallColor.White);
+
+
+            var path = field.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
+
+            Assert.AreEqual(null, path);
+        }
+
+        [TestMethod]
+        public void TestGetPath3()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 1), BallColor.White);
+            field.SetBallColorAt(new Position(1, 1), BallColor.White);
+
+
+            var path = field.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
+
+            var pathCount = path.Count;
+
+            Assert.AreNotEqual(null, pathCount);
         }
 
         [TestMethod]
@@ -144,7 +172,7 @@ namespace GameTest
             var neighborList = field.GetNeighbors(new Position(1,1));
 
             var countNeighbors = neighborList.Count();
-            Assert.AreEqual(8, countNeighbors);
+            Assert.AreEqual(4, countNeighbors);
         }
 
         [TestMethod]
@@ -159,7 +187,7 @@ namespace GameTest
             var neighborList = field.GetNeighbors(new Position(0, 0));
 
             var countNeighbors = neighborList.Count();
-            Assert.AreEqual(3, countNeighbors);
+            Assert.AreEqual(2, countNeighbors);
         }
 
         [TestMethod]
@@ -174,7 +202,10 @@ namespace GameTest
             var neighborList = field.GetNeighbors(new Position(8, 8));
 
             var countNeighbors = neighborList.Count();
-            Assert.AreEqual(3, countNeighbors);
+            Assert.AreEqual(2, countNeighbors);
+
+            Assert.AreEqual(neighborList[0], new Position(8, 7));
+            Assert.AreEqual(neighborList[1], new Position(7, 8));
         }
 
         private static int CountEmptySquares(Field field)

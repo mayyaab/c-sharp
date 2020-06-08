@@ -110,9 +110,6 @@ namespace Game
 
         public IList<Position> GetPath(Position source, Position destination, bool[,] visited)
         {
-            // condition when the function will end
-            //
-            //var list = new List<Position>();
             if (source == destination)
             {
                 return new List<Position>
@@ -125,7 +122,7 @@ namespace Game
 
             foreach (var neighbor in GetNeighbors(source))
             {
-                if (!IsVisited(neighbor, visited))
+                if (!IsVisited(neighbor, visited) && GetBallColorAt(neighbor.Row, neighbor.Column) == BallColor.Empty)
                 {
                     visited[neighbor.Row, neighbor.Column] = true;
                     var path = GetPath(neighbor, destination, visited);
@@ -141,28 +138,30 @@ namespace Game
             return minPath;
         }
 
-        public IEnumerable<Position> GetNeighbors(Position source)
+        public IList<Position> GetNeighbors(Position source)
         {
             var neighbors = new List<Position>();
-            int countRow = 0;
-            int countCol = 0;
-            for (int row = source.Row - 1; countRow < 3; row++)
+
+            foreach (var direction in new[]{Line.Direction.Horizontal, Line.Direction.Vertical})
             {
-                for (int col = source.Column - 1; countCol < 3; col++)
+                var directionPositions = GetDirections(direction);
+
+                foreach (var step in new[]{directionPositions.Item1, directionPositions.Item2})
                 {
-                    var newP = new Position(row, col);
-                    if (newP != source && newP.Row >= 0 && newP.Row < Width && newP.Column >= 0 && newP.Column < Height
-                        && (source.Row + 1 >= newP.Row || source.Row - 1 >= newP.Row)
-                        && (source.Column + 1 >= newP.Column || source.Column - 1 >= newP.Column))
+                    var position = source + step;
+                    if (IsInField(position))
                     {
-                        neighbors.Add(newP);
+                        neighbors.Add(position);
                     }
-                    countCol++;
                 }
-                countRow++;
             }
 
             return neighbors;
+        }
+
+        public bool IsInField(Position position)
+        {
+            return position.Row >= 0 && position.Row < Width && position.Column >= 0 && position.Column < Height;
         }
 
         private bool IsVisited(Position position, bool[,] visited)

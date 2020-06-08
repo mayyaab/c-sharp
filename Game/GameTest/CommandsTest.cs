@@ -78,9 +78,9 @@ namespace GameTest
             commands.Add("name2", () => { });
             commands.Add("name3", () => { });
 
-            //var size = commands.GetSize();
+            var size = commands.Count;
 
-            //Assert.AreEqual(3, size);
+            Assert.AreEqual(3, size);
         }
 
         [TestMethod]

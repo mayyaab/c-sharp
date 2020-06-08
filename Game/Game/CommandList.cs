@@ -8,10 +8,7 @@ namespace Game
     {
         private readonly OrderedDictionary _dictionary = new OrderedDictionary(StringComparer.InvariantCultureIgnoreCase);
 
-        public int GetSize
-        {
-            get { return _dictionary.Count; }
-        }
+        public int Count => _dictionary.Count;
 
         public CommandList()
         {
