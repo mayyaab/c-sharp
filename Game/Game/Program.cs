@@ -8,7 +8,7 @@ namespace Game
         static void Main(string[] args)
         {
             bool doLoop = true;
-            var field = new Field();
+            Field field = new Field();
 
             var commands = new CommandList();
 
@@ -20,18 +20,24 @@ namespace Game
             commands.Add("Start", "Start a new game", () =>
             {
                 Console.WriteLine("New game started");
+                field = new Field();
+                field.PlaceBalls();
                 PrintField(field);
             });
 
             commands.Add("Next", "Add a temp", () =>
             {
                 field.PlaceBalls();
+                field.RemoveForBalls();
                 PrintField(field);
             });
 
             commands.Add("Switch", "Switch two balls", () =>
             {
                 SwitchBalls(field);
+                field.PlaceBalls();
+                field.RemoveForBalls();
+                PrintField(field);
             });
 
             commands.Add("End", "Finish the game", () =>
@@ -118,7 +124,14 @@ namespace Game
                 Console.WriteLine("Wrong format!");
             }
 
-            field.MoveBall(source, destination);
+            if (field.GetPath(source, destination, new bool[field.Height, field.Width]) != null)
+            {
+                field.MoveBall(source, destination);
+            }
+            else
+            {
+                Console.WriteLine("No path");
+            }
         }
     }
 }

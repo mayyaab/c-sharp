@@ -108,6 +108,20 @@ namespace Game
             }
         }
 
+        public void RemoveForBalls()
+        {
+            for (int row = 0; row < Height; row++)
+            {
+                for (int col = 0; col < Width; col++)
+                {
+                    if (GetBallColorAt(row, col) != BallColor.Empty)
+                    {
+                        RemoveLines(new Position(row, col));
+                    }
+                }
+            }
+        }
+
         public IList<Position> GetPath(Position source, Position destination, bool[,] visited)
         {
             if (source == destination)
