@@ -27,16 +27,17 @@ namespace Game
 
             commands.Add("Next", "Add a temp", () =>
             {
-                field.PlaceBalls();
-                field.RemoveForBalls();
+                var balls = field.PlaceBalls();
+                field.RemoveForBalls(balls);
                 PrintField(field);
             });
 
             commands.Add("Switch", "Switch two balls", () =>
             {
-                SwitchBalls(field);
-                field.PlaceBalls();
-                field.RemoveForBalls();
+                var destination = SwitchBalls(field);
+                field.RemoveLines(destination);
+                var balls = field.PlaceBalls();
+                field.RemoveForBalls(balls);
                 PrintField(field);
             });
 
@@ -106,7 +107,7 @@ namespace Game
             }
         }
 
-        private static void SwitchBalls(Field field)
+        private static Position SwitchBalls(Field field)
         {
             Console.WriteLine("Source [row column]: ");
             var source = ParsePosition(Console.ReadLine());
@@ -132,6 +133,8 @@ namespace Game
             {
                 Console.WriteLine("No path");
             }
+
+            return destination;
         }
     }
 }

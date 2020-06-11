@@ -38,7 +38,7 @@ namespace Game
             return _array[row, column];
         }
 
-        public void PlaceBalls()
+        public List<Position> PlaceBalls()
         {
             var listPosition = new List<Position>();
 
@@ -66,6 +66,8 @@ namespace Game
                     _array[position.Row, position.Column] = (BallColor)random.Next(1, ColorsCount + 1);
                 }
             }
+
+            return listPosition;
         }
 
         public void MoveBall(Position source, Position destination)
@@ -108,16 +110,13 @@ namespace Game
             }
         }
 
-        public void RemoveForBalls()
+        public void RemoveForBalls(List<Position> listPositions)
         {
-            for (int row = 0; row < Height; row++)
+            foreach (var position in listPositions)
             {
-                for (int col = 0; col < Width; col++)
+                if (GetBallColorAt(position) != BallColor.Empty)
                 {
-                    if (GetBallColorAt(row, col) != BallColor.Empty)
-                    {
-                        RemoveLines(new Position(row, col));
-                    }
+                    RemoveLines(position);
                 }
             }
         }
