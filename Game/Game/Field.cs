@@ -38,7 +38,7 @@ namespace Game
             return _array[row, column];
         }
 
-        public List<Position> PlaceBalls()
+        public IEnumerable<Position> PlaceBalls()
         {
             var listPosition = new List<Position>();
 
@@ -110,7 +110,7 @@ namespace Game
             }
         }
 
-        public void RemoveForBalls(List<Position> listPositions)
+        public void RemoveForBalls(IEnumerable<Position> listPositions)
         {
             foreach (var position in listPositions)
             {
