@@ -115,7 +115,6 @@ namespace Game
             if (source == null)
             {
                 Console.WriteLine("Wrong format!");
-
             }
 
             Console.WriteLine("Destination [row column]: ");

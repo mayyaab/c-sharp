@@ -26,10 +26,10 @@ namespace Game
             return Equals((Position) obj);
         }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Row, Column);
-        }
+        //public override int GetHashCode()
+        //{
+        //    return HashCode.Combine(Row, Column);
+        //}
 
         public static bool operator ==(Position left, Position right)
         {
