@@ -19,5 +19,11 @@ namespace Game.UI
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+
+
+        private static void PrintField (Field field)
+        {
+        
+        }
     }
 }
