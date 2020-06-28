@@ -20,10 +20,5 @@ namespace Game.UI
             Application.Run(new Form1());
         }
 
-
-        private static void PrintField (Field field)
-        {
-        
-        }
     }
 }

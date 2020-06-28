@@ -28,33 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.PlaceBalls = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.PlaceBalls)).BeginInit();
             this.SuspendLayout();
-            // 
-            // PlaceBalls
-            // 
-            this.PlaceBalls.Image = ((System.Drawing.Image)(resources.GetObject("PlaceBalls.Image")));
-            this.PlaceBalls.Location = new System.Drawing.Point(646, 12);
-            this.PlaceBalls.Name = "PlaceBalls";
-            this.PlaceBalls.Size = new System.Drawing.Size(199, 65);
-            this.PlaceBalls.TabIndex = 0;
-            this.PlaceBalls.TabStop = false;
-            this.PlaceBalls.Click += new System.EventHandler(this.PlaceBalls_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(857, 649);
-            this.Controls.Add(this.PlaceBalls);
+            this.ClientSize = new System.Drawing.Size(278, 244);
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_PaintLines);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.PlaceBalls)).EndInit();
+            this.Load += new System.EventHandler(this.Form1_Load_1);
             this.ResumeLayout(false);
 
         }
