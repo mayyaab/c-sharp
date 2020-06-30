@@ -35,6 +35,7 @@
             // 
             // PlaceBalls
             // 
+            this.PlaceBalls.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.PlaceBalls.Image = ((System.Drawing.Image)(resources.GetObject("PlaceBalls.Image")));
             this.PlaceBalls.Location = new System.Drawing.Point(646, 12);
             this.PlaceBalls.Name = "PlaceBalls";

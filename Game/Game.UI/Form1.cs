@@ -6,7 +6,8 @@ namespace Game.UI
 {
     public partial class Form1 : Form
     {
-        private Field field = new Field();
+        private readonly Field _field = new Field();
+
         public Form1()
         {
             InitializeComponent();
@@ -25,16 +26,16 @@ namespace Game.UI
             using var pen = new Pen(Color.SandyBrown, 5);
 
             var rowLine = 0;
-            for (int row = 0; row <= field.Height; row++)
+            for (int row = 0; row <= _field.Height; row++)
             {
-                graphics.DrawLine(pen, 0, rowLine, cellSize * field.Height, rowLine);
+                graphics.DrawLine(pen, 0, rowLine, cellSize * _field.Height, rowLine);
                 rowLine += cellSize;
             }
 
             var columnLine = 0;
-            for (int col = 0; col <= field.Width; col++)
+            for (int col = 0; col <= _field.Width; col++)
             {
-                graphics.DrawLine(pen, columnLine, 0, columnLine, cellSize * field.Width);
+                graphics.DrawLine(pen, columnLine, 0, columnLine, cellSize * _field.Width);
                 columnLine += cellSize;
             }
         }
@@ -44,13 +45,13 @@ namespace Game.UI
             var ballInCellSize = ClientRectangle.Height / 9;
             var indentBallSize = ClientRectangle.Height / 24;
 
-            for (int row = 0; row < field.Height; row++)
+            for (int row = 0; row < _field.Height; row++)
             {
-                for (int col = 0; col < field.Width; col++)
+                for (int col = 0; col < _field.Width; col++)
                 {
-                    if (field.GetBallColorAt(row, col) != BallColor.Empty)
+                    if (_field.GetBallColorAt(row, col) != BallColor.Empty)
                     {
-                        var colorPen = MapColor(field.GetBallColorAt(row, col));
+                        var colorPen = MapColor(_field.GetBallColorAt(row, col));
                         using var pen = new Pen(colorPen, 5);
                         graphics.DrawEllipse(pen, row * ballInCellSize + indentBallSize, col * ballInCellSize + indentBallSize, 20, 20);
                     }
@@ -80,14 +81,8 @@ namespace Game.UI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            _field.PlaceBalls();
 
         }
-
-        /*
-        private void PlaceBalls_Click(object? sender, PaintEventArgs e)
-        {
-            field.PlaceBalls();
-        }
-        */
     }
 }
