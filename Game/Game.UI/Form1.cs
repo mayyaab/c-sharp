@@ -12,7 +12,7 @@ namespace Game.UI
             InitializeComponent();
         }
 
-        private void Form1_PaintField(object sender, PaintEventArgs e)
+        private void Form1_Paint_1(object sender, PaintEventArgs e)
         {
             PaintGrid(e.Graphics);
             PaintBalls(e.Graphics);
@@ -83,14 +83,11 @@ namespace Game.UI
 
         }
 
+        /*
         private void PlaceBalls_Click(object? sender, PaintEventArgs e)
         {
             field.PlaceBalls();
         }
-
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-
-        }
+        */
     }
 }
