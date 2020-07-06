@@ -8,8 +8,6 @@ namespace Game.UI
     {
         private readonly Field _field = new Field();
         private Position _selectedBall;
-        private int _indentBallSize;
-        private int _ballSize;
 
         public Form1()
         {
@@ -17,6 +15,7 @@ namespace Game.UI
         }
 
         private int CellSize => Math.Min(ClientRectangle.Height, ClientRectangle.Width) / _field.Height;
+        private int LineWidth => 5;
 
         private void Form1_Paint_1(object sender, PaintEventArgs e)
         {
@@ -27,32 +26,34 @@ namespace Game.UI
         private void PaintGrid(Graphics graphics)
         {
             var cellSize = CellSize;
+            var gridWidth = cellSize * _field.Height;
+            var gridHeight = cellSize * _field.Height;
 
-            using var pen = new Pen(Color.SandyBrown, 5);
+            using var pen = new Pen(Color.SandyBrown, LineWidth);
 
+            // Draw horizontal lines
             var rowLine = 0;
-            for (int row = 0; row <= _field.Height; row++)
+            for (int row = 0; row <= _field.Width; row++)
             {
-                graphics.DrawLine(pen, 0, rowLine, cellSize * _field.Height, rowLine);
+                graphics.DrawLine(pen, 0, rowLine, gridWidth, rowLine);
                 rowLine += cellSize;
             }
 
+            // Draw vertical lines
             var columnLine = 0;
-            for (int col = 0; col <= _field.Width; col++)
+            for (int col = 0; col <= _field.Height; col++)
             {
-                graphics.DrawLine(pen, columnLine, 0, columnLine, cellSize * _field.Width);
+                graphics.DrawLine(pen, columnLine, 0, columnLine, gridHeight);
                 columnLine += cellSize;
             }
         }
 
         private void PaintBalls(Graphics graphics)
         {
-            var height = ClientRectangle.Height;
+            var indent = LineWidth;
 
-            var ballInCellSize = CellSize;
-
-            _indentBallSize = height / 75;
-            _ballSize = height / 11;
+            var cellSize = CellSize;
+            var ballSize = CellSize - 2 * indent;
 
             for (int row = 0; row < _field.Height; row++)
             {
@@ -62,7 +63,9 @@ namespace Game.UI
                     {
                         var colorPen = MapColor(_field.GetBallColorAt(row, col));
                         using var pen = new Pen(colorPen, 5);
-                        graphics.DrawEllipse(pen, row * ballInCellSize + _indentBallSize, col * ballInCellSize + _indentBallSize, _ballSize, _ballSize);
+                        using var brush = new SolidBrush(colorPen);
+                        graphics.DrawEllipse(pen, row * cellSize + indent, col * cellSize + indent, ballSize, ballSize);
+                        graphics.FillEllipse(brush, row * cellSize + indent, col * cellSize + indent, ballSize, ballSize);
                     }
                 }
             }
@@ -91,7 +94,6 @@ namespace Game.UI
         private void Form1_Load(object sender, EventArgs e)
         {
             _field.PlaceBalls();
-
         }
 
         private void Form1_Click(object sender, EventArgs e)
