@@ -8,16 +8,15 @@ namespace Game.UI
     {
         private readonly Field _field = new Field();
         private Position _selectedBall;
-        private int  _ballInCellSize;
         private int _indentBallSize;
         private int _ballSize;
-        private int _cellSize;
-
 
         public Form1()
         {
             InitializeComponent();
         }
+
+        private int CellSize => Math.Min(ClientRectangle.Height, ClientRectangle.Width) / _field.Height;
 
         private void Form1_Paint_1(object sender, PaintEventArgs e)
         {
@@ -27,30 +26,33 @@ namespace Game.UI
 
         private void PaintGrid(Graphics graphics)
         {
-            _cellSize = ClientRectangle.Height / 9;
+            var cellSize = CellSize;
 
             using var pen = new Pen(Color.SandyBrown, 5);
 
             var rowLine = 0;
             for (int row = 0; row <= _field.Height; row++)
             {
-                graphics.DrawLine(pen, 0, rowLine, _cellSize * _field.Height, rowLine);
-                rowLine += _cellSize;
+                graphics.DrawLine(pen, 0, rowLine, cellSize * _field.Height, rowLine);
+                rowLine += cellSize;
             }
 
             var columnLine = 0;
             for (int col = 0; col <= _field.Width; col++)
             {
-                graphics.DrawLine(pen, columnLine, 0, columnLine, _cellSize * _field.Width);
-                columnLine += _cellSize;
+                graphics.DrawLine(pen, columnLine, 0, columnLine, cellSize * _field.Width);
+                columnLine += cellSize;
             }
         }
 
         private void PaintBalls(Graphics graphics)
         {
-            _ballInCellSize = ClientRectangle.Height / 9;
-            _indentBallSize = ClientRectangle.Height / 75;
-            _ballSize = ClientRectangle.Height / 11;
+            var height = ClientRectangle.Height;
+
+            var ballInCellSize = CellSize;
+
+            _indentBallSize = height / 75;
+            _ballSize = height / 11;
 
             for (int row = 0; row < _field.Height; row++)
             {
@@ -60,7 +62,7 @@ namespace Game.UI
                     {
                         var colorPen = MapColor(_field.GetBallColorAt(row, col));
                         using var pen = new Pen(colorPen, 5);
-                        graphics.DrawEllipse(pen, row * _ballInCellSize + _indentBallSize, col * _ballInCellSize + _indentBallSize, _ballSize, _ballSize);
+                        graphics.DrawEllipse(pen, row * ballInCellSize + _indentBallSize, col * ballInCellSize + _indentBallSize, _ballSize, _ballSize);
                     }
                 }
             }
@@ -131,8 +133,10 @@ namespace Game.UI
 
         private Position CalculatePositionByCoordinates(int x, int y)
         {
-            var positionX = (_field.Height * _cellSize) % x;
-            var positionY = (_field.Height * _cellSize) % y;
+            var cellSize = CellSize;
+
+            var positionX = (_field.Height * cellSize) % x;
+            var positionY = (_field.Height * cellSize) % y;
 
             return _selectedBall = new Position(positionX, positionY);
         }
@@ -141,7 +145,5 @@ namespace Game.UI
         {
             //
         }
-
-        
     }
 }
