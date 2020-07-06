@@ -98,7 +98,9 @@ namespace Game.UI
 
         private void Form1_Click(object sender, EventArgs e)
         {
-            CalculatePositionByCoordinates(Location.X, Location.Y);
+            var mouseEventArgs = (MouseEventArgs) e;
+
+            CalculatePositionByCoordinates(mouseEventArgs.X, mouseEventArgs.Y);
             TwitchBall(_selectedBall);
 
             if (_field.GetBallColorAt(_selectedBall) == BallColor.Empty)
@@ -137,8 +139,8 @@ namespace Game.UI
         {
             var cellSize = CellSize;
 
-            var positionX = (_field.Height * cellSize) % x;
-            var positionY = (_field.Height * cellSize) % y;
+            var positionX = x / cellSize;
+            var positionY = y / cellSize;
 
             return _selectedBall = new Position(positionX, positionY);
         }
