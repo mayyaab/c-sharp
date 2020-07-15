@@ -99,40 +99,34 @@ namespace Game.UI
         private void Form1_Click(object sender, EventArgs e)
         {
             var mouseEventArgs = (MouseEventArgs) e;
+            var clickedPosition = CalculatePositionByCoordinates(mouseEventArgs.X, mouseEventArgs.Y);
+            var colorClickedPosition = _field.GetBallColorAt(clickedPosition);
 
-            CalculatePositionByCoordinates(mouseEventArgs.X, mouseEventArgs.Y);
-            TwitchBall(_selectedBall);
-
-            if (_field.GetBallColorAt(_selectedBall) == BallColor.Empty)
+            if (_selectedBall == null)
             {
-                  //_field.MoveBall(_selectedBall,  );
-            }
-            else if (_field.GetBallColorAt(_selectedBall) != BallColor.Empty)
-            {
-                //_selectedBall =
+                if (colorClickedPosition != BallColor.Empty)
+                {
+                    _selectedBall = clickedPosition;
+                    TwitchBall(_selectedBall);
+                }
             }
             else
             {
+                if (colorClickedPosition != BallColor.Empty)
+                {
+                    _selectedBall = clickedPosition;
+                    TwitchBall(_selectedBall);
+                }
 
+                else if (colorClickedPosition == BallColor.Empty)
+                {
+                    _field.MoveBall(_selectedBall, clickedPosition);
+                    _field.RemoveLines(clickedPosition);
+                    Invalidate();
+                    _field.PlaceBalls();
+                    _selectedBall = null;
+                }
             }
-
-            //_selectedBall = new Position(MousePosition.X, MousePosition.Y);
-
-           // if (_selectedBall )
-
-            // if selected ball is  null
-            // =
-            //по координатам вычеслить х и у клика
-            // запомнить кликнутую координату
-            // _selectedBall
-
-            // если шарик занят и кликаем на другой шарик то шарик перевыбиается
-
-            //else
-            //проверка если кликаем на пустое поле
-            // если да то MoveBall
-
-
         }
 
         private Position CalculatePositionByCoordinates(int x, int y)
@@ -142,12 +136,12 @@ namespace Game.UI
             var positionX = x / cellSize;
             var positionY = y / cellSize;
 
-            return _selectedBall = new Position(positionX, positionY);
+            return new Position(positionX, positionY);
         }
 
         private void TwitchBall(Position position)
         {
-            //
+
         }
     }
 }
