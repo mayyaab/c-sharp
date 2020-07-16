@@ -8,6 +8,7 @@ namespace Game.UI
     {
         private readonly Field _field = new Field();
         private Position _selectedBall;
+        private int BallSize { get; set; }
 
         public Form1()
         {
@@ -53,7 +54,7 @@ namespace Game.UI
             var indent = LineWidth;
 
             var cellSize = CellSize;
-            var ballSize = CellSize - 2 * indent;
+            BallSize = CellSize - 2 * indent;
 
             for (int row = 0; row < _field.Height; row++)
             {
@@ -64,8 +65,8 @@ namespace Game.UI
                         var colorPen = MapColor(_field.GetBallColorAt(row, col));
                         using var pen = new Pen(colorPen, 5);
                         using var brush = new SolidBrush(colorPen);
-                        graphics.DrawEllipse(pen, row * cellSize + indent, col * cellSize + indent, ballSize, ballSize);
-                        graphics.FillEllipse(brush, row * cellSize + indent, col * cellSize + indent, ballSize, ballSize);
+                        graphics.DrawEllipse(pen, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
+                        graphics.FillEllipse(brush, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
                     }
                 }
             }
@@ -120,10 +121,13 @@ namespace Game.UI
 
                 else if (colorClickedPosition == BallColor.Empty)
                 {
-                    _field.MoveBall(_selectedBall, clickedPosition);
+                    if (_field.GetPath(_selectedBall, clickedPosition, new bool[_field.Height, _field.Width]) != null)
+                    {
+                        _field.MoveBall(_selectedBall, clickedPosition);
+                        _field.PlaceBalls();
+                    }
                     _field.RemoveLines(clickedPosition);
                     Invalidate();
-                    _field.PlaceBalls();
                     _selectedBall = null;
                 }
             }
@@ -142,6 +146,8 @@ namespace Game.UI
         private void TwitchBall(Position position)
         {
 
+            BallSize *= 2;
+            Invalidate();
         }
     }
 }
