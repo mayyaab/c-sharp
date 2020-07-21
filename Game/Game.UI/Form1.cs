@@ -22,6 +22,7 @@ namespace Game.UI
         {
             PaintGrid(e.Graphics);
             PaintBalls(e.Graphics);
+            PaintSelected(e.Graphics);
         }
 
         private void PaintGrid(Graphics graphics)
@@ -65,11 +66,22 @@ namespace Game.UI
                         var colorPen = MapColor(_field.GetBallColorAt(row, col));
                         using var pen = new Pen(colorPen, 5);
                         using var brush = new SolidBrush(colorPen);
-                        graphics.DrawEllipse(pen, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
-                        graphics.FillEllipse(brush, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
+                        graphics.DrawEllipse(pen, col * cellSize + indent, row * cellSize + indent,  BallSize, BallSize);
+                        graphics.FillEllipse(brush, col * cellSize + indent, row * cellSize + indent,  BallSize, BallSize);
                     }
                 }
             }
+        }
+
+        private void PaintSelected(Graphics graphics)
+        {
+            if (_selectedBall == null)
+                return;
+
+            var cellSize = CellSize;
+
+            using var pen = new Pen(Color.Brown, LineWidth);
+            graphics.DrawRectangle(pen, _selectedBall.Column * cellSize, _selectedBall.Row * cellSize, cellSize, cellSize);
         }
 
         private Color MapColor(BallColor color)
@@ -108,7 +120,6 @@ namespace Game.UI
                 if (colorClickedPosition != BallColor.Empty)
                 {
                     _selectedBall = clickedPosition;
-                    TwitchBall(_selectedBall);
                 }
             }
             else
@@ -116,9 +127,7 @@ namespace Game.UI
                 if (colorClickedPosition != BallColor.Empty)
                 {
                     _selectedBall = clickedPosition;
-                    TwitchBall(_selectedBall);
                 }
-
                 else if (colorClickedPosition == BallColor.Empty)
                 {
                     if (_field.GetPath(_selectedBall, clickedPosition, new bool[_field.Height, _field.Width]) != null)
@@ -127,10 +136,11 @@ namespace Game.UI
                         _field.PlaceBalls();
                     }
                     _field.RemoveLines(clickedPosition);
-                    Invalidate();
                     _selectedBall = null;
                 }
             }
+
+            Invalidate();
         }
 
         private Position CalculatePositionByCoordinates(int x, int y)
@@ -140,14 +150,7 @@ namespace Game.UI
             var positionX = x / cellSize;
             var positionY = y / cellSize;
 
-            return new Position(positionX, positionY);
-        }
-
-        private void TwitchBall(Position position)
-        {
-
-            BallSize *= 2;
-            Invalidate();
+            return new Position(positionY, positionX);
         }
     }
 }
