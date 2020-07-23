@@ -38,6 +38,37 @@ namespace Game
             return _array[row, column];
         }
 
+        public IList<Position> GetPath(Position source, Position destination, bool[,] visited)
+        {
+            if (source == destination)
+            {
+                return new List<Position>
+                {
+                    source
+                };
+            }
+
+            IList<Position> minPath = null;
+
+            foreach (var neighbor in GetNeighbors(source))
+            {
+                if (!IsVisited(neighbor, visited) && GetBallColorAt(neighbor.Row, neighbor.Column) == BallColor.Empty)
+                {
+                    visited[neighbor.Row, neighbor.Column] = true;
+                    var path = GetPath(neighbor, destination, visited);
+                    if (path != null && (minPath == null || minPath.Count > path.Count))
+                    {
+                        minPath = path;
+                    }
+                }
+            }
+
+            minPath?.Insert(0, source);
+
+            return minPath;
+        }
+
+
         public IEnumerable<Position> PlaceBalls()
         {
             var listPosition = new List<Position>();
@@ -121,37 +152,7 @@ namespace Game
             }
         }
 
-        public IList<Position> GetPath(Position source, Position destination, bool[,] visited)
-        {
-            if (source == destination)
-            {
-                return new List<Position>
-                {
-                    source
-                };
-            }
-
-            IList<Position> minPath = null;
-
-            foreach (var neighbor in GetNeighbors(source))
-            {
-                if (!IsVisited(neighbor, visited) && GetBallColorAt(neighbor.Row, neighbor.Column) == BallColor.Empty)
-                {
-                    visited[neighbor.Row, neighbor.Column] = true;
-                    var path = GetPath(neighbor, destination, visited);
-                    if (path != null && (minPath == null || minPath.Count > path.Count))
-                    {
-                        minPath = path;
-                    }
-                }
-            }
-
-            minPath?.Insert(0, source);
-
-            return minPath;
-        }
-
-        public IList<Position> GetNeighbors(Position source)
+        internal IList<Position> GetNeighbors(Position source)
         {
             var neighbors = new List<Position>();
 
@@ -172,12 +173,12 @@ namespace Game
             return neighbors;
         }
 
-        public bool IsInField(Position position)
+        internal bool IsInField(Position position)
         {
             return position.Row >= 0 && position.Row < Width && position.Column >= 0 && position.Column < Height;
         }
 
-        private bool IsVisited(Position position, bool[,] visited)
+        internal bool IsVisited(Position position, bool[,] visited)
         {
             return visited[position.Row, position.Column];
         }

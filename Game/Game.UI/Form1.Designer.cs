@@ -1,6 +1,6 @@
 ﻿namespace Game.UI
 {
-    partial class Form1
+    partial class GameLines
     {
         /// <summary>
         ///  Required designer variable.
@@ -30,17 +30,17 @@
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // GameLines
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(661, 649);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Click += new System.EventHandler(this.Form1_Click);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint_1);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
+            this.DoubleBuffered = true;
+            this.Name = "GameLines";
+            this.Text = "GameLines";
+            this.Load += new System.EventHandler(this.GameLines_Load);
+            this.Click += new System.EventHandler(this.GameLines_Click);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameLines_Paint_1);
+            this.Resize += new System.EventHandler(this.GameLines_Resize);
             this.ResumeLayout(false);
 
         }

@@ -4,13 +4,13 @@ using System.Windows.Forms;
 
 namespace Game.UI
 {
-    public partial class Form1 : Form
+    public partial class GameLines : Form
     {
         private readonly Field _field = new Field();
-        private Position _selectedBall;
+        private Position _selectedPosition;
         private int BallSize { get; set; }
 
-        public Form1()
+        public GameLines()
         {
             InitializeComponent();
         }
@@ -18,10 +18,11 @@ namespace Game.UI
         private int CellSize => Math.Min(ClientRectangle.Height, ClientRectangle.Width) / _field.Height;
         private int LineWidth => 5;
 
-        private void Form1_Paint_1(object sender, PaintEventArgs e)
+        private void GameLines_Paint_1(object sender, PaintEventArgs e)
         {
             PaintGrid(e.Graphics);
             PaintBalls(e.Graphics);
+            PaintBordersSelectedBall(e.Graphics);
         }
 
         private void PaintGrid(Graphics graphics)
@@ -62,15 +63,21 @@ namespace Game.UI
                 {
                     if (_field.GetBallColorAt(row, col) != BallColor.Empty)
                     {
-                        var colorPen = MapColor(_field.GetBallColorAt(row, col));
-                        using var pen = new Pen(colorPen, 5);
-                        using var brush = new SolidBrush(colorPen);
-                        graphics.DrawEllipse(pen, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
-                        graphics.FillEllipse(brush, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
+                        DrawingBall(graphics, row, col, cellSize, indent);
                     }
                 }
             }
         }
+
+        private void DrawingBall(Graphics graphics, int row, int col, int cellSize, int indent)
+        {
+            var colorPen = MapColor(_field.GetBallColorAt(row, col));
+            using var pen = new Pen(colorPen, 5);
+            using var brush = new SolidBrush(colorPen);
+            graphics.DrawEllipse(pen, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
+            graphics.FillEllipse(brush, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
+        }
+
 
         private Color MapColor(BallColor color)
         {
@@ -87,50 +94,55 @@ namespace Game.UI
             return Color.SandyBrown;
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
+        private void GameLines_Resize(object sender, EventArgs e)
         {
             Invalidate();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void GameLines_Load(object sender, EventArgs e)
         {
             _field.PlaceBalls();
         }
 
-        private void Form1_Click(object sender, EventArgs e)
+        private void GameLines_Click(object sender, EventArgs e)
         {
             var mouseEventArgs = (MouseEventArgs) e;
             var clickedPosition = CalculatePositionByCoordinates(mouseEventArgs.X, mouseEventArgs.Y);
             var colorClickedPosition = _field.GetBallColorAt(clickedPosition);
 
-            if (_selectedBall == null)
+            if (_selectedPosition == null)
             {
                 if (colorClickedPosition != BallColor.Empty)
                 {
-                    _selectedBall = clickedPosition;
-                    TwitchBall(_selectedBall);
+                    _selectedPosition = clickedPosition;
                 }
             }
             else
             {
                 if (colorClickedPosition != BallColor.Empty)
                 {
-                    _selectedBall = clickedPosition;
-                    TwitchBall(_selectedBall);
+                    _selectedPosition = clickedPosition;
                 }
 
                 else if (colorClickedPosition == BallColor.Empty)
                 {
-                    if (_field.GetPath(_selectedBall, clickedPosition, new bool[_field.Height, _field.Width]) != null)
+                    if (_field.GetPath(_selectedPosition, clickedPosition, new bool[_field.Height, _field.Width]) != null)
                     {
-                        _field.MoveBall(_selectedBall, clickedPosition);
+                        var path = _field.GetPath(_selectedPosition, clickedPosition,
+                            new bool[_field.Height, _field.Width]);
+                        foreach (var position in path)
+                        {
+                          //  DrawingBall(, position.Row, position.Column, CellSize, LineWidth);
+                            Invalidate();
+                        }
+                        _field.MoveBall(_selectedPosition, clickedPosition);
                         _field.PlaceBalls();
                     }
                     _field.RemoveLines(clickedPosition);
-                    Invalidate();
-                    _selectedBall = null;
+                    _selectedPosition = null;
                 }
             }
+            Invalidate();
         }
 
         private Position CalculatePositionByCoordinates(int x, int y)
@@ -143,11 +155,15 @@ namespace Game.UI
             return new Position(positionX, positionY);
         }
 
-        private void TwitchBall(Position position)
+        private void PaintBordersSelectedBall(Graphics graphics)
         {
+            if (_selectedPosition == null) return;
+            var cellSize = CellSize;
+            var color = MapColor(_field.GetBallColorAt(_selectedPosition));
+            using var pen = new Pen(color, 5);
 
-            BallSize *= 2;
-            Invalidate();
+            graphics.DrawRectangle(pen, _selectedPosition.Row * cellSize, _selectedPosition.Column * cellSize,
+                cellSize, cellSize);
         }
     }
 }
