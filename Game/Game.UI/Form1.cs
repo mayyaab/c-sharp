@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Game.UI
@@ -69,15 +70,25 @@ namespace Game.UI
             }
         }
 
-        private void DrawingBall(Graphics graphics, int row, int col, int cellSize, int indent)
+        private void DrawingBall(Graphics graphics, int col, int row, int cellSize, int indent)
         {
-            var colorPen = MapColor(_field.GetBallColorAt(row, col));
+            var colorPen = MapColor(_field.GetBallColorAt(col, row));
             using var pen = new Pen(colorPen, 5);
             using var brush = new SolidBrush(colorPen);
-            graphics.DrawEllipse(pen, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
-            graphics.FillEllipse(brush, row * cellSize + indent, col * cellSize + indent, BallSize, BallSize);
+            graphics.DrawEllipse(pen, col * cellSize + indent, row * cellSize + indent, BallSize, BallSize);
+            graphics.FillEllipse(brush, col * cellSize + indent, row * cellSize + indent, BallSize, BallSize);
         }
 
+        private void BlurOutBall(Graphics graphics, int row, int col, int cellSize, int indent)
+        {
+           // using var pen = new Pen(Color.White, 5);
+            using var brush = new SolidBrush(Color.White);
+
+            //graphics.DrawRectangle(pen, row * cellSize, col * cellSize,
+               // cellSize, cellSize);
+            graphics.FillRectangle(brush, row * cellSize, col * cellSize,
+                cellSize, cellSize);
+        }
 
         private Color MapColor(BallColor color)
         {
@@ -132,17 +143,19 @@ namespace Game.UI
                             new bool[_field.Height, _field.Width]);
                         foreach (var position in path)
                         {
-                          //  DrawingBall(, position.Row, position.Column, CellSize, LineWidth);
-                            Invalidate();
+                            using var graphics = CreateGraphics();
+                            DrawingBall(graphics, position.Row, position.Column, CellSize, LineWidth);
+                            Thread.Sleep(100);
+                            BlurOutBall(graphics, position.Row, position.Column, CellSize, LineWidth);
                         }
                         _field.MoveBall(_selectedPosition, clickedPosition);
                         _field.PlaceBalls();
+                        _field.RemoveLines(clickedPosition);
                     }
-                    _field.RemoveLines(clickedPosition);
                     _selectedPosition = null;
                 }
             }
-            Invalidate();
+           // Invalidate();
         }
 
         private Position CalculatePositionByCoordinates(int x, int y)

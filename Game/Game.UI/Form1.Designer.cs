@@ -33,6 +33,7 @@
             // GameLines
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(661, 649);
             this.DoubleBuffered = true;
             this.Name = "GameLines";
