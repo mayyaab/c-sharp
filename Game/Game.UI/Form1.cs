@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace Game.UI
 {
+    // TG: rename the file as well
     public partial class GameLines : Form
     {
         private readonly Field _field = new Field();
@@ -156,6 +158,11 @@ namespace Game.UI
                 }
             }
            // Invalidate();
+        }
+
+        private void RemoveLines(Graphics graphics, IEnumerable<Position> balls)
+        {
+            // Use disappearing effect to remove the balls
         }
 
         private Position CalculatePositionByCoordinates(int x, int y)
