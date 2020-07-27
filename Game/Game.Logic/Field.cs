@@ -38,6 +38,8 @@ namespace Game
             return _array[row, column];
         }
 
+        // TG: lets implement an alternative algorithm as Strategy pattern
+        // https://www.dofactory.com/net/strategy-design-pattern
         public IList<Position> GetPath(Position source, Position destination, bool[,] visited)
         {
             if (source == destination)
