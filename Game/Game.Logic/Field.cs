@@ -119,9 +119,10 @@ namespace Game
             _array[destination.Row, destination.Column] = temp;
         }
 
-        public void RemoveLines(Position position)
+        public IEnumerable<Position> RemoveLines(Position position)
         {
             var lines = new List<Line>();
+            IEnumerable<Position> removedLine = null;
 
             // collect all lines
             foreach (Line.Direction direction in Enum.GetValues(typeof(Line.Direction)))
@@ -135,12 +136,15 @@ namespace Game
             {
                 if (line.Positions.Count >= BallsInLineCount)
                 {
+                    removedLine = new List<Position>(line.Positions);
                     foreach (Position ball in line.Positions)
                     {
                         SetBallColorAt(ball, BallColor.Empty);
                     }
                 }
             }
+
+            return removedLine;
         }
 
         public void RemoveForBalls(IEnumerable<Position> listPositions)

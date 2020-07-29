@@ -81,7 +81,7 @@ namespace Game.UI
             graphics.FillEllipse(brush, col * cellSize + indent, row * cellSize + indent, BallSize, BallSize);
         }
 
-        private void BlurOutBall(Graphics graphics, int row, int col, int cellSize, int indent)
+        private void BlurOutBall(Graphics graphics, int row, int col, int cellSize)
         {
            // using var pen = new Pen(Color.White, 5);
             using var brush = new SolidBrush(Color.White);
@@ -141,28 +141,41 @@ namespace Game.UI
                 {
                     if (_field.GetPath(_selectedPosition, clickedPosition, new bool[_field.Height, _field.Width]) != null)
                     {
+                        using var graphics = CreateGraphics();
                         var path = _field.GetPath(_selectedPosition, clickedPosition,
                             new bool[_field.Height, _field.Width]);
                         foreach (var position in path)
                         {
-                            using var graphics = CreateGraphics();
                             DrawingBall(graphics, position.Row, position.Column, CellSize, LineWidth);
-                            Thread.Sleep(100);
-                            BlurOutBall(graphics, position.Row, position.Column, CellSize, LineWidth);
+                            Thread.Sleep(40);
+                            BlurOutBall(graphics, position.Row, position.Column, CellSize);
                         }
                         _field.MoveBall(_selectedPosition, clickedPosition);
                         _field.PlaceBalls();
-                        _field.RemoveLines(clickedPosition);
+                        var line = _field.RemoveLines(clickedPosition);
+                        if (line != null)
+                        {
+                            RemoveLines(graphics, line);
+                        }
+
                     }
                     _selectedPosition = null;
                 }
             }
-           // Invalidate();
+            Invalidate();
         }
 
         private void RemoveLines(Graphics graphics, IEnumerable<Position> balls)
         {
-            // Use disappearing effect to remove the balls
+            Thread.Sleep(50);
+            var cellSize = CellSize;
+            foreach (var ball in balls)
+            {
+                var color = MapColor(_field.GetBallColorAt(ball));
+                using var pen = new Pen(color, 5);
+                graphics.DrawRectangle(pen, _selectedPosition.Row * cellSize, _selectedPosition.Column * cellSize,
+                    cellSize, cellSize);
+            }
         }
 
         private Position CalculatePositionByCoordinates(int x, int y)
