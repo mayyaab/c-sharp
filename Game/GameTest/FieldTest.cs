@@ -117,7 +117,7 @@ namespace GameTest
 
             field.SetBallColorAt(new Position(1, 2), BallColor.White);
 
-            var path = field.GetPath(new Position(1, 2), new Position(3, 2), new bool[field.Height, field.Width] );
+            var path = field.GetPathWave(new Position(1, 2), new Position(3, 2) );
 
             var pathCount = path.Count;
 

@@ -11,6 +11,7 @@ namespace Game.UI
     {
         private readonly Field _field = new Field();
         private Position _selectedPosition;
+
         private int BallSize { get; set; }
 
         public GameLines()
@@ -64,32 +65,27 @@ namespace Game.UI
             {
                 for (int col = 0; col < _field.Width; col++)
                 {
-                    if (_field.GetBallColorAt(row, col) != BallColor.Empty)
+                    var ballColor = _field.GetBallColorAt(row, col);
+                    if (ballColor != BallColor.Empty)
                     {
-                        DrawingBall(graphics, row, col, cellSize, indent);
+                        DrawingBall(graphics, row, col, cellSize, indent, ballColor);
                     }
                 }
             }
         }
 
-        private void DrawingBall(Graphics graphics, int col, int row, int cellSize, int indent)
+        private void DrawingBall(Graphics graphics, int col, int row, int cellSize, int indent, BallColor color)
         {
-            var colorPen = MapColor(_field.GetBallColorAt(col, row));
-            using var pen = new Pen(colorPen, 5);
-            using var brush = new SolidBrush(colorPen);
+            var colorPan = MapColor(color);
+            using var pen = new Pen(colorPan);
+            using var brush = new SolidBrush(colorPan);
             graphics.DrawEllipse(pen, col * cellSize + indent, row * cellSize + indent, BallSize, BallSize);
             graphics.FillEllipse(brush, col * cellSize + indent, row * cellSize + indent, BallSize, BallSize);
         }
 
-        private void BlurOutBall(Graphics graphics, int row, int col, int cellSize)
+        private void BlurOutBall(Graphics graphics, int row, int col, int cellSize, int indent)
         {
-           // using var pen = new Pen(Color.White, 5);
-            using var brush = new SolidBrush(Color.White);
-
-            //graphics.DrawRectangle(pen, row * cellSize, col * cellSize,
-               // cellSize, cellSize);
-            graphics.FillRectangle(brush, row * cellSize, col * cellSize,
-                cellSize, cellSize);
+            DrawingBall(graphics, row, col, cellSize, indent, BallColor.White);
         }
 
         private Color MapColor(BallColor color)
@@ -97,7 +93,7 @@ namespace Game.UI
             switch (color)
             {
                 case BallColor.Empty: return Color.SandyBrown;
-                case BallColor.White: return Color.DarkGray;
+                case BallColor.White: return Color.White;
                 case BallColor.Black: return Color.Black;
                 case BallColor.Blue: return Color.Blue;
                 case BallColor.Red: return Color.Red;
@@ -144,11 +140,13 @@ namespace Game.UI
                         using var graphics = CreateGraphics();
                         var path = _field.GetPath(_selectedPosition, clickedPosition,
                             new bool[_field.Height, _field.Width]);
+
+                        var ballColor = _field.GetBallColorAt(_selectedPosition);
                         foreach (var position in path)
                         {
-                            DrawingBall(graphics, position.Row, position.Column, CellSize, LineWidth);
+                            DrawingBall(graphics, position.Row, position.Column, CellSize, LineWidth, ballColor);
                             Thread.Sleep(40);
-                            BlurOutBall(graphics, position.Row, position.Column, CellSize);
+                            BlurOutBall(graphics, position.Row, position.Column, CellSize, LineWidth);
                         }
                         _field.MoveBall(_selectedPosition, clickedPosition);
                         _field.PlaceBalls();
@@ -192,8 +190,7 @@ namespace Game.UI
         {
             if (_selectedPosition == null) return;
             var cellSize = CellSize;
-            var color = MapColor(_field.GetBallColorAt(_selectedPosition));
-            using var pen = new Pen(color, 5);
+            using var pen = new Pen(Color.Black, 5);
 
             graphics.DrawRectangle(pen, _selectedPosition.Row * cellSize, _selectedPosition.Column * cellSize,
                 cellSize, cellSize);
