@@ -71,7 +71,7 @@ namespace Game
             return minPath;
         }
 
-        public IList<Position> GetPathWave(Position source, Position destination)
+        public bool GetPathWave(Position source, Position destination, bool[,] visited)
         {
             /* Распространение волны
 
@@ -97,8 +97,33 @@ namespace Game
              */
 
 
+            // BFS
+            // bool visited
+            // пройтись
+            // сама точка visited а хоть один сосед не visited
 
+            //1 лист -состоит из сорс
+            // из листа для кажого поля смотреть neigbors (not visited) и записывать в конец листа
 
+            List<Position> visitedPositions = new List<Position>();
+            visitedPositions.Add(source);
+
+            foreach (var position in visitedPositions)
+            {
+                var neighbors = GetNeighbors(position);
+                foreach (var neighbor in neighbors)
+                {
+                    if (neighbor != destination && visited[neighbor.Row, neighbor.Column] == false)
+                    {
+                        visited[neighbor.Row, neighbor.Column] = true;
+                        visitedPositions.Add(neighbor);
+                    }
+                    else return true;
+
+                }
+            }
+
+            return false;
         }
 
 
