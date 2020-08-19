@@ -232,9 +232,9 @@ namespace GameTest
 
             field.SetBallColorAt(new Position(1, 1), BallColor.White);
 
-            var path = field.GetPathWave(new Position(1, 1), new Position(2, 2), new bool[field.Height, field.Width]);
+            var path = field.GetPathWave(new Position(1, 1), new Position(2, 2));
 
-            Assert.AreNotEqual(true, path);
+            Assert.AreEqual(true, path);
         }
     }
 }

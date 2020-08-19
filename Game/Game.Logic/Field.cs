@@ -71,7 +71,7 @@ namespace Game
             return minPath;
         }
 
-        public bool GetPathWave(Position source, Position destination, bool[,] visited)
+        public bool GetPathWave(Position source, Position destination)
         {
             /* Распространение волны
 
@@ -104,25 +104,38 @@ namespace Game
 
             //1 лист -состоит из сорс
             // из листа для кажого поля смотреть neigbors (not visited) и записывать в конец листа
+            bool[,] visited = new bool[Height,Width];
 
-            List<Position> visitedPositions = new List<Position>();
-            visitedPositions.Add(source);
+            var visitedPositions = new Queue<Queue<Position>>();
+            var sourceQueue = new Queue<Position>();
+            sourceQueue.Enqueue(source);
+            visitedPositions.Enqueue(sourceQueue);
 
-            foreach (var position in visitedPositions)
+            while (visitedPositions.Count != 0)
             {
-                var neighbors = GetNeighbors(position);
-                foreach (var neighbor in neighbors)
+                var queue = visitedPositions.Dequeue();
+                while (queue.Count != 0)
                 {
-                    if (neighbor != destination && visited[neighbor.Row, neighbor.Column] == false)
+                    var element = queue.Dequeue();
+                    if (element == destination)
                     {
-                        visited[neighbor.Row, neighbor.Column] = true;
-                        visitedPositions.Add(neighbor);
+                        return true;
                     }
-                    else return true;
+                    visited[element.Row, element.Column] = true;
 
+                    var neighbors = GetNeighbors(element);
+
+                    var visitedPositionsSmall = new Queue<Position>();
+                    foreach (var neighbor in neighbors)
+                    {
+                        if (!visited[neighbor.Row, neighbor.Column])
+                        {
+                            visitedPositionsSmall.Enqueue(neighbor);
+                        }
+                    }
+                    visitedPositions.Enqueue(visitedPositionsSmall);
                 }
             }
-
             return false;
         }
 
