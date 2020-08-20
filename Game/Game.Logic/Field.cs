@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Game
 {
@@ -71,7 +72,7 @@ namespace Game
             return minPath;
         }
 
-        public bool GetPathWave(Position source, Position destination)
+        public List<Position> GetPathWave(Position source, Position destination)
         {
             /* Распространение волны
 
@@ -104,222 +105,224 @@ namespace Game
 
             //1 лист -состоит из сорс
             // из листа для кажого поля смотреть neigbors (not visited) и записывать в конец листа
-            bool[,] visited = new bool[Height,Width];
+            bool[,] visited = new bool[Height, Width];
 
-            var visitedPositions = new Queue<Queue<Position>>();
-            var sourceQueue = new Queue<Position>();
-            sourceQueue.Enqueue(source);
+            var visitedPositions = new Queue<List<Position>>();
+            var sourceQueue = new List<Position>();
+            sourceQueue.Add(source);
             visitedPositions.Enqueue(sourceQueue);
 
             while (visitedPositions.Count != 0)
             {
-                var queue = visitedPositions.Dequeue();
-                while (queue.Count != 0)
+                var path = visitedPositions.Dequeue();
+
+                var element = path.Last();
+                if (element == destination)
                 {
-                    var element = queue.Dequeue();
-                    if (element == destination)
+                    return path;
+                }
+                visited[element.Row, element.Column] = true;
+
+                var neighbors = GetNeighbors(element);
+
+                foreach (var neighbor in neighbors)
+                    //{
+                    if (!visited[neighbor.Row, neighbor.Column])
                     {
-                        return true;
+                        // ???
+                        // new list (duplicate path)
+                        // add newbourgh
+                        // add queue
+
+                        var list = new List<Position>(path);
+                        list.Add(neighbor);
+                        visitedPositions.Enqueue(list);
                     }
-                    visited[element.Row, element.Column] = true;
-
-                    var neighbors = GetNeighbors(element);
-
-                    var visitedPositionsSmall = new Queue<Position>();
-                    foreach (var neighbor in neighbors)
-                    {
-                        if (!visited[neighbor.Row, neighbor.Column])
-                        {
-                            visitedPositionsSmall.Enqueue(neighbor);
-                        }
-                    }
-                    visitedPositions.Enqueue(visitedPositionsSmall);
-                }
             }
-            return false;
-        }
-
-
-        public IEnumerable<Position> PlaceBalls()
-        {
-            var listPosition = new List<Position>();
-
-            var random = new Random();
-            for (int row = 0; row < Height; row++)
-            {
-                for (int col = 0; col < Width; col++)
-                {
-                    if (_array[row, col] == 0)
-                    {
-                        listPosition.Add(new Position(row, col));
-                    }
-                }
-            }
-            if (listPosition.Count == 0)
-            {
-                Console.WriteLine("Game is over");
-            }
-            else
-            {
-                for (int i = 0; i < BallsCount; i++)
-                {
-                    var elementIndex = random.Next(listPosition.Count);
-                    var position = listPosition[elementIndex];
-                    _array[position.Row, position.Column] = (BallColor)random.Next(1, ColorsCount + 1);
-                }
-            }
-
-            return listPosition;
-        }
-
-        public void MoveBall(Position source, Position destination)
-        {
-            if (_array[source.Row, source.Column] == 0)
-            {
-                throw new Exception("The source square is empty.");
-            }
-            if (_array[destination.Row, destination.Column] != 0)
-            {
-                throw new Exception("The destination square is occupied.");
-            }
-
-            var temp = _array[source.Row, source.Column];
-            _array[source.Row, source.Column] = _array[destination.Row, destination.Column];
-            _array[destination.Row, destination.Column] = temp;
-        }
-
-        public IEnumerable<Position> RemoveLines(Position position)
-        {
-            var lines = new List<Line>();
-            IEnumerable<Position> removedLine = null;
-
-            // collect all lines
-            foreach (Line.Direction direction in Enum.GetValues(typeof(Line.Direction)))
-            {
-                var line = GetLine(position, direction);
-                lines.Add(line);
-            }
-
-            //remove lines
-            foreach (var line in lines)
-            {
-                if (line.Positions.Count >= BallsInLineCount)
-                {
-                    removedLine = new List<Position>(line.Positions);
-                    foreach (Position ball in line.Positions)
-                    {
-                        SetBallColorAt(ball, BallColor.Empty);
-                    }
-                }
-            }
-
-            return removedLine;
-        }
-
-        public void RemoveForBalls(IEnumerable<Position> listPositions)
-        {
-            foreach (var position in listPositions)
-            {
-                if (GetBallColorAt(position) != BallColor.Empty)
-                {
-                    RemoveLines(position);
-                }
-            }
-        }
-
-        internal IList<Position> GetNeighbors(Position source)
-        {
-            var neighbors = new List<Position>();
-
-            foreach (var direction in new[]{Line.Direction.Horizontal, Line.Direction.Vertical})
-            {
-                var directionPositions = GetDirections(direction);
-
-                foreach (var step in new[]{directionPositions.Item1, directionPositions.Item2})
-                {
-                    var position = source + step;
-                    if (IsInField(position))
-                    {
-                        neighbors.Add(position);
-                    }
-                }
-            }
-
-            return neighbors;
-        }
-
-        internal bool IsInField(Position position)
-        {
-            return position.Row >= 0 && position.Row < Width && position.Column >= 0 && position.Column < Height;
-        }
-
-        internal bool IsVisited(Position position, bool[,] visited)
-        {
-            return visited[position.Row, position.Column];
-        }
-
-        private Tuple<Position, Position> GetDirections(Line.Direction direction)
-        {
-            // TG: consider simplifying it to array and then use direction as an index in the array.
-
-            if (direction == Line.Direction.Horizontal)
-            {
-                return new Tuple<Position, Position>(new Position(0, -1), new Position(0, 1));
-            }
-
-            if (direction == Line.Direction.Vertical)
-            {
-                return new Tuple<Position, Position>(new Position(-1, 0), new Position(1, 0));
-            }
-
-            if (direction == Line.Direction.Descending)
-            {
-                return new Tuple<Position, Position>(new Position(-1, -1), new Position(1, 1));
-            }
-
-            if (direction == Line.Direction.Ascending)
-            {
-                return new Tuple<Position, Position>(new Position(1, -1), new Position(-1, 1));
-            }
-
             return null;
         }
 
-        private Line GetLine(Position position, Line.Direction directions)
-        {
-            var line = GetLine(position, GetDirections(directions));
-            return line;
-        }
 
-        private Line GetLine(Position position, Tuple<Position, Position> directions)
-        {
-            var color = GetBallColorAt(position);
-            var line = new List<Position> { position };
+    public IEnumerable<Position> PlaceBalls()
+    {
+        var listPosition = new List<Position>();
 
-            foreach (var direction in new[] { directions.Item1, directions.Item2 })
+        var random = new Random();
+        for (int row = 0; row < Height; row++)
+        {
+            for (int col = 0; col < Width; col++)
             {
-                var current = position;
-
-                for (; ; )
+                if (_array[row, col] == 0)
                 {
-                    current = current + direction;
-
-                    if (current.Column < 0 || current.Column >= Width || current.Row < 0 || current.Row >= Height ||
-                        GetBallColorAt(current) != color)
-                    {
-                        break;
-                    }
-
-                    line.Add(current);
+                    listPosition.Add(new Position(row, col));
                 }
             }
-            Line newLine = new Line(line);
-            return newLine;
+        }
+        if (listPosition.Count == 0)
+        {
+            Console.WriteLine("Game is over");
+        }
+        else
+        {
+            for (int i = 0; i < BallsCount; i++)
+            {
+                var elementIndex = random.Next(listPosition.Count);
+                var position = listPosition[elementIndex];
+                _array[position.Row, position.Column] = (BallColor)random.Next(1, ColorsCount + 1);
+            }
         }
 
-        internal void SetBallColorAt(Position position, BallColor color)
+        return listPosition;
+    }
+
+    public void MoveBall(Position source, Position destination)
+    {
+        if (_array[source.Row, source.Column] == 0)
         {
-            _array[position.Row, position.Column] = color;
+            throw new Exception("The source square is empty.");
+        }
+        if (_array[destination.Row, destination.Column] != 0)
+        {
+            throw new Exception("The destination square is occupied.");
+        }
+
+        var temp = _array[source.Row, source.Column];
+        _array[source.Row, source.Column] = _array[destination.Row, destination.Column];
+        _array[destination.Row, destination.Column] = temp;
+    }
+
+    public IEnumerable<Position> RemoveLines(Position position)
+    {
+        var lines = new List<Line>();
+        IEnumerable<Position> removedLine = null;
+
+        // collect all lines
+        foreach (Line.Direction direction in Enum.GetValues(typeof(Line.Direction)))
+        {
+            var line = GetLine(position, direction);
+            lines.Add(line);
+        }
+
+        //remove lines
+        foreach (var line in lines)
+        {
+            if (line.Positions.Count >= BallsInLineCount)
+            {
+                removedLine = new List<Position>(line.Positions);
+                foreach (Position ball in line.Positions)
+                {
+                    SetBallColorAt(ball, BallColor.Empty);
+                }
+            }
+        }
+
+        return removedLine;
+    }
+
+    public void RemoveForBalls(IEnumerable<Position> listPositions)
+    {
+        foreach (var position in listPositions)
+        {
+            if (GetBallColorAt(position) != BallColor.Empty)
+            {
+                RemoveLines(position);
+            }
         }
     }
+
+    internal IList<Position> GetNeighbors(Position source)
+    {
+        var neighbors = new List<Position>();
+
+        foreach (var direction in new[] { Line.Direction.Horizontal, Line.Direction.Vertical })
+        {
+            var directionPositions = GetDirections(direction);
+
+            foreach (var step in new[] { directionPositions.Item1, directionPositions.Item2 })
+            {
+                var position = source + step;
+                if (IsInField(position))
+                {
+                    neighbors.Add(position);
+                }
+            }
+        }
+
+        return neighbors;
+    }
+
+    internal bool IsInField(Position position)
+    {
+        return position.Row >= 0 && position.Row < Width && position.Column >= 0 && position.Column < Height;
+    }
+
+    internal bool IsVisited(Position position, bool[,] visited)
+    {
+        return visited[position.Row, position.Column];
+    }
+
+    private Tuple<Position, Position> GetDirections(Line.Direction direction)
+    {
+        // TG: consider simplifying it to array and then use direction as an index in the array.
+
+        if (direction == Line.Direction.Horizontal)
+        {
+            return new Tuple<Position, Position>(new Position(0, -1), new Position(0, 1));
+        }
+
+        if (direction == Line.Direction.Vertical)
+        {
+            return new Tuple<Position, Position>(new Position(-1, 0), new Position(1, 0));
+        }
+
+        if (direction == Line.Direction.Descending)
+        {
+            return new Tuple<Position, Position>(new Position(-1, -1), new Position(1, 1));
+        }
+
+        if (direction == Line.Direction.Ascending)
+        {
+            return new Tuple<Position, Position>(new Position(1, -1), new Position(-1, 1));
+        }
+
+        return null;
+    }
+
+    private Line GetLine(Position position, Line.Direction directions)
+    {
+        var line = GetLine(position, GetDirections(directions));
+        return line;
+    }
+
+    private Line GetLine(Position position, Tuple<Position, Position> directions)
+    {
+        var color = GetBallColorAt(position);
+        var line = new List<Position> { position };
+
+        foreach (var direction in new[] { directions.Item1, directions.Item2 })
+        {
+            var current = position;
+
+            for (; ; )
+            {
+                current = current + direction;
+
+                if (current.Column < 0 || current.Column >= Width || current.Row < 0 || current.Row >= Height ||
+                    GetBallColorAt(current) != color)
+                {
+                    break;
+                }
+
+                line.Add(current);
+            }
+        }
+        Line newLine = new Line(line);
+        return newLine;
+    }
+
+    internal void SetBallColorAt(Position position, BallColor color)
+    {
+        _array[position.Row, position.Column] = color;
+    }
+}
 }

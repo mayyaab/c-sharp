@@ -233,8 +233,9 @@ namespace GameTest
             field.SetBallColorAt(new Position(1, 1), BallColor.White);
 
             var path = field.GetPathWave(new Position(1, 1), new Position(2, 2));
+            var pathCount = path.Count;
 
-            Assert.AreEqual(true, path);
+            Assert.AreNotEqual(null, pathCount);
         }
     }
 }
