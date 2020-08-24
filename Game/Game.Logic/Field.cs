@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Game
 {
@@ -97,14 +98,6 @@ namespace Game
             ВОЗВРАТ путь не найден
              */
 
-
-            // BFS
-            // bool visited
-            // пройтись
-            // сама точка visited а хоть один сосед не visited
-
-            //1 лист -состоит из сорс
-            // из листа для кажого поля смотреть neigbors (not visited) и записывать в конец листа
             bool[,] visited = new bool[Height, Width];
 
             var visitedPositions = new Queue<List<Position>>();
@@ -126,14 +119,8 @@ namespace Game
                 var neighbors = GetNeighbors(element);
 
                 foreach (var neighbor in neighbors)
-                    //{
                     if (!visited[neighbor.Row, neighbor.Column])
                     {
-                        // ???
-                        // new list (duplicate path)
-                        // add newbourgh
-                        // add queue
-
                         var list = new List<Position>(path);
                         list.Add(neighbor);
                         visitedPositions.Enqueue(list);
@@ -142,8 +129,55 @@ namespace Game
             return null;
         }
 
+        public bool GetPathWaveOriginal(Position source, Position destination)
+        {
+            int[,] visited = new int[Height, Width];
+            var loc = source;
+            int step = 0;
 
-    public IEnumerable<Position> PlaceBalls()
+            while (visited[Width, Height] == 0)
+            {
+                if (visited[destination.Row, destination.Column] != 0)
+                {
+                    return GetPathBack(source, destination, visited);
+                }
+                var neighbors = GetNeighbors(loc);
+                step++;
+                foreach (var neighbor in neighbors)
+                {
+                    if (visited[neighbor.Row, neighbor.Column] == 0)
+                    {
+                        visited[neighbor.Row, neighbor.Column] = step;
+                        loc = neighbor;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool GetPathBack(Position source, Position destination, int[,] visited)
+        {
+
+            while (destination == source)
+            {
+                var neighbors = GetNeighbors(destination);
+                foreach (var neighbor in neighbors)
+                {
+                    if (neighbor == source)
+                    {
+                        return true;
+                    }
+                    if (visited[neighbor.Row, neighbor.Column] - 1 == visited[destination.Row, destination.Column])
+                    {
+                        destination = neighbor;
+                    }
+                }
+            }
+            return false;
+        }
+
+
+        public IEnumerable<Position> PlaceBalls()
     {
         var listPosition = new List<Position>();
 

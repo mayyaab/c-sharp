@@ -237,5 +237,18 @@ namespace GameTest
 
             Assert.AreNotEqual(null, pathCount);
         }
+
+        [TestMethod]
+        public void TestGetPathWaveOriginal1()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(1, 1), BallColor.White);
+
+            var path = field.GetPathWaveOriginal(new Position(1, 1), new Position(2, 2));
+            //var pathCount = path.Count;
+
+            Assert.AreEqual(true, path);
+        }
     }
 }
