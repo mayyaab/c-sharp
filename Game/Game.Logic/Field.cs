@@ -129,51 +129,63 @@ namespace Game
             return null;
         }
 
-        public bool GetPathWaveOriginal(Position source, Position destination)
+        public List<Position> GetPathWaveOriginal(Position source, Position destination)
         {
             int[,] visited = new int[Height, Width];
-            var loc = source;
             int step = 0;
+            var position = new Tuple<Position, int>(source, step);
+            var visitedPositions = new Queue<Tuple<Position, int>>();
+            visitedPositions.Enqueue(position);
+            visited[source.Row, source.Column] = step;
 
-            while (visited[Width, Height] == 0)
+            while (visitedPositions.Count != 0)
             {
-                if (visited[destination.Row, destination.Column] != 0)
+                var dequeue = visitedPositions.Dequeue();
+
+                if (dequeue.Item1 == destination)
                 {
+                    visited[dequeue.Item1.Row, dequeue.Item1.Column] = dequeue.Item2;
                     return GetPathBack(source, destination, visited);
                 }
-                var neighbors = GetNeighbors(loc);
-                step++;
+
+                visited[dequeue.Item1.Row, dequeue.Item1.Column] = dequeue.Item2;
+                var neighbors = GetNeighbors(dequeue.Item1);
+                //step++;
+
                 foreach (var neighbor in neighbors)
                 {
                     if (visited[neighbor.Row, neighbor.Column] == 0)
                     {
-                        visited[neighbor.Row, neighbor.Column] = step;
-                        loc = neighbor;
+                        var newStep = dequeue.Item2;
+                        visitedPositions.Enqueue(new Tuple<Position, int>(neighbor, newStep+1));
                     }
                 }
             }
-            return false;
+            return null;
         }
 
-        private bool GetPathBack(Position source, Position destination, int[,] visited)
+        private List<Position> GetPathBack(Position source, Position destination, int[,] visited)
         {
-
-            while (destination == source)
+            var listBack = new List<Position>();
+            while (destination != source)
             {
                 var neighbors = GetNeighbors(destination);
                 foreach (var neighbor in neighbors)
                 {
                     if (neighbor == source)
                     {
-                        return true;
+                        listBack.Add(neighbor);
+                        return listBack;
                     }
-                    if (visited[neighbor.Row, neighbor.Column] - 1 == visited[destination.Row, destination.Column])
+                    if (visited[neighbor.Row, neighbor.Column] == visited[destination.Row, destination.Column] - 1)
                     {
+                        listBack.Add(neighbor);
                         destination = neighbor;
+                        break;
                     }
                 }
             }
-            return false;
+            return null;
         }
 
 

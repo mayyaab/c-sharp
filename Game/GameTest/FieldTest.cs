@@ -245,10 +245,48 @@ namespace GameTest
 
             field.SetBallColorAt(new Position(1, 1), BallColor.White);
 
-            var path = field.GetPathWaveOriginal(new Position(1, 1), new Position(2, 2));
-            //var pathCount = path.Count;
+            var path = field.GetPathWaveOriginal(new Position(1, 1), new Position(2, 3));
 
-            Assert.AreEqual(true, path);
+            Assert.AreEqual(3, path.Count);
+        }
+
+        [TestMethod]
+        public void TestGetPathWaveOriginal2()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 0), BallColor.White);
+
+            var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(5, 5));
+
+            Assert.AreNotEqual(null, path.Count);
+        }
+
+        [TestMethod]
+        public void TestGetPathWaveOriginal3()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 0), BallColor.White);
+
+            var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(-1, -1));
+
+            Assert.AreEqual(null, path);
+        }
+
+        [TestMethod]
+        public void TestGetPathWaveOriginal4()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 1), BallColor.White);
+            field.SetBallColorAt(new Position(1, 0), BallColor.White);
+            field.SetBallColorAt(new Position(1, 1), BallColor.White);
+            field.SetBallColorAt(new Position(0, 0), BallColor.White);
+
+            var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(2, 2));
+
+            Assert.AreEqual(null, path);
         }
     }
 }
