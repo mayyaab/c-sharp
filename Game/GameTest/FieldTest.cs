@@ -156,6 +156,23 @@ namespace GameTest
         }
 
         [TestMethod]
+        public void TestGetPath4()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 1), BallColor.White);
+            field.SetBallColorAt(new Position(1, 0), BallColor.White);
+            field.SetBallColorAt(new Position(1, 1), BallColor.White);
+            field.SetBallColorAt(new Position(0, 0), BallColor.White);
+
+            var path = field.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
+
+            var pathCount = path.Count;
+
+            Assert.AreEqual(null, pathCount);
+        }
+
+        [TestMethod]
         public void GetNeighbors1()
         {
             var field = new Field();
@@ -287,6 +304,18 @@ namespace GameTest
             var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(2, 2));
 
             Assert.AreEqual(null, path);
+        }
+
+        [TestMethod]
+        public void TestGetPathWaveOriginal5()
+        {
+            var field = new Field();
+
+            field.SetBallColorAt(new Position(0, 0), BallColor.Red);
+
+            var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(1, 1));
+
+            Assert.AreNotEqual(null, path);
         }
     }
 }

@@ -145,16 +145,17 @@ namespace Game
                 if (dequeue.Item1 == destination)
                 {
                     visited[dequeue.Item1.Row, dequeue.Item1.Column] = dequeue.Item2;
-                    return GetPathBack(source, destination, visited);
+                    var pathBack = GetPathBack(source, destination, visited);
+                    pathBack.Reverse();
+                    return pathBack;
                 }
 
                 visited[dequeue.Item1.Row, dequeue.Item1.Column] = dequeue.Item2;
                 var neighbors = GetNeighbors(dequeue.Item1);
-                //step++;
 
                 foreach (var neighbor in neighbors)
                 {
-                    if (visited[neighbor.Row, neighbor.Column] == 0)
+                    if (visited[neighbor.Row, neighbor.Column] == 0 && GetBallColorAt(neighbor.Row, neighbor.Column) == BallColor.Empty)
                     {
                         var newStep = dequeue.Item2;
                         visitedPositions.Enqueue(new Tuple<Position, int>(neighbor, newStep+1));
