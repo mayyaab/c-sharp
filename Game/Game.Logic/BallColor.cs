@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Game
+namespace Game.Logic
 {
     public enum BallColor
     {

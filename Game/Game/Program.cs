@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Game.Logic;
 
 namespace Game
 {
@@ -124,14 +125,14 @@ namespace Game
                 Console.WriteLine("Wrong format!");
             }
 
-            if (field.GetPath(source, destination, new bool[field.Height, field.Width]) != null)
+            if (field.PathStrategy.GetPath(source, destination, new bool[field.Height, field.Width]) != null)
             {
                 field.MoveBall(source, destination);
             }
             else
             {
                 Console.WriteLine("No path");
-            }
+              }
 
             return destination;
         }

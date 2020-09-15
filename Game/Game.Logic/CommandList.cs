@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 
-namespace Game
+namespace Game.Logic
 {
     public class CommandList
     {

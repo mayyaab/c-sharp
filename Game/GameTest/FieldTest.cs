@@ -1,5 +1,6 @@
 using System.Linq;
 using Game;
+using Game.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GameTest
@@ -117,7 +118,7 @@ namespace GameTest
 
             field.SetBallColorAt(new Position(1, 2), BallColor.White);
 
-            var path = field.GetPath(new Position(1, 2), new Position(3, 2), new bool[field.Height, field.Width]);
+            var path = field.PathStrategy.GetPath(new Position(1, 2), new Position(3, 2), new bool[field.Height, field.Width]);
 
             var pathCount = path.Count;
 
@@ -134,7 +135,7 @@ namespace GameTest
             field.SetBallColorAt(new Position(1, 0), BallColor.White);
 
 
-            var path = field.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
+            var path = field.PathStrategy.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
 
             Assert.AreEqual(null, path);
         }
@@ -148,7 +149,7 @@ namespace GameTest
             field.SetBallColorAt(new Position(1, 1), BallColor.White);
 
 
-            var path = field.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
+            var path = field.PathStrategy.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
 
             var pathCount = path.Count;
 
@@ -165,7 +166,7 @@ namespace GameTest
             field.SetBallColorAt(new Position(1, 1), BallColor.White);
             field.SetBallColorAt(new Position(0, 0), BallColor.White);
 
-            var path = field.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
+            var path = field.PathStrategy.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
 
             var pathCount = path.Count;
 
@@ -262,9 +263,15 @@ namespace GameTest
 
             field.SetBallColorAt(new Position(1, 1), BallColor.White);
 
-            var path = field.GetPathWaveOriginal(new Position(1, 1), new Position(2, 3));
+            var pathDefault = field.PathStrategy.GetPath(new Position(1, 1), new Position(2, 3), new bool[field.Height, field.Width]);
 
-            Assert.AreEqual(3, path.Count);
+            Assert.AreEqual(3, pathDefault.Count);
+
+            IPathStrategy simpleStrategy = new GetPathSimple();
+
+            var pathSimple = simpleStrategy.GetPath(new Position(1, 1), new Position(2, 3), new bool[field.Height, field.Width]);
+
+            Assert.AreEqual(3, pathSimple.Count);
         }
 
         [TestMethod]
@@ -274,9 +281,15 @@ namespace GameTest
 
             field.SetBallColorAt(new Position(0, 0), BallColor.White);
 
-            var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(5, 5));
+            var path = field.PathStrategy.GetPath(new Position(0, 0), new Position(5, 5), new bool[field.Height, field.Width]);
 
             Assert.AreNotEqual(null, path.Count);
+
+            IPathStrategy simpleStrategy = new GetPathSimple();
+
+            var pathSimple = simpleStrategy.GetPath(new Position(0, 0), new Position(5, 5), new bool[field.Height, field.Width]);
+
+            Assert.AreNotEqual(null, pathSimple.Count);
         }
 
         [TestMethod]
@@ -286,9 +299,15 @@ namespace GameTest
 
             field.SetBallColorAt(new Position(0, 0), BallColor.White);
 
-            var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(-1, -1));
+            var path = field.PathStrategy.GetPath(new Position(0, 0), new Position(-1, -1), new bool[field.Height, field.Width]);
 
             Assert.AreEqual(null, path);
+
+            IPathStrategy simpleStrategy = new GetPathSimple();
+
+            var pathSimple = simpleStrategy.GetPath(new Position(0, 0), new Position(-1, -1), new bool[field.Height, field.Width]);
+
+            Assert.AreEqual(null, pathSimple);
         }
 
         [TestMethod]
@@ -301,9 +320,16 @@ namespace GameTest
             field.SetBallColorAt(new Position(1, 1), BallColor.White);
             field.SetBallColorAt(new Position(0, 0), BallColor.White);
 
-            var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(2, 2));
+            var path = field.PathStrategy.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
 
             Assert.AreEqual(null, path);
+
+            IPathStrategy simpleStrategy = new GetPathSimple();
+
+            var pathSimple = simpleStrategy.GetPath(new Position(0, 0), new Position(2, 2), new bool[field.Height, field.Width]);
+
+            Assert.AreEqual(null, pathSimple);
+
         }
 
         [TestMethod]
@@ -313,9 +339,16 @@ namespace GameTest
 
             field.SetBallColorAt(new Position(0, 0), BallColor.Red);
 
-            var path = field.GetPathWaveOriginal(new Position(0, 0), new Position(1, 1));
+            var path = field.PathStrategy.GetPath(new Position(0, 0), new Position(1, 1), new bool[field.Height, field.Width]);
 
             Assert.AreNotEqual(null, path);
+
+            IPathStrategy simpleStrategy = new GetPathSimple();
+
+            var pathSimple = simpleStrategy.GetPath(new Position(0, 0), new Position(1, 1), new bool[field.Height, field.Width]);
+
+            Assert.AreNotEqual(null, pathSimple);
+
         }
     }
 }

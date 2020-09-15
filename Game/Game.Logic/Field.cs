@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 
-namespace Game
+namespace Game.Logic
 {
     public class Field
     {
@@ -14,6 +11,7 @@ namespace Game
         public int BallsCount { get; }
         public int ColorsCount { get; }
         public int BallsInLineCount { get; }
+        public IPathStrategy PathStrategy { get; set; } = new GetPathOriginal();
 
         readonly BallColor[,] _array;
 
@@ -41,63 +39,8 @@ namespace Game
             return _array[row, column];
         }
 
-        // TG: lets implement an alternative algorithm as Strategy pattern
-        // https://www.dofactory.com/net/strategy-design-pattern
-        public IList<Position> GetPath(Position source, Position destination, bool[,] visited)
-        {
-            if (source == destination)
-            {
-                return new List<Position>
-                {
-                    source
-                };
-            }
-
-            IList<Position> minPath = null;
-
-            foreach (var neighbor in GetNeighbors(source))
-            {
-                if (!IsVisited(neighbor, visited) && GetBallColorAt(neighbor.Row, neighbor.Column) == BallColor.Empty)
-                {
-                    visited[neighbor.Row, neighbor.Column] = true;
-                    var path = GetPath(neighbor, destination, visited);
-                    if (path != null && (minPath == null || minPath.Count > path.Count))
-                    {
-                        minPath = path;
-                    }
-                }
-            }
-
-            minPath?.Insert(0, source);
-
-            return minPath;
-        }
-
         public List<Position> GetPathWave(Position source, Position destination)
         {
-            /* Распространение волны
-
-            ЦИКЛ
-                ДЛЯ каждой ячейки loc, помеченной числом d
-            пометить все соседние свободные непомеченные ячейки числом d + 1
-            КЦ
-            d := d + 1
-            ПОКА(финишная ячейка не помечена) И(есть возможность распространения волны)
-
-            Восстановление пути
-
-            ЕСЛИ финишная ячейка помечена
-            ТО
-            перейти в финишную ячейку
-            ЦИКЛ
-            выбрать среди соседних ячейку, помеченную числом на 1 меньше числа в текущей ячейке
-            перейти в выбранную ячейку и добавить её к пути
-            ПОКА текущая ячейка — не стартовая
-            ВОЗВРАТ путь найден
-            ИНАЧЕ
-            ВОЗВРАТ путь не найден
-             */
-
             bool[,] visited = new bool[Height, Width];
 
             var visitedPositions = new Queue<List<Position>>();
@@ -129,69 +72,8 @@ namespace Game
             return null;
         }
 
-        public List<Position> GetPathWaveOriginal(Position source, Position destination)
-        {
-            int[,] visited = new int[Height, Width];
-            int step = 0;
-            var position = new Tuple<Position, int>(source, step);
-            var visitedPositions = new Queue<Tuple<Position, int>>();
-            visitedPositions.Enqueue(position);
-            visited[source.Row, source.Column] = step;
-
-            while (visitedPositions.Count != 0)
-            {
-                var dequeue = visitedPositions.Dequeue();
-
-                if (dequeue.Item1 == destination)
-                {
-                    visited[dequeue.Item1.Row, dequeue.Item1.Column] = dequeue.Item2;
-                    var pathBack = GetPathBack(source, destination, visited);
-                    pathBack.Reverse();
-                    return pathBack;
-                }
-
-                visited[dequeue.Item1.Row, dequeue.Item1.Column] = dequeue.Item2;
-                var neighbors = GetNeighbors(dequeue.Item1);
-
-                foreach (var neighbor in neighbors)
-                {
-                    if (visited[neighbor.Row, neighbor.Column] == 0 && GetBallColorAt(neighbor.Row, neighbor.Column) == BallColor.Empty)
-                    {
-                        var newStep = dequeue.Item2;
-                        visitedPositions.Enqueue(new Tuple<Position, int>(neighbor, newStep+1));
-                    }
-                }
-            }
-            return null;
-        }
-
-        private List<Position> GetPathBack(Position source, Position destination, int[,] visited)
-        {
-            var listBack = new List<Position>();
-            while (destination != source)
-            {
-                var neighbors = GetNeighbors(destination);
-                foreach (var neighbor in neighbors)
-                {
-                    if (neighbor == source)
-                    {
-                        listBack.Add(neighbor);
-                        return listBack;
-                    }
-                    if (visited[neighbor.Row, neighbor.Column] == visited[destination.Row, destination.Column] - 1)
-                    {
-                        listBack.Add(neighbor);
-                        destination = neighbor;
-                        break;
-                    }
-                }
-            }
-            return null;
-        }
-
-
         public IEnumerable<Position> PlaceBalls()
-    {
+        {
         var listPosition = new List<Position>();
 
         var random = new Random();
@@ -262,7 +144,6 @@ namespace Game
                 }
             }
         }
-
         return removedLine;
     }
 
@@ -277,7 +158,7 @@ namespace Game
         }
     }
 
-    internal IList<Position> GetNeighbors(Position source)
+    public IList<Position> GetNeighbors(Position source)
     {
         var neighbors = new List<Position>();
 
@@ -294,7 +175,6 @@ namespace Game
                 }
             }
         }
-
         return neighbors;
     }
 

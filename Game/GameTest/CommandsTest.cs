@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using Game;
+using Game.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GameTest

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using Game.Logic;
 
 namespace Game.UI
 {
@@ -135,10 +136,11 @@ namespace Game.UI
 
                 else if (colorClickedPosition == BallColor.Empty)
                 {
-                    if (_field.GetPathWaveOriginal(_selectedPosition, clickedPosition) != null)
+                    if (_field.PathStrategy.GetPath(_selectedPosition, clickedPosition, new bool[_field.Height, _field.Width]) != null)
                     {
                         using var graphics = CreateGraphics();
-                        var path = _field.GetPathWaveOriginal(_selectedPosition, clickedPosition);
+                        var path = _field.PathStrategy.GetPath(_selectedPosition, clickedPosition,
+                            new bool[_field.Height, _field.Width]);
 
                         var ballColor = _field.GetBallColorAt(_selectedPosition);
                         foreach (var position in path)
